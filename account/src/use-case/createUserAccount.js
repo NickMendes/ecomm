@@ -1,6 +1,6 @@
 const usuariosList = [];
 
-const createUserUseCase = (name, email, password) => {
+export const createUserUseCase = (name, email, password) => {
   const dateNow = new Date().toJSON().slice(0,10).replace(/-/g,'-');
   const date = dateNow.toString('dd-MM-yyyy');
 
@@ -16,5 +16,3 @@ const createUserUseCase = (name, email, password) => {
   
   return user;
 }
-
-export default createUserUseCase;
