@@ -1,6 +1,6 @@
 FROM node:14-alpine
 
-WORKDIR /node-app
+WORKDIR /node-app/product
 
 COPY . .
 
