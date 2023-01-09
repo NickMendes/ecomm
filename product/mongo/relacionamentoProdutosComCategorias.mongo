@@ -1,0 +1,7 @@
+db.products.find({}).forEach(function(ele) {
+  let info_cat = db.categories.findOne({ "name": ele.CATEGORIA });
+
+  ele.STATUS = info_cat.status;
+
+  db.products.save(ele);
+})
