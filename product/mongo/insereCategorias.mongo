@@ -20,7 +20,7 @@ db.categories.insertMany(
     "status": "INATIVA"
   },
   {
-    "name": "EXPORTES",
+    "name": "ESPORTE",
     "status": "INATIVA"
   },
   {
