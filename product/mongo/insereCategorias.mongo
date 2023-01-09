@@ -1,0 +1,34 @@
+db.categories.insertMany(
+  [{
+    "name": "INFORMÁTICA",
+    "status": "ATIVA"
+  },
+  {
+    "name": "BELEZA",
+    "status": "INATIVA"
+  },
+  {
+    "name": "CELULARES",
+    "status": "ATIVA"
+  },
+  {
+    "name": "MÓVEIS",
+    "status": "ATIVA"
+  },
+  {
+    "name": "LUXO",
+    "status": "INATIVA"
+  },
+  {
+    "name": "EXPORTES",
+    "status": "INATIVA"
+  },
+  {
+    "name": "AUTOMOTIVA",
+    "status": "ATIVA"
+  },
+  {
+    "name": "LIVROS",
+    "status": "ATIVA"
+  }]
+)
