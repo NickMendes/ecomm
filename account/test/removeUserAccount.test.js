@@ -22,6 +22,6 @@ const removeCorreto = removeUserUseCase('maria@exemple.com');
 console.log('Try to remove user with correct email, expects "True":\n', removeCorreto);
 
 const checkRemoval = searchUserAccountByEmailUseCase('maria@exemple.com');
-console.log('Seearch for deleted user, expects Error Mgs:\n', checkRemoval);
+console.log('Search for deleted user, expects Error Mgs:\n', checkRemoval);
 
 console.log('Check userList, expect array with 2 users/objects:\n', userList);
