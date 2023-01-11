@@ -1,8 +1,8 @@
 import { userList } from "./createUserAccount.js";
 
 export const addAddressUseCase = (add, email) =>{
-  const userOld = userList.find((ele) => ele.email === email);
-  const index = userList.findIndex((ele) => ele.email === email);
+  const userOld = userList.find((user) => user.email === email);
+  const index = userList.findIndex((user) => user.email === email);
   
   if (!userOld) {
     return false;
