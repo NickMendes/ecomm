@@ -1,4 +1,4 @@
-export const usuariosList = [
+export const userList = [
   {
     id: 1,
     name: 'Rafael',
@@ -46,14 +46,14 @@ export const createUserUseCase = (name, email, password) => {
   const date = dateNow.toString('dd-MM-yyyy');
 
   const user = {
-    id: usuariosList.length + 1,
+    id: userList.length + 1,
     name,
     email,
     password,
     createDate: date
   };
 
-  usuariosList.push(user);
+  userList.push(user);
   
   return user;
 }

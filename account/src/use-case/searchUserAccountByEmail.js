@@ -1,7 +1,7 @@
-import { usuariosList } from "./createUserAccount.js";
+import { userList } from "./createUserAccount.js";
 
 export const searchUserAccountByEmailUseCase = (email) => {
-  const user = usuariosList.find((ele) => ele.email === email);
+  const user = userList.find((ele) => ele.email === email);
   
   if (user) {
     return user
