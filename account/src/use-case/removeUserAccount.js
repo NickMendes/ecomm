@@ -1,13 +1,15 @@
-import { usuariosList } from "./createUserAccount.js";
+import { userList } from "./createUserAccount.js";
 
 export const removeUserUseCase = (email) => {
-  const index = usuariosList.findIndex((ele) => ele.email === email);
+  const index = userList.findIndex((user) => user.email === email);
+  
   if (index === -1) {
     return false;
-  } else {
-    usuariosList.splice(index, 1);
-    return true;
-  }
+  } 
+    
+  userList.splice(index, 1);
+  
+  return true;
 };
 
-export { usuariosList };
+export { userList };

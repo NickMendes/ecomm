@@ -1,25 +1,25 @@
-import { usuariosList } from "./createUserAccount.js";
+import { userList } from "./createUserAccount.js";
 import { removeUserUseCase } from "./removeUserAccount.js";
 
 export const changeUserNameUseCase = (email, newName) => {
-  const user = usuariosList.find((ele) => ele.email === email);
+  const userChanging = userList.find((user) => user.email === email);
 
-  if (user) {
-    const newUser = {
-      id: user.id,
-      name: newName,
-      email: user.email,
-      password: user.password,
-      createDate: user.createDate
-    };
-
-    removeUserUseCase(email);
-    usuariosList.push(newUser);
-
-    return true;
-  } else if (!user) {
+  if (!userChanging) {
     return false
   }
+
+  const newUser = {
+    id: userChanging.id,
+    name: newName,
+    email: userChanging.email,
+    password: userChanging.password,
+    createDate: userChanging.createDate
+  };
+
+  removeUserUseCase(email);
+  userList.push(newUser);
+
+  return true;
 };
 
-export { usuariosList };
+export { userList };
