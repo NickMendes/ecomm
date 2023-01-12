@@ -1,11 +1,27 @@
 import { removeUserUseCase } from "../src/use-case/removeUserAccount.js";
 import { searchUserAccountByEmailUseCase } from "../src/use-case/searchUserAccountByEmail.js";
+import { createUserUseCase, userList } from '../src/use-case/createUserAccount.js';
 
-const removeErrado = removeUserUseCase('errado@email.com');
-console.log('Tenta remover com o email errado, espera False', removeErrado);
+createUserUseCase('Maria', 'maria@exemple.com', 'maria123');
+createUserUseCase('Jose', 'jose@exemple.com', '123456js');
+const address = {
+  logradouro: 'Rua Um',
+  numero: 100,
+  complemento: 'NP',
+  bairro: 'Qualquer',
+  CEP: 30100000,
+  cidade: 'São Paulo',
+  UF: 'SP'
+};
+createUserUseCase('Fulana', 'fulana@example.com', '123fulana', address);
 
-const removeCorreto = removeUserUseCase('rafa@el.com.br');
-console.log('Remover com o email correto, espera True', removeCorreto);
+const removeErrado = removeUserUseCase('wrong@email.com');
+console.log('Try to remove user using incorrect email, expects "False":\n', removeErrado);
 
-const emailCorreto = searchUserAccountByEmailUseCase('rafa@el.com.br');
-console.log('Buscando email já deletado, espera Erro', emailCorreto);
+const removeCorreto = removeUserUseCase('maria@exemple.com');
+console.log('Try to remove user with correct email, expects "True":\n', removeCorreto);
+
+const checkRemoval = searchUserAccountByEmailUseCase('maria@exemple.com');
+console.log('Search for deleted user, expects Error Mgs:\n', checkRemoval);
+
+console.log('Check userList, expect array with 2 users/objects:\n', userList);

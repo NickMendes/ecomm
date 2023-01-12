@@ -1,17 +1,18 @@
-import { usuariosList } from "./createUserAccount.js";
+import { userList } from "./createUserAccount.js";
 
 export const addAddressUseCase = (add, email) =>{
-  const userOld = usuariosList.find((ele) => ele.email === email);
-  const index = usuariosList.findIndex((ele) => ele.email === email);
+  const userOld = userList.find((user) => user.email === email);
+  const index = userList.findIndex((user) => user.email === email);
   
-  if (userOld) {
-    const newUser = { ...userOld, address: add };
-    usuariosList.splice(index, 1);
-    usuariosList.push(newUser);
-    return true;
-  } else if (!userOld) {
+  if (!userOld) {
     return false;
-  };
+  } 
+
+  const newUser = { ...userOld, address: add };
+  userList.splice(index, 1);
+  userList.push(newUser);
+
+  return true;
 };
 
-export { usuariosList };
+export { userList };
