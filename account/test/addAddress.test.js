@@ -1,9 +1,8 @@
 import { addAddressUseCase } from "../src/use-case/addAddress.js";
 import { searchUserAccountByEmailUseCase } from "../src/use-case/searchUserAccountByEmail.js";
-import { createUserUseCase } from '../src/use-case/createUserAccount.js';
+import { createUserUseCase, userList } from '../src/use-case/createUserAccount.js';
 
 createUserUseCase('Maria', 'maria@exemple.com', 'maria123');
-createUserUseCase('Jose', 'jose@exemple.com', '123456js');
 const address = {
   logradouro: 'Rua Um',
   numero: 100,
@@ -13,13 +12,14 @@ const address = {
   cidade: 'São Paulo',
   UF: 'SP'
 };
-createUserUseCase('Fulana', 'fulana@example.com', '123fulana', address);
 
-const emailErrado = addAddressUseCase(address, 'wrong@email.com');
-console.log('Try to add an address using incorrect email, expects "False":\n', emailErrado);
+const addAddressWrongEmail = addAddressUseCase(address, 'wrong@email.com');
+console.log('Try to add an address using incorrect email, expects "False":\n', addAddressWrongEmail);
 
-const emailCorreto = addAddressUseCase(address, 'maria@exemple.com');
-console.log('Try to add an address using correct email, expects "True":\n', emailCorreto);
+console.log('Checking if userList didnt changed, expects object Maria without address:\n', userList);
+
+const addAddressCorrect = addAddressUseCase(address, 'maria@exemple.com');
+console.log('Try to add an address using correct email, expects "True":\n', addAddressCorrect);
 
 const checkAddress = searchUserAccountByEmailUseCase('maria@exemple.com');
 console.log('Search for user with added address, expects object with address not empty:\n', checkAddress);
