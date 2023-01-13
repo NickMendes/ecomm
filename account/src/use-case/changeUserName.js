@@ -8,13 +8,7 @@ export const changeUserNameUseCase = (email, newName) => {
     return false
   }
 
-  const newUser = {
-    id: userChanging.id,
-    name: newName,
-    email: userChanging.email,
-    password: userChanging.password,
-    createDate: userChanging.createDate
-  };
+  const newUser = { ...userChanging, name: newName };
 
   removeUserUseCase(email);
   userList.push(newUser);
