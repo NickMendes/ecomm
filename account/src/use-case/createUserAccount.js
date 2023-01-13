@@ -16,4 +16,4 @@ export const createUserUseCase = (name, email, password, address) => {
   userList.push(user);
   
   return user;
-}
+};

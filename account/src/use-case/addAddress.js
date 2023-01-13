@@ -14,5 +14,3 @@ export const addAddressUseCase = (add, email) =>{
 
   return true;
 };
-
-export { userList };

@@ -11,5 +11,3 @@ export const removeUserUseCase = (email) => {
   
   return true;
 };
-
-export { userList };

@@ -15,5 +15,3 @@ export const changeUserNameUseCase = (email, newName) => {
 
   return true;
 };
-
-export { userList };
