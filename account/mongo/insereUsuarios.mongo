@@ -1,0 +1,53 @@
+db.users.insertMany([
+  {
+    "first_name": "Maria",
+    "last_name": "Madalena",
+    "cpf": 49330014054,
+    "email": "maria@exemple.com",
+    "password": "maria!123",
+    "phones": [31999887766, 31999998877],
+    "creation_date": new Date("2023-02-16"),
+    "address": {
+      "street": "Rua da Maria",
+      "number": "101",
+      "complement": "S/N",
+      "cep": 32100100,
+      "city": "Belo Horizonte",
+      "state": "MG"
+    }
+  },
+    {
+    "first_name": "Jose",
+    "last_name": "Padilha",
+    "cpf": 95810032079,
+    "email": "josepd@exemple.com",
+    "password": "padinha!123",
+    "phones": [11999887766],
+    "creation_date": new Date("2023-02-16"),
+    "address": {
+      "street": "Rua do Jose",
+      "number": "102",
+      "complement": "apto 02",
+      "cep": 04163300,
+      "city": "São Paulo",
+      "state": "SP"
+    }
+  },
+    {
+    "first_name": "Eduardo",
+    "last_name": "Corno",
+    "cpf": 38668574035,
+    "email": "dudu@exemple.com",
+    "password": "soucorno!123",
+    "phones": [61999887766, 61999998877],
+    "creation_date": new Date("2023-02-16"),
+    "address": {
+      "street": "Rua da Corno",
+      "number": "1069",
+      "complement": "S/N",
+      "cep": 76459970,
+      "city": "Minaçu",
+      "state": "GO"
+    }
+  },
+])
