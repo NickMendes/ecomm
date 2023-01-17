@@ -1,4 +1,4 @@
-usee ecomm-product
+use ecomm-product
 
 db.products.updateOne(
   { "PRODUTO": "Galaxy Tab S8", "QUANTIDADE EM ESTOQUE": { $gte: 2 } },
