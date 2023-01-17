@@ -1,3 +1,5 @@
+use ecomm-product
+
 // Cria indice dos nomes das categorias.
 db.categories.createIndex({ name: 1 })
 

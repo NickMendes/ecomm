@@ -1,3 +1,5 @@
+use ecomm-product
+
 db.products.insertMany([
   {
     "PRODUTO": "Notebook Samsung",

@@ -1,3 +1,5 @@
+use ecomm-product
+
 db.products.find(
   { $and: [ 
     { "PREÇO UNITÁRIO": { $gte: 1000 } },

@@ -1,3 +1,5 @@
+use ecomm-account
+
 db.users.insertMany([
   {
     "first_name": "Maria",

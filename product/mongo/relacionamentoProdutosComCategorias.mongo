@@ -1,3 +1,5 @@
+use ecomm-product
+
 db.products.find({}).forEach(function(ele) {
   let info_cat = db.categories.findOne({ "name": ele.CATEGORIA });
 
