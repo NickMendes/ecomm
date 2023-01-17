@@ -2,6 +2,7 @@ use ecomm-account
 
 db.users.insertMany([
   {
+    "_id": 0001,
     "first_name": "Maria",
     "last_name": "Madalena",
     "cpf": 49330014054,
@@ -19,6 +20,7 @@ db.users.insertMany([
     }
   },
     {
+    "_id": 0002,
     "first_name": "Jose",
     "last_name": "Padilha",
     "cpf": 95810032079,
@@ -36,6 +38,7 @@ db.users.insertMany([
     }
   },
     {
+    "_id": 0003,
     "first_name": "Eduardo",
     "last_name": "Corno",
     "cpf": 38668574035,
