@@ -2,147 +2,147 @@ use ecomm-product
 
 db.products.insertMany([
   {
-    "_id": "01",
-    "PRODUTO": "Notebook Samsung",
-    "DESCRIÇÃO": 'Samsung Book Core i5-1135G7, 8G, 256GB SSD, Iris Xe, 15.6"FHD, W11 Cinza', 
-    "SLUG": "notebook-samsung",
-    "PREÇO UNITÁRIO": NumberDecimal("3523.00"),
-    "QUANTIDADE EM ESTOQUE": 1,
-    "CATEGORIA": "INFORMÁTICA"
+    _id: "01",
+    produto: "Notebook Samsung",
+    descricao: 'Samsung Book Core i5-1135G7, 8G, 256GB SSD, Iris Xe, 15.6"FHD, W11 Cinza', 
+    slug: "notebook-samsung",
+    preco_unitario: NumberDecimal("3523.00"),
+    quant_estoque: 1,
+    categoria: "Informática"
   },
     {
-    "_id": "02",
-    "PRODUTO": "Sofá 3 lugares",
-    "DESCRIÇÃO": "Sofá 3 Lugares Retrátil e Reclinável Cama Inbox Compact 1,80m Velusoft Cinza", 
-    "SLUG": "sofa-3-lugares",
-    "PREÇO UNITÁRIO": NumberDecimal("2500.00"),
-    "QUANTIDADE EM ESTOQUE": 1,
-    "CATEGORIA": "MÓVEIS"
+    _id: "02",
+    produto: "Sofá 3 lugares",
+    descricao: "Sofá 3 Lugares Retrátil e Reclinável Cama Inbox Compact 1,80m Velusoft Cinza", 
+    slug: "sofa-3-lugares",
+    preco_unitario: NumberDecimal("2500.00"),
+    quant_estoque: 1,
+    categoria: "Móveis"
   },
     {
-    "_id": "03",
-    "PRODUTO": "Clean Architecture",
-    "DESCRIÇÃO": "Arquitetura limpa: O guia do artesão para estrutura e design de software por Robert C. Martin (Uncle Bob)", 
-    "SLUG": "livro-clean-architecture",
-    "PREÇO UNITÁRIO": NumberDecimal("102.90"),
-    "QUANTIDADE EM ESTOQUE": 2,
-    "CATEGORIA": "LIVROS"
+    _id: "03",
+    produto: "Clean Architecture",
+    descricao: "Arquitetura limpa: O guia do artesão para estrutura e design de software por Robert C. Martin (Uncle Bob)", 
+    slug: "livro-clean-architecture",
+    preco_unitario: NumberDecimal("102.90"),
+    quant_estoque: 2,
+    categoria: "Livros"
   },
     {
-    "_id": "04",
-    "PRODUTO": "Mesa de jantar 6 lugares",
-    "DESCRIÇÃO": "Mesa de Jantar 6 Lugares Lótus Oppa Design - Caramel", 
-    "SLUG": "mesa-de-jantar-6-lugares",
-    "PREÇO UNITÁRIO": NumberDecimal("3678.98"),
-    "QUANTIDADE EM ESTOQUE": 1,
-    "CATEGORIA": "MÓVEIS"
+    _id: "04",
+    produto: "Mesa de jantar 6 lugares",
+    descricao: "Mesa de Jantar 6 Lugares Lótus Oppa Design - Caramel", 
+    slug: "mesa-de-jantar-6-lugares",
+    preco_unitario: NumberDecimal("3678.98"),
+    quant_estoque: 1,
+    categoria: "Móveis"
   },
     {
-    "_id": "05",
-    "PRODUTO": "iPhone 13 Pro",
-    "DESCRIÇÃO": "Apple iPhone 13 Pro (256 GB) - Verde-alpino", 
-    "SLUG": "iphone-13-pro",
-    "PREÇO UNITÁRIO": NumberDecimal("9176.00"),
-    "QUANTIDADE EM ESTOQUE": 6,
-    "CATEGORIA": "CELULARES"
+    _id: "05",
+    produto: "iPhone 13 Pro",
+    descricao: "Apple iPhone 13 Pro (256 GB) - Verde-alpino", 
+    slug: "iphone-13-pro",
+    preco_unitario: NumberDecimal("9176.00"),
+    quant_estoque: 6,
+    categoria: "Celulares"
   },
     {
-    "_id": "06",
-    "PRODUTO": "Monitor Dell 27"",
-    "DESCRIÇÃO": 'Monitor Dell de 27" P2722H, Preto', 
-    "SLUG": "monitor-dell-27",
-    "PREÇO UNITÁRIO": NumberDecimal("1889.00"),
-    "QUANTIDADE EM ESTOQUE": 3,
-    "CATEGORIA": "INFORMÁTICA"
+    _id: "06",
+    produto: "Monitor Dell 27"",
+    descricao: 'Monitor Dell de 27" P2722H, Preto', 
+    slug: "monitor-dell-27",
+    preco_unitario: NumberDecimal("1889.00"),
+    quant_estoque: 3,
+    categoria: "Informática"
   },
     {
-    "_id": "07",
-    "PRODUTO": "Implementing Domain-Driven Design",
-    "DESCRIÇÃO": "Implementando Domain-Driven Design por Vaughn Vernon", 
-    "SLUG": "livro-implementing-ddd",
-    "PREÇO UNITÁRIO": NumberDecimal("144.07"),
-    "QUANTIDADE EM ESTOQUE": 3,
-    "CATEGORIA": "LIVROS"
+    _id: "07",
+    produto: "Implementing Domain-Driven Design",
+    descricao: "Implementando Domain-Driven Design por Vaughn Vernon", 
+    slug: "livro-implementing-ddd",
+    preco_unitario: NumberDecimal("144.07"),
+    quant_estoque: 3,
+    categoria: "Livros"
   },
     {
-    "_id": "08",
-    "PRODUTO": "Jogo de pneus",
-    "DESCRIÇÃO": "Pneu Barum by Continental Aro 13 Bravuris 5hm 175/70r13 82t", 
-    "SLUG": "jogo-de-pneus-continental-13",
-    "PREÇO UNITÁRIO": NumberDecimal("1276.79"),
-    "QUANTIDADE EM ESTOQUE": 1,
-    "CATEGORIA": "AUTOMOTIVA"
+    _id: "08",
+    produto: "Jogo de pneus",
+    descricao: "Pneu Barum by Continental Aro 13 Bravuris 5hm 175/70r13 82t", 
+    slug: "jogo-de-pneus-continental-13",
+    preco_unitario: NumberDecimal("1276.79"),
+    quant_estoque: 1,
+    categoria: "Automotiva"
   },
     {
-    "_id": "09",
-    "PRODUTO": "Clean Code",
-    "DESCRIÇÃO": "Código limpo: Habilidades práticas do Agile Software por Robert C. Martin (Uncle Bob)", 
-    "SLUG": "livro-clean",
-    "PREÇO UNITÁRIO": NumberDecimal("95.17"),
-    "QUANTIDADE EM ESTOQUE": 1,
-    "CATEGORIA": "LIVROS"
+    _id: "09",
+    produto: "Clean Code",
+    descricao: "Código limpo: Habilidades práticas do Agile Software por Robert C. Martin (Uncle Bob)", 
+    slug: "livro-clean",
+    preco_unitario: NumberDecimal("95.17"),
+    quant_estoque: 1,
+    categoria: "Livros"
   },
     {
-    "_id": "10",
-    "PRODUTO": "Galaxy S22 Ultra",
-    "DESCRIÇÃO": 'Smartphone Samsung Galaxy S22 Ultra 256GB 5G com caneta S PEN - Preto, Câmera Tripla 108MP + Selfie 40MP, RAM 12GB, Tela 6.8"', 
-    "SLUG": "celular-galaxy-22-ultra",
-    "PREÇO UNITÁRIO": NumberDecimal("8549.10"),
-    "QUANTIDADE EM ESTOQUE": 5,
-    "CATEGORIA": "CELULARES"
+    _id: "10",
+    produto: "Galaxy S22 Ultra",
+    descricao: 'Smartphone Samsung Galaxy S22 Ultra 256GB 5G com caneta S PEN - Preto, Câmera Tripla 108MP + Selfie 40MP, RAM 12GB, Tela 6.8"', 
+    slug: "celular-galaxy-22-ultra",
+    preco_unitario: NumberDecimal("8549.10"),
+    quant_estoque: 5,
+    categoria: "Celulares"
   },
     {
-    "_id": "11",
-    "PRODUTO": "Macbook Pro 16",
-    "DESCRIÇÃO": "Notebook Apple MacBook Pro de 13 polegadas: Chip M2 da Apple com CPU de oito núcleos e GPU de dez núcleos, de 512 GB SSD - Prateado", 
-    "SLUG": "notebook-macbook-pro-16",
-    "PREÇO UNITÁRIO": NumberDecimal("31752.00"),
-    "QUANTIDADE EM ESTOQUE": 1,
-    "CATEGORIA": "INFORMÁTICA"
+    _id: "11",
+    produto: "Macbook Pro 16",
+    descricao: "Notebook Apple MacBook Pro de 13 polegadas: Chip M2 da Apple com CPU de oito núcleos e GPU de dez núcleos, de 512 GB SSD - Prateado", 
+    slug: "notebook-macbook-pro-16",
+    preco_unitario: NumberDecimal("31752.00"),
+    quant_estoque: 1,
+    categoria: "Informática"
   },
     {
-    "_id": "12",
-    "PRODUTO": "Refactoring Improving the Design of Existing Code",
-    "DESCRIÇÃO": "Refatoração: Aperfeiçoando o Design de Códigos Existentes por Martin Fowler", 
-    "SLUG": "livro-refactoring",
-    "PREÇO UNITÁRIO": NumberDecimal("173.90"),
-    "QUANTIDADE EM ESTOQUE": 1,
-    "CATEGORIA": "LIVROS"
+    _id: "12",
+    produto: "Refactoring Improving the Design of Existing Code",
+    descricao: "Refatoração: Aperfeiçoando o Design de Códigos Existentes por Martin Fowler", 
+    slug: "livro-refactoring",
+    preco_unitario: NumberDecimal("173.90"),
+    quant_estoque: 1,
+    categoria: "Livros"
   },
     {
-    "_id": "13",
-    "PRODUTO": "Cama queen size",
-    "DESCRIÇÃO": "Cama Queen Size Dener Oppa Design - Mel", 
-    "SLUG": "cama-queen-size-dener",
-    "PREÇO UNITÁRIO": NumberDecimal("3100.00"),
-    "QUANTIDADE EM ESTOQUE": 2,
-    "CATEGORIA": "MÓVEIS"
+    _id: "13",
+    produto: "Cama queen size",
+    descricao: "Cama Queen Size Dener Oppa Design - Mel", 
+    slug: "cama-queen-size-dener",
+    preco_unitario: NumberDecimal("3100.00"),
+    quant_estoque: 2,
+    categoria: "Móveis"
   },
     {
-    "_id": "14",
-    "PRODUTO": "Central multimidia",
-    "DESCRIÇÃO": "Kit Combo Central Multimídia 9 Polegadas Mp5 Automotivo Aparelho 2 Din Som Pra Carro Sistema Operacional Android 12 Bluetooth Usb Gps Integrado Conexão Wifi Função Speedplay que Simula Carplay e Android Auto Mais Aplicativos Como Spotify Waze Youtube WhatsApp, Tela Resistiva, Microfone Externo Função Multi Tela 2gb Ram e 32gb de Memória interna, Entradas para Encostos de Cabeça, Comando de Volante e Para Câmera Frontal ou Traseira + Moldura Painel Kia Sorento 2013 a 2014 Cor Preta + Câmera de ré", 
-    "SLUG": "central-multimidia-automotiva",
-    "PREÇO UNITÁRIO": NumberDecimal("711.18"),
-    "QUANTIDADE EM ESTOQUE": 1,
-    "CATEGORIA": "AUTOMOTIVA"
+    _id: "14",
+    produto: "Central multimidia",
+    descricao: "Kit Combo Central Multimídia 9 Polegadas Mp5 Automotivo Aparelho 2 Din Som Pra Carro Sistema Operacional Android 12 Bluetooth Usb Gps Integrado Conexão Wifi Função Speedplay que Simula Carplay e Android Auto Mais Aplicativos Como Spotify Waze Youtube WhatsApp, Tela Resistiva, Microfone Externo Função Multi Tela 2gb Ram e 32gb de Memória interna, Entradas para Encostos de Cabeça, Comando de Volante e Para Câmera Frontal ou Traseira + Moldura Painel Kia Sorento 2013 a 2014 Cor Preta + Câmera de ré", 
+    slug: "central-multimidia-automotiva",
+    preco_unitario: NumberDecimal("711.18"),
+    quant_estoque: 1,
+    categoria: "Automotiva"
   },
     {
-    "_id": "15",
-    "PRODUTO": "Building Microservices",
-    "DESCRIÇÃO": "Building Microservices (English Edition) por Sam Newman", 
-    "SLUG": "livro-building-microservices",
-    "PREÇO UNITÁRIO": NumberDecimal("300.28"),
-    "QUANTIDADE EM ESTOQUE": 2,
-    "CATEGORIA": "LIVROS"
+    _id: "15",
+    produto: "Building Microservices",
+    descricao: "Building Microservices (English Edition) por Sam Newman", 
+    slug: "livro-building-microservices",
+    preco_unitario: NumberDecimal("300.28"),
+    quant_estoque: 2,
+    categoria: "Livros"
   },
     {
-    "_id": "16",
-    "PRODUTO": "Galaxy Tab S8",
-    "DESCRIÇÃO": "Tablet Samsung Galaxy S8 5G SM-X706B 256gb Grafite 8gb Ram", 
-    "SLUG": "tablet-galaxy-tab-s8",
-    "PREÇO UNITÁRIO": NumberDecimal("5939.10"),
-    "QUANTIDADE EM ESTOQUE": 4,
-    "CATEGORIA": "INFORMÁTICA"
+    _id: "16",
+    produto: "Galaxy Tab S8",
+    descricao: "Tablet Samsung Galaxy S8 5G SM-X706B 256gb Grafite 8gb Ram", 
+    slug: "tablet-galaxy-tab-s8",
+    preco_unitario: NumberDecimal("5939.10"),
+    quant_estoque: 4,
+    categoria: "Informática"
   }
 ])

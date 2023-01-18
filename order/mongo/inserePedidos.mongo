@@ -1,33 +1,37 @@
 use ecomm-order
 
 db.orders.insertMany([
-  {
-    "_id": 01,
-    "order_date": new Date(),
-    "user_id": "0002",
-    "address": {
-      "client_address": "false",
-      "street": "Rua da Entrega",
-      "number": "106",
-      "complement": "S/N",
-      "cep": 32100190,
-      "city": "Belo Horizonte",
-      "state": "MG"
+    {
+        _id: 001,
+        order_date: new Date(),
+        user_id: 0002,
+        address: {
+            street: "Rua do Jose",
+            number: "102",
+            complement: "apto 02",
+            cep: 04163300,
+            city: "São Paulo",
+            state: "SP"
+        },
+        sale: [
+            { product_id: 04, quantity: 1, unit_price: NumberDecimal("3678.98"), discount: NumberDecimal("100.00") }
+        ]
     },
-    "sale": [
-      {"product_id": 04 , "quantity": 2, "unit_price": 3678.98, "discount": 300.00},
-    ]
-  },
-  {
-    "_id": 02,
-    "order_date": new Date(),
-    "user_id": "0001",
-    "address": {
-      "client_address": "true",
-    },
-    "sale": [
-      {"product_id": 05 , "quantity": 1, "unit_price": 9176.00, "discount": 0},
-      {"product_id": 09 , "quantity": 1, "unit_price": 95.17, "discount": 0},
-    ],
-  }
+    {
+        _id: 002,
+        order_date: new Date(),
+        user_id: 0001,
+        address: {
+            street: "Rua da Maria",
+            number: "101",
+            complement: "S/N",
+            cep: 32100100,
+            city: "Belo Horizonte",
+            state: "MG"
+        },
+        sale: [
+            { product_id: 05, quantity: 1, unit_price: NumberDecimal("9176.00"), discount: NumberDecimal("100.00") },
+            { product_id: 05, quantity: 1, unit_price: NumberDecimal("95.17"), discount: NumberDecimal("5.00") }
+        ]
+    }
 ])

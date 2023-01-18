@@ -1,5 +1,5 @@
 use ecomm-product
 
 db.products.find(
-  { "CATEGORIA": { $in: ["LIVROS", "CELULARES"] } }
+  { "categoria": { $in: ["Livros", "Celulares"] } }
 )

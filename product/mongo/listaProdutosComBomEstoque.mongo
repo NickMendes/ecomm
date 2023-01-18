@@ -1,6 +1,6 @@
 use ecomm-product
 
 db.products.find(
-  { "QUANTIDADE EM ESTOQUE": { $gte: 3 } },
-  { "PRODUTO": 1, "QUANTIDADE EM ESTOQUE": 1 }
+  { "quant_estoque": { $gte: 3 } },
+  { "produto": 1, "quant_estoque": 1 }
 )

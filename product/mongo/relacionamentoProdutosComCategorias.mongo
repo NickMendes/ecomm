@@ -1,9 +1,9 @@
 use ecomm-product
 
 db.products.find({}).forEach(function(ele) {
-  let info_cat = db.categories.findOne({ "name": ele.CATEGORIA });
+  let info_cat = db.categories.findOne({ "name": ele.categoria });
 
-  ele.STATUS = info_cat.status;
+  ele.status = info_cat.status;
 
   db.products.save(ele);
 })
