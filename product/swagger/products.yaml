@@ -12,7 +12,7 @@ info:
     url: http://www.alura.com
 components:
   schemas:
-    categorie:
+    category:
       type: object
       properties:
         id:
@@ -23,7 +23,8 @@ components:
           type: string
 servers:
   - url: https://6096015d116f3f00174b29ba.mockapi.io/
-    description: Server avulso que provavelmente não funciona para fazer o YML
+    description: >-
+      Server avulso que provavelmente não funciona para fazer o YML
       corretamente. Irei mudar no futuro próximo.
 paths:
   /api/categories:
@@ -52,3 +53,29 @@ paths:
           content:
             aplication/json:
               example: Not Found
+  /api/admin/categories:
+    post:
+      tags:
+        - products
+      summary: >-
+        Adiciona uma nova categoria a lista. Você deve estar logado como
+        administrador para funcionamento
+      responses:
+        '201':
+          description: Created
+          content:
+            aplication/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  status:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            aplication/json:
+              example: User unathorized, please check your credentials
