@@ -14,7 +14,7 @@ components:
   schemas:
     category:
       type: object
-      properties:
+      properties: 
         id:
           type: string
         name:
@@ -56,475 +56,314 @@ components:
         category_id:
           type: integer
 servers:
-  - url: https://6096015d116f3f00174b29ba.mockapi.io/
-    description: >-
-      Server avulso que provavelmente não funciona para fazer o YML
-      corretamente. Irei mudar no futuro próximo.
+- url: https://6096015d116f3f00174b29ba.mockapi.io/
+  description: Server avulso que provavelmente não funciona para fazer o YML corretamente. Irei mudar no futuro próximo.
 paths:
   /api/categories:
     get:
       tags:
-        - categories
+      - categories
       summary: Search for all available categories
       responses:
-        '200':
+        200:
           description: Success
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                    name:
-                      type: string
-                    status:
-                      type: string
-        '404':
+                  $ref: '#/components/schemas/category'
+        404:
           description: Not Found
           content:
             aplication/json:
               example: Not Found
-        '500':
+        500:
+          description: Internal Server Error
+  /api/categories/{id}:
+    parameters: 
+    - name: id
+      in: path
+      description: Unique identifier
+      required: true
+      example: 63caa785ae701b25441ff0be
+      schema: 
+        type: string 
+    get:
+      tags:
+      - categories
+      summary: Search for category by ID
+      responses:
+        200:
+          description: Success
+          content: 
+            aplication/json:
+              schema: 
+                $ref: '#/components/schemas/category'
+        404:
+          description: Not Found
+          content: 
+            aplication/json:
+              example: Category Not Found
+        500:
           description: Internal Server Error
   /api/admin/categories:
     post:
       tags:
-        - categories
-      summary: >-
-        Add a new category to the list. You need to be logged as an adminstrator
-        to use this.
+      - categories
+      summary: Add a new category to the list. You need to be logged as an adminstrator to use this.
       responses:
-        '201':
+        201:
           description: Created
-          content:
+          content: 
             aplication/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                  name:
-                    type: string
-                  status:
-                    type: string
-        '401':
+              schema: 
+                $ref: '#/components/schemas/category'
+        401:
           description: Unauthorized
-          content:
+          content: 
             aplication/json:
               example: User unathorized, please check your credentials
-        '500':
-          description: Internal Server Error
-  /api/categories/{id}:
-    parameters:
-      - name: id
-        in: path
-        description: Unique identifier
-        required: true
-        example: 63caa785ae701b25441ff0be
-        schema:
-          type: string
-    get:
-      tags:
-        - categories
-      summary: Search for category by ID
-      responses:
-        '200':
-          description: Success
-          content:
-            aplication/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                  name:
-                    type: string
-                  status:
-                    type: string
-        '404':
-          description: Not Found
-          content:
-            aplication/json:
-              example: Category Not Found
-        '500':
+        500:
           description: Internal Server Error
   /api/admin/categories/{id}:
-    parameters:
-      - name: id
-        in: path
-        description: Unique identifier
-        required: true
-        example: 63caa785ae701b25441ff0be
-        schema:
-          type: string
+    parameters: 
+    - name: id
+      in: path
+      description: Unique identifier
+      required: true
+      example: 63caa785ae701b25441ff0be
+      schema: 
+        type: string
     post:
       tags:
-        - categories
-      summary: >-
-        Change category by ID. You need to be logged as an adminstrator to use
-        this.
-      responses:
-        '202':
+      - categories
+      summary: Change category by ID. You need to be logged as an adminstrator to use this.
+      responses: 
+        202:
           description: Accepted
           content:
             aplication/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                  name:
-                    type: string
-                  status:
-                    type: string
-        '401':
+              schema: 
+                $ref: '#/components/schemas/category'
+        401:
           description: Unauthorized
-          content:
+          content: 
             aplication/json:
               example: User unathorized, please check your credentials
-        '404':
+        404:
           description: Not Found
-          content:
+          content: 
             aplication/json:
               example: Category Not Found
-        '500':
+        500:
           description: Internal Server Error
     patch:
       tags:
-        - categories
-      summary: >-
-        Change category status by ID. You need to be logged as an adminstrator
-        to use this.
-      responses:
-        '202':
+      - categories
+      summary: Change category status by ID. You need to be logged as an adminstrator to use this.
+      responses: 
+        202:
           description: Accepted
           content:
             aplication/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                  name:
-                    type: string
-                  status:
-                    type: string
-        '401':
+              schema: 
+                $ref: "#/components/schemas/category"
+        401:
           description: Unauthorized
-          content:
+          content: 
             aplication/json:
               example: User unathorized, please check your credentials
-        '404':
+        404:
           description: Not Found
-          content:
+          content: 
             aplication/json:
               example: Category Not Found
-        '500':
+        500:
           description: Internal Server Error
     delete:
       tags:
-        - categories
-      summary: >-
-        Delete category by ID. You need to be logged as an adminstrator to use
-        this.
-      responses:
-        '200':
+      - categories
+      summary: Delete category by ID. You need to be logged as an adminstrator to use this.
+      responses: 
+        200:
           description: Seccess
           content:
             aplication/json:
               example: Category deleted
-        '401':
+        401:
           description: Unauthorized
-          content:
+          content: 
             aplication/json:
               example: User unathorized, please check your credentials
-        '404':
+        404:
           description: Not Found
-          content:
+          content: 
             aplication/json:
               example: Category Not Found
-        '500':
+        500:
           description: Internal Server Error
   /api/products:
     get:
       tags:
-        - products
+      - products
       summary: Search for all available products.
-      responses:
-        '200':
+      responses: 
+        200:
           description: Success
           content:
             aplication/json:
-              schema:
+              schema: 
                 type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                    name:
-                      type: string
-                    description:
-                      type: string
-                    slug:
-                      type: string
-                    unit_price:
-                      type: number
-                      format: float
-                    storage_qty:
-                      type: integer
-                    category_id:
-                      type: string
-        '404':
+                items: 
+                  $ref: '#/components/schemas/product-response'
+        404:
           description: Not Found
           content:
             aplication/json:
               example: Not Found
-        '500':
+        500:
+          description: Internal Server Error
+  /api/products/{id}:
+    parameters: 
+    - name: id
+      in: path
+      description: Unique identifier
+      required: true
+      example: 63caa785ae701b25441ff0be
+      schema: 
+        type: string 
+    get:
+      tags:
+      - products
+      summary: Search for product by ID
+      responses:
+        200:
+          description: Success
+          content: 
+            aplication/json:
+              schema: 
+                $ref: '#/components/schemas/product-response'
+        404:
+          description: Not Found
+          content: 
+            aplication/json:
+              example: Product Not Found
+        500:
           description: Internal Server Error
   /api/admin/products:
     post:
       tags:
-        - products
-      summary: >-
-        Add a new product to the list. You need to be logged as an adminstrator
-        to use this.
+      - products
+      summary: Add a new product to the list. You need to be logged as an adminstrator to use this.
       requestBody:
         required: true
         content:
           aplication/json:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                description:
-                  type: string
-                slug:
-                  type: string
-                unit_price:
-                  type: number
-                  format: float
-                storage_qty:
-                  type: integer
-                category_id:
-                  type: integer
-      responses:
-        '200':
+              $ref: '#/components/schemas/product-insert'
+      responses: 
+        200:
           description: Success
           content:
             aplication/json:
-              schema:
+              schema: 
                 type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                    name:
-                      type: string
-                    description:
-                      type: string
-                    slug:
-                      type: string
-                    unit_price:
-                      type: number
-                      format: float
-                    storage_qty:
-                      type: integer
-                    category_id:
-                      type: string
-        '404':
+                items: 
+                  $ref: '#/components/schemas/product-response'
+        404:
           description: Not Found
           content:
             aplication/json:
               example: Not Found
-        '500':
-          description: Internal Server Error
-  /api/products/{id}:
-    parameters:
-      - name: id
-        in: path
-        description: Unique identifier
-        required: true
-        example: 63caa785ae701b25441ff0be
-        schema:
-          type: string
-    get:
-      tags:
-        - products
-      summary: Search for product by ID
-      responses:
-        '200':
-          description: Success
-          content:
-            aplication/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                  name:
-                    type: string
-                  description:
-                    type: string
-                  slug:
-                    type: string
-                  unit_price:
-                    type: number
-                    format: float
-                  storage_qty:
-                    type: integer
-                  category_id:
-                    type: string
-        '404':
-          description: Not Found
-          content:
-            aplication/json:
-              example: Product Not Found
-        '500':
+        500:
           description: Internal Server Error
   /api/admin/products/{id}:
-    parameters:
-      - name: id
-        in: path
-        description: Unique identifier
-        required: true
-        example: 63caa785ae701b25441ff0be
-        schema:
-          type: string
+    parameters: 
+    - name: id
+      in: path
+      description: Unique identifier
+      required: true
+      example: 63caa785ae701b25441ff0be
+      schema: 
+        type: string
     post:
       tags:
-        - products
-      summary: >-
-        Change all product information by ID. You need to be logged as an
-        adminstrator to use this.
+      - products
+      summary: Change all product information by ID. You need to be logged as an adminstrator to use this.
       requestBody:
         required: true
         content:
           aplication/json:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                description:
-                  type: string
-                slug:
-                  type: string
-                unit_price:
-                  type: number
-                  format: float
-                storage_qty:
-                  type: integer
-                category_id:
-                  type: integer
-      responses:
-        '202':
+              $ref: '#/components/schemas/product-insert'
+      responses: 
+        202:
           description: Accepted
           content:
             aplication/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                  name:
-                    type: string
-                  description:
-                    type: string
-                  slug:
-                    type: string
-                  unit_price:
-                    type: number
-                    format: float
-                  storage_qty:
-                    type: integer
-                  category_id:
-                    type: string
-        '401':
+              schema: 
+                $ref: '#/components/schemas/product-response'
+        401:
           description: Unauthorized
-          content:
+          content: 
             aplication/json:
               example: User unathorized, please check your credentials
-        '404':
+        404:
           description: Not Found
-          content:
+          content: 
             aplication/json:
               example: Product Not Found
-        '500':
+        500:
           description: Internal Server Error
     patch:
       tags:
-        - products
-      summary: >-
-        Change a product information by ID. You need to be logged as an
-        adminstrator to use this.
+      - products
+      summary: Change a product information by ID. You need to be logged as an adminstrator to use this.
       requestBody:
         required: true
         content:
           aplication/json:
             schema:
               type: object
-      responses:
-        '202':
+      responses: 
+        202:
           description: Accepted
           content:
             aplication/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                  name:
-                    type: string
-                  description:
-                    type: string
-                  slug:
-                    type: string
-                  unit_price:
-                    type: number
-                    format: float
-                  storage_qty:
-                    type: integer
-                  category_id:
-                    type: string
-        '401':
+              schema: 
+                $ref: '#/components/schemas/product-response'
+        401:
           description: Unauthorized
-          content:
+          content: 
             aplication/json:
               example: User unathorized, please check your credentials
-        '404':
+        404:
           description: Not Found
-          content:
+          content: 
             aplication/json:
               example: Product Not Found
-        '500':
+        500:
           description: Internal Server Error
     delete:
       tags:
-        - products
-      summary: >-
-        Delete product by ID. You need to be logged as an adminstrator to use
-        this.
-      responses:
-        '200':
+      - products
+      summary: Delete product by ID. You need to be logged as an adminstrator to use this.
+      responses: 
+        200:
           description: Success
           content:
             aplication/json:
               example: Product deleted
-        '401':
+        401:
           description: Unauthorized
-          content:
+          content: 
             aplication/json:
               example: User unathorized, please check your credentials
-        '404':
+        404:
           description: Not Found
-          content:
+          content: 
             aplication/json:
               example: Product Not Found
-        '500':
+        500:
           description: Internal Server Error
