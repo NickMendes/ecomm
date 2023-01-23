@@ -53,6 +53,8 @@ paths:
           content:
             aplication/json:
               example: Not Found
+        '500':
+          description: Internal Server Error
   /api/admin/categories:
     post:
       tags:
@@ -79,3 +81,39 @@ paths:
           content:
             aplication/json:
               example: User unathorized, please check your credentials
+        '500':
+          description: Internal Server Error
+  /api/categories/{id}:
+    parameters:
+      - name: id
+        in: path
+        description: Identificador unico
+        required: true
+        example: 63caa785ae701b25441ff0be
+        schema:
+          type: string
+    get:
+      tags:
+        - products
+      summary: Busca por uma categoria a partir de seu identificador
+      responses:
+        '200':
+          description: Success
+          content:
+            aplication/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  status:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            aplication/json:
+              example: Category Not Found
+        '500':
+          description: Internal Server Error
