@@ -1,1 +1,3 @@
-db.categories.find({"status": "ATIVA"}, {_id: 0})
+use ecomm-product
+
+db.categories.find({"status": "Ativa"}, {_id: 0})

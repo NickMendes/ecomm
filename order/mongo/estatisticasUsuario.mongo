@@ -1,0 +1,30 @@
+use ecomm_order
+
+db.orders.aggregate([
+  { $match: { user_id: 0001 } },
+  { $unwind: "$sale" },
+  { $addFields: { 
+    qty_x_price: { $multiply: ["$sale.quantity", "$sale.unit_price"] }
+  } },
+  { $group: {
+    _id: "$user_id",
+    total_by_sale: { $push: "$qty_x_price" },
+    discount: { $push: "$sale.discount" },
+    quantity: { $push: "$sale.quantity" }
+  } },
+  { $project: {
+    total_no_discount: { $sum: "$total_by_sale" },
+    total_quantity: { $sum: "$quantity" },
+    total_discount: { $sum: "$discount" }
+  } }
+])
+
+
+
+db.orders.findOne(
+  { "user_id": 0001 }, { prod_qty: { $sum: "$sale.quantity" }, _id: 0 }
+);
+
+db.orders.findOne(
+  { "user_id": 0001 }, { total_discount: { $sum: "$sale.discount" }, _id: 0 }
+)

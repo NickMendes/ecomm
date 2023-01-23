@@ -1,5 +1,7 @@
+use ecomm-product
+
 // Cria indice dos nomes das categorias.
 db.categories.createIndex({ name: 1 })
 
 // Cria indice dos preços dos produtos.
-db.products.createIndex({ "PREÇO UNITÁRIO": 1 })
+db.products.createIndex({ "preco_unitario": 1 })
