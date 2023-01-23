@@ -30,8 +30,8 @@ paths:
   /api/categories:
     get:
       tags:
-        - products
-      summary: Busca todas as categorias
+        - categories
+      summary: Search for all available categories
       responses:
         '200':
           description: Success
@@ -58,10 +58,10 @@ paths:
   /api/admin/categories:
     post:
       tags:
-        - products
+        - categories
       summary: >-
-        Adiciona uma nova categoria a lista. Você deve estar logado como
-        administrador para funcionamento
+        Add a new category to the list. You need to be logged as an adminstrator
+        to use this.
       responses:
         '201':
           description: Created
@@ -87,15 +87,15 @@ paths:
     parameters:
       - name: id
         in: path
-        description: Identificador unico
+        description: Unique identifier
         required: true
         example: 63caa785ae701b25441ff0be
         schema:
           type: string
     get:
       tags:
-        - products
-      summary: Busca por uma categoria a partir de seu identificador
+        - categories
+      summary: Search for category by ID
       responses:
         '200':
           description: Success
@@ -110,6 +110,88 @@ paths:
                     type: string
                   status:
                     type: string
+        '404':
+          description: Not Found
+          content:
+            aplication/json:
+              example: Category Not Found
+        '500':
+          description: Internal Server Error
+  /api/admin/categories/{id}:
+    parameters:
+      - name: id
+        in: path
+        description: Unique identifier
+        required: true
+        example: 63caa785ae701b25441ff0be
+        schema:
+          type: string
+    post:
+      tags:
+        - categories
+      summary: >-
+        Change category by ID. You need to be logged as an adminstrator to use
+        this.
+      responses:
+        '202':
+          description: Accepted
+          content:
+            aplication/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  status:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            aplication/json:
+              example: Category Not Found
+        '500':
+          description: Internal Server Error
+    patch:
+      tags:
+        - categories
+      summary: >-
+        Change category status by ID. You need to be logged as an adminstrator
+        to use this.
+      responses:
+        '202':
+          description: Accepted
+          content:
+            aplication/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  status:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            aplication/json:
+              example: Category Not Found
+        '500':
+          description: Internal Server Error
+    delete:
+      tags:
+        - categories
+      summary: >-
+        Delete category by ID. You need to be logged as an adminstrator to use
+        this.
+      responses:
+        '200':
+          description: Seccess
+          content:
+            aplication/json:
+              example: Category deleted
         '404':
           description: Not Found
           content:
