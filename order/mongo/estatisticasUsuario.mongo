@@ -1,4 +1,4 @@
-use ecomm_order
+use ecomm-order
 
 db.orders.aggregate([
   { $match: { user_id: 0001 } },
