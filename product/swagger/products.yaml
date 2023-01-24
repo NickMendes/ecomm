@@ -12,11 +12,18 @@ info:
     url: http://www.alura.com
 components:
   schemas:
-    category:
+    category-response:
       type: object
       properties: 
         _id:
           type: string
+        name:
+          type: string
+        status:
+          type: string
+    category-insert:
+      type: object
+      properties:
         name:
           type: string
         status:
@@ -72,7 +79,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/category'
+                  $ref: '#/components/schemas/category-response'
         404:
           description: Not Found
           content:
@@ -99,7 +106,7 @@ paths:
           content: 
             aplication/json:
               schema: 
-                $ref: '#/components/schemas/category'
+                $ref: '#/components/schemas/category-response'
         404:
           description: Not Found
           content: 
@@ -118,12 +125,7 @@ paths:
           content: 
             aplication/json:
               schema: 
-                type: object
-                properties:
-                  name:
-                    type: string
-                  status:
-                    type: string
+                $ref: '#/components/schemas/category-insert'
         401:
           description: Unauthorized
           content: 
@@ -150,7 +152,7 @@ paths:
           content:
             aplication/json:
               schema: 
-                $ref: '#/components/schemas/category'
+                $ref: '#/components/schemas/category-insert'
         401:
           description: Unauthorized
           content: 
@@ -173,7 +175,7 @@ paths:
           content:
             aplication/json:
               schema: 
-                $ref: "#/components/schemas/category"
+                $ref: '#/components/schemas/category-response'
         401:
           description: Unauthorized
           content: 
