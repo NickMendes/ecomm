@@ -56,8 +56,8 @@ components:
         category_id:
           type: integer
 servers:
-- url: https://6096015d116f3f00174b29ba.mockapi.io/
-  description: Server avulso que provavelmente não funciona para fazer o YML corretamente. Irei mudar no futuro próximo.
+- url:
+  description: Product Server - XD
 paths:
   /api/categories:
     get:
@@ -140,7 +140,7 @@ paths:
       example: 63caa785ae701b25441ff0be
       schema: 
         type: string
-    post:
+    put:
       tags:
       - categories
       summary: Change category by ID. You need to be logged as an adminstrator to use this.
@@ -292,7 +292,7 @@ paths:
       example: 63caa785ae701b25441ff0be
       schema: 
         type: string
-    post:
+    put:
       tags:
       - products
       summary: Change all product information by ID. You need to be logged as an adminstrator to use this.
