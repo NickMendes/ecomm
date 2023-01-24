@@ -15,7 +15,7 @@ components:
     category:
       type: object
       properties: 
-        id:
+        _id:
           type: string
         name:
           type: string
@@ -24,7 +24,7 @@ components:
     product-response:
       type: object
       properties:
-        id:
+        _id:
           type: string
         name:
           type: string
