@@ -77,6 +77,81 @@ components:
         create_date:
           type: string
           format: date
+    order-insert:
+      type: object
+      properties:
+        user_id:
+          type: string
+        delivery_address:
+          type: object
+          properties: 
+            cep:
+              type: integer
+            street:
+              type: string
+            number:
+              type: integer
+            complement:
+              type: string
+            city:
+              type: string
+            state:
+              type: string
+        sale:
+          type: array
+          items:
+            type: object
+            properties: 
+              product_id:
+                type: string
+              product_qty:
+                type: integer
+              descount:
+                type: number
+                format: float
+              product_unit_price:
+                type: number
+                format: float
+    order-response:
+      type: object
+      properties:
+        _id:
+          type: string
+        user_id:
+          type: string
+        delivery_address:
+          type: object
+          properties: 
+            cep:
+              type: integer
+            street:
+              type: string
+            number:
+              type: integer
+            complement:
+              type: string
+            city:
+              type: string
+            state:
+              type: string
+        sale:
+          type: array
+          items:
+            type: object
+            properties: 
+              product_id:
+                type: string
+              product_qty:
+                type: integer
+              descount:
+                type: number
+                format: float
+              product_unit_price:
+                type: number
+                format: float
+        sale_date:
+          type: string
+          format: date
 servers:
 - url: 
   description: User Server - XD
@@ -242,5 +317,168 @@ paths:
           content: 
             aplication/json:
               example: User Not Found
+        500:
+          description: Internal Server Error
+  /api/orders:
+    get:
+      tags:
+      - Order
+      summary: Search for all available Orders.
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/order-response'
+        404:
+          description: Not Found
+          content:
+            aplication/json:
+              example: Not Found
+        500:
+          description: Internal Server Error
+  /api/orders/{id}:
+    parameters: 
+    - in: path
+      name: id
+      description: Unique identifier
+      required: true
+      example: 63caa785ae701b25441ff0be
+      schema: 
+        type: string
+    get:
+      tags:
+      - Order
+      summary: Search for an especific order by ID.
+      responses: 
+        200:
+          description: Success
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/order-response'
+        404:
+          description: Not Found
+          content: 
+            aplication/json:
+              example: Not Found
+        500:
+          description: Internal Server Error
+  /api/admin/order:
+    post:
+      tags:
+      - Order
+      summary: Add a new order to the list. You need to be logged as an adminstrator to use this.
+      requestBody:
+        required: true
+        content:
+          aplication/json:
+            schema:
+              $ref: '#/components/schemas/order-insert'
+      responses: 
+        201:
+          description: Created
+          content: 
+            aplication/json:
+              schema: 
+                $ref: '#/components/schemas/order-response'
+        401:
+          description: Unauthorized
+          content: 
+            aplication/json:
+              example: User unathorized, please check your credentials
+        500:
+          description: Internal Server Error
+  /api/admin/orders/{id}:
+    parameters: 
+    - in: path
+      name: id
+      description: Unique identifier
+      required: true
+      example: 63caa785ae701b25441ff0be
+      schema: 
+        type: string
+    put:
+      tags:
+      - Order
+      summary: Change all order information by ID. You need to be logged as an adminstrator to use this.
+      requestBody:
+        required: true
+        content:
+          aplication/json:
+            schema:
+              $ref: '#/components/schemas/order-insert'
+      responses: 
+        202:
+          description: Accepted
+          content: 
+            aplicativo/json:
+              schema: 
+                $ref: '#/components/schemas/order-response'
+        401:
+          description: Unauthorized
+          content: 
+            aplication/json:
+              example: User unathorized, please check your credentials
+        404:
+          description: Not Found
+          content: 
+            aplication/json:
+              schema: 
+                example: Order Not Found
+        500:
+          description: Internal Server Error
+    patch:
+      tags:
+      - Order
+      summary: Change a order information by ID. You need to be logged as an adminstrator to use this.
+      requestBody:
+        required: true
+        content:
+          aplication/json:
+            schema:
+              type: object
+      responses: 
+        202:
+          description: Accepted
+          content:
+            aplication/json:
+              schema: 
+                $ref: '#/components/schemas/order-response'
+        401:
+          description: Unauthorized
+          content: 
+            aplication/json:
+              example: User unathorized, please check your credentials
+        404:
+          description: Not Found
+          content: 
+            aplication/json:
+              example: Order Not Found
+        500:
+          description: Internal Server Error
+    delete:
+      tags:
+      - Order
+      summary: Delete a order by ID. You need to be logged as an adminstrator to use this.
+      responses: 
+        200:
+          description: Success
+          content:
+            aplication/json:
+              example: Order deleted
+        401:
+          description: Unauthorized
+          content: 
+            aplication/json:
+              example: User unathorized, please check your credentials
+        404:
+          description: Not Found
+          content: 
+            aplication/json:
+              example: Order Not Found
         500:
           description: Internal Server Error
