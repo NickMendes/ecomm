@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.0.3
 info:
   description: Semana 5 - Treinamento da PagoNxt com a Alura sobre HTTP e Swagger.
   version: 0.1.0
@@ -118,7 +118,12 @@ paths:
           content: 
             aplication/json:
               schema: 
-                $ref: '#/components/schemas/category'
+                type: object
+                properties:
+                  name:
+                    type: string
+                  status:
+                    type: string
         401:
           description: Unauthorized
           content: 
