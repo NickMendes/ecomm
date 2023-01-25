@@ -2,7 +2,7 @@ openapi: 3.0.1
 info:
   description: Semana 5 - Treinamento da PagoNxt com a Alura sobre HTTP e Swagger.
   version: 0.1.0
-  title: Ecomm Project
+  title: Ecomm Project - Orders API
   termsOfService: http://swagger.io/terms/
   contact:
     name: Marina
@@ -108,10 +108,10 @@ components:
                 type: integer
               descount:
                 type: number
-                format: float
+                format: double
               product_unit_price:
                 type: number
-                format: float
+                format: double
     order-response:
       type: object
       properties:
@@ -145,10 +145,10 @@ components:
                 type: integer
               descount:
                 type: number
-                format: float
+                format: double
               product_unit_price:
                 type: number
-                format: float
+                format: double
         sale_date:
           type: string
           format: date

@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   description: Semana 5 - Treinamento da PagoNxt com a Alura sobre HTTP e Swagger.
   version: 0.1.0
-  title: Ecomm Project
+  title: Ecomm Project - Products API
   termsOfService: http://swagger.io/terms/
   contact:
     name: Marina
@@ -21,6 +21,7 @@ components:
           type: string
         status:
           type: string
+          enum: [Ativa, Inativa]
     category-insert:
       type: object
       properties:
@@ -28,6 +29,7 @@ components:
           type: string
         status:
           type: string
+          example: Ativa
     product-response:
       type: object
       properties:
@@ -41,7 +43,7 @@ components:
           type: string
         unit_price:
           type: number
-          format: float
+          format: double
         storage_qty:
           type: integer
         category_id:
@@ -57,7 +59,7 @@ components:
           type: string
         unit_price:
           type: number
-          format: float
+          format: double
         storage_qty:
           type: integer
         category_id:
@@ -69,7 +71,7 @@ paths:
   /api/categories:
     get:
       tags:
-      - categories
+      - Categories
       summary: Search for all available categories
       responses:
         200:
@@ -98,7 +100,7 @@ paths:
         type: string 
     get:
       tags:
-      - categories
+      - Categories
       summary: Search for category by ID
       responses:
         200:
@@ -117,7 +119,7 @@ paths:
   /api/admin/categories:
     post:
       tags:
-      - categories
+      - Categories
       summary: Add a new category to the list. You need to be logged as an adminstrator to use this.
       responses:
         201:
@@ -144,7 +146,7 @@ paths:
         type: string
     put:
       tags:
-      - categories
+      - Categories
       summary: Change category by ID. You need to be logged as an adminstrator to use this.
       responses: 
         202:
@@ -167,7 +169,7 @@ paths:
           description: Internal Server Error
     patch:
       tags:
-      - categories
+      - Categories
       summary: Change category status by ID. You need to be logged as an adminstrator to use this.
       responses: 
         202:
@@ -190,7 +192,7 @@ paths:
           description: Internal Server Error
     delete:
       tags:
-      - categories
+      - Categories
       summary: Delete category by ID. You need to be logged as an adminstrator to use this.
       responses: 
         200:
@@ -213,7 +215,7 @@ paths:
   /api/products:
     get:
       tags:
-      - products
+      - Products
       summary: Search for all available products.
       responses: 
         200:
@@ -242,7 +244,7 @@ paths:
         type: string 
     get:
       tags:
-      - products
+      - Products
       summary: Search for product by ID
       responses:
         200:
@@ -261,7 +263,7 @@ paths:
   /api/admin/products:
     post:
       tags:
-      - products
+      - Products
       summary: Add a new product to the list. You need to be logged as an adminstrator to use this.
       requestBody:
         required: true
@@ -296,7 +298,7 @@ paths:
         type: string
     put:
       tags:
-      - products
+      - Products
       summary: Change all product information by ID. You need to be logged as an adminstrator to use this.
       requestBody:
         required: true
@@ -325,7 +327,7 @@ paths:
           description: Internal Server Error
     patch:
       tags:
-      - products
+      - Products
       summary: Change a product information by ID. You need to be logged as an adminstrator to use this.
       requestBody:
         required: true
@@ -354,7 +356,7 @@ paths:
           description: Internal Server Error
     delete:
       tags:
-      - products
+      - Products
       summary: Delete product by ID. You need to be logged as an adminstrator to use this.
       responses: 
         200:
@@ -372,5 +374,99 @@ paths:
           content: 
             aplication/json:
               example: Product Not Found
+        500:
+          description: Internal Server Error
+  /api/products?max_value=#&min_value=#:
+    parameters: 
+    - name: max_value
+      in: query
+      description: Maximum value price of Product
+      required: true
+      example: 100
+      schema: 
+        type: integer
+    - name: min_value
+      in: query
+      description: Minimum value price of Product
+      required: true
+      example: 20
+      schema: 
+        type: integer
+    get:
+      tags:
+      - Products
+      summary: Search for products in an especific price range.
+      responses: 
+        200:
+          description: Success
+          content: 
+            aplication/json:
+              schema: 
+                type: array
+                items:
+                  $ref: '#/components/schemas/product-response'
+        404:
+          description: Not Found
+          content:
+            aplication/json:
+              example: Not Found
+        500:
+          description: Internal Server Error
+  /api/products/{category}:
+    parameters: 
+    - name: category
+      in: path
+      description: Category of products you want to search
+      required: true
+      example: Esporte
+      schema: 
+        type: string
+    get:
+      tags:
+      - Products
+      summary: Search for products of an especific category
+      responses:
+        200:
+          description: Success
+          content: 
+            aplication/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/product-response'
+        404:
+          description: Not Found
+          content: 
+            aplication/json:
+              example: Category Not Found
+        500:
+          description: Internal Server Error
+  /api/products?storage_qty=#:
+    parameters: 
+    - name: storage_qty
+      in: query
+      description: Minimum quantity of items on storage
+      required: true
+      example: 100
+      schema: 
+        type: integer
+    get:
+      tags:
+      - Products
+      summary: Search for products with an especific quantity on storage.
+      responses: 
+        200:
+          description: Success
+          content: 
+            aplication/json:
+              schema: 
+                type: array
+                items:
+                  $ref: '#/components/schemas/product-response'
+        404:
+          description: Not Found
+          content:
+            aplication/json:
+              example: Not Found
         500:
           description: Internal Server Error
