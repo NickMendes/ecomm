@@ -40,7 +40,7 @@ components:
                 type: string
               product_qty:
                 type: integer
-              descount:
+              discount:
                 type: number
                 format: double
               product_unit_price:
@@ -77,7 +77,7 @@ components:
                 type: string
               product_qty:
                 type: integer
-              descount:
+              discount:
                 type: number
                 format: double
               product_unit_price:
