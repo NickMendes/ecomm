@@ -6,3 +6,6 @@ services:
   account:
     build: ./account
     container_name: ecomm-account
+  order:
+    build: ./order
+    container_name: ecomm-order
