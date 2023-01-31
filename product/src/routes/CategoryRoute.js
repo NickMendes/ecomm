@@ -10,4 +10,4 @@ router
   .put('/categories/:id', CategoryController.putCategory)
   .delete('/categories/:id', CategoryController.deleteCategory)
 
-export default router;   
+export default router;

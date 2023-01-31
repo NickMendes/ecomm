@@ -1,32 +1,34 @@
-import category from "../models/CagetogyModel.js";
+import categoryModel from "../models/CagetogyModel.js";
 
-class CateogryController {
+class CategoryController {
   static getAllCategories = (_req, res) => {
-    category.find((err, category) => {
-      res.status(200).json(category)
+    categoryModel.find((err, category) => {
+      res.status(200).json(category);
     });
   };
 
   static getCategoryById = (req, res) => {
     const id = req.params.id;
 
-    category.findById(id, (err, category) => {
+    categoryModel.findById(id, (err, category) => {
       if(err) {
-        res.status(400).send({ message: `${err.message} - Category ID not identified` })
+        res.status(400).send({ message: err.message });
+        console.log("error", category);
       } else {
         res.status(200).send(category);
+        console.log("correto", category);
       }
     });
   };
 
   static postCategory = (req, res) => {
-    let category = new category(req.body);
+    let categoryModel = new categoryModel(req.body);
 
-    category.save((err) => {
+    categoryModel.create((err) => {
       if(err) {
-        res.status(500).send({ essage: `${err.message} - Fail to add Category` })
+        res.status(500).send({ essage: err.message });
       } else {
-        res.status(201).send(category.toJSON())
+        res.status(201).send(categoryModel.toJSON());
       }
     });
   };
@@ -34,11 +36,11 @@ class CateogryController {
   static putCategory = (req, res) => {
     const id = req.params.id;
 
-    category.findByIdAndUpdate(id, { $set: req.body }, (err) => {
+    categoryModel.findByIdAndUpdate(id, { $set: req.body }, (err) => {
       if(!err) {
-        res.status(200).send({ message: 'Category updated success' })
+        res.status(200).send({ message: 'Category updated success' });
       } else {
-        res.status(500).send({ message: err.message })
+        res.status(500).send({ message: err.message });
       }
     });
   };
@@ -46,15 +48,15 @@ class CateogryController {
   static deleteCategory = (req, res) => {
     const id = req.params.id;
 
-    category.findByIdAndDelete(id, (err) => {
+    categoryModel.findByIdAndDelete(id, (err) => {
       if(!err){
-        res.status(200).send({ message: 'Category deleted success' })
+        res.status(200).send({ message: 'Category deleted success' });
       } else {
-        res.status(500).send({ message: err.message })
+        res.status(500).send({ message: err.message });
       }
     });
   };
 
 }
 
-export default CateogryController;
+export default CategoryController;
