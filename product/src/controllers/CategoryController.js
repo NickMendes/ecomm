@@ -22,13 +22,13 @@ class CategoryController {
   };
 
   static postCategory = (req, res) => {
-    let categoryModel = new categoryModel(req.body);
+    let category = new categoryModel(req.body);
 
-    categoryModel.create((err) => {
+    category.save((err) => {
       if(err) {
         res.status(500).send({ essage: err.message });
       } else {
-        res.status(201).send(categoryModel.toJSON());
+        res.status(201).send(category.toJSON());
       }
     });
   };

@@ -24,13 +24,13 @@ class UserController {
   };
 
   static postUser = (req, res) => {
-    let users = new users(req.body);
+    let user = new users(req.body);
 
-    users.create((err) => {
+    user.save((err) => {
       if(err) {
         res.status(500).send({ message: err.message });
       } else {
-        res.status(201).send(users.toJSON());
+        res.status(201).send(user.toJSON());
       }
     });
   };

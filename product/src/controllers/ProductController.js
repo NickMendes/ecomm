@@ -13,7 +13,7 @@ class ProductController {
     const id = req.params.id;
 
     products.findById(id)
-      .populate('caterogy_id') 
+      .populate('category_id') 
       .exec((err, product) => {
         if(err) {
           res.status(400).send({ message: err.message });
@@ -24,13 +24,13 @@ class ProductController {
   };
 
   static postProduct = (req, res) => {
-    let products = new products(req.body);
+    let product = new products(req.body);
 
-    products.create((err) => {
+    product.save((err) => {
       if(err) {
         res.status(500).send({ message: err.message });
       } else {
-        res.status(201).json(products.toJSON());
+        res.status(201).json(product.toJSON());
       }
     });
   };
