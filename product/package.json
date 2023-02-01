@@ -1,7 +1,7 @@
 {
   "name": "product",
   "version": "1.0.0",
-  "description": "semana 2 - nxt",
+  "description": "projects ecomm - Alura/PagoNxt",
   "main": "server.js",
   "type": "module",
   "scripts": {
