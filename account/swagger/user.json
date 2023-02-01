@@ -1,0 +1,391 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "description": "Semana 5 - Treinamento da PagoNxt com a Alura sobre HTTP e Swagger.",
+    "version": "0.1.0",
+    "title": "Ecomm Project - User API",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "name": "Marina",
+      "email": "marina.mendes@pagonxt.com"
+    },
+    "license": {
+      "name": "Licença",
+      "url": "http://www.alura.com"
+    }
+  },
+  "components": {
+    "schemas": {
+      "user-insert": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "cpf": {
+            "type": "integer"
+          },
+          "phones": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "address": {
+            "type": "object",
+            "properties": {
+              "cep": {
+                "type": "integer"
+              },
+              "street": {
+                "type": "string"
+              },
+              "number": {
+                "type": "integer"
+              },
+              "complement": {
+                "type": "string"
+              },
+              "city": {
+                "type": "string"
+              },
+              "state": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "user-response": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "cpf": {
+            "type": "integer"
+          },
+          "phones": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "address": {
+            "type": "object",
+            "properties": {
+              "cep": {
+                "type": "integer"
+              },
+              "street": {
+                "type": "string"
+              },
+              "number": {
+                "type": "integer"
+              },
+              "complement": {
+                "type": "string"
+              },
+              "city": {
+                "type": "string"
+              },
+              "state": {
+                "type": "string"
+              }
+            }
+          },
+          "create_date": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": null,
+      "description": "User Server - XD"
+    }
+  ],
+  "paths": {
+    "/api/user": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Search for all available users.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/user-response"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "aplication/json": {
+                "example": "Not Found"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/user/{id}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "description": "Unique identifier",
+          "required": true,
+          "example": "63caa785ae701b25441ff0be",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Search for an especific user by ID.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/user-response"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "aplication/json": {
+                "example": "Not Found"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/admin/user": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Add a new user to the list. You need to be logged as an adminstrator to use this.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "aplication/json": {
+              "schema": {
+                "$ref": "#/components/schemas/user-insert"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/user-response"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "aplication/json": {
+                "example": "User unathorized, please check your credentials"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/admin/user/{id}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "description": "Unique identifier",
+          "required": true,
+          "example": "63caa785ae701b25441ff0be",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Change all user information by ID. You need to be logged as an adminstrator to use this.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "aplication/json": {
+              "schema": {
+                "$ref": "#/components/schemas/user-insert"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Accepted",
+            "content": {
+              "aplicativo/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/user-response"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "aplication/json": {
+                "example": "User unathorized, please check your credentials"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "example": "User Not Found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Change a user information by ID. You need to be logged as an adminstrator to use this.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "aplication/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Accepted",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/user-response"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "aplication/json": {
+                "example": "User unathorized, please check your credentials"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "aplication/json": {
+                "example": "User Not Found"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Delete a user by ID. You need to be logged as an adminstrator to use this.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "aplication/json": {
+                "example": "User deleted"
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "aplication/json": {
+                "example": "User unathorized, please check your credentials"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "aplication/json": {
+                "example": "User Not Found"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  }
+}

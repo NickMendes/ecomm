@@ -1,4 +1,6 @@
 import express from 'express';
+import swaggerUi from 'swagger-ui-express';
+import swaggerDoc from '../swagger/products.json' assert { type: "json" };
 import db from './config/connectionProduct.js';
 import routes from './routes/index.js';
 
@@ -8,6 +10,8 @@ db.once("open", () => {
 })
 
 const app = express();
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
 app.use(express.json())
 
