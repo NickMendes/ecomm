@@ -45,6 +45,23 @@ class CategoryController {
     });
   };
 
+  static patchCategory = (req, res) => {
+    const id = req.params.id;
+    const newStatus = req.body.status;
+
+    if(!newStatus) {
+      res.status(400).send({ message: 'Add an status to the body requirement' })
+    } else {
+      categoryModel.findByIdAndUpdate(id, { $set: { status: newStatus } }, (err) => {
+        if(!err) {
+          res.status(200).send({ message: 'Category updated success' });
+        } else {
+          res.status(500).send({ message: err.message });
+        }
+      });
+    }
+  };
+
   static deleteCategory = (req, res) => {
     const id = req.params.id;
 
