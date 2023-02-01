@@ -11,6 +11,7 @@ info:
     name: Licença
     url: http://www.alura.com
 components:
+  schemas:
     order-insert:
       type: object
       properties:
