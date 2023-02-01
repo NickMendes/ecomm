@@ -26,7 +26,7 @@ class CategoryController {
 
     category.save((err) => {
       if(err) {
-        res.status(500).send({ essage: err.message });
+        res.status(400).send({ message: err.message });
       } else {
         res.status(201).send(category.toJSON());
       }
