@@ -2,9 +2,10 @@
   "name": "order",
   "version": "1.0.0",
   "description": "semana 2 - nxt",
-  "main": "tempCodeRunnerFile.js",
+  "main": "/src/app.js",
   "type": "module",
   "scripts": {
+    "dev": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
