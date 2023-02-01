@@ -6,8 +6,8 @@ const router = express.Router();
 router
   .get('/products', ProductController.getAllProducts)
   .get('/products/:id', ProductController.getProductById)
-  .post('/products', ProductController.createProduct)
-  .put('/products/:id', ProductController.updateProduct)
-  .delete('/products/:id', ProductController.deleteProduct)
+  .post('/admin/products', ProductController.createProduct)
+  .put('/admin/products/:id', ProductController.updateProduct)
+  .delete('/admin/products/:id', ProductController.deleteProduct)
 
 export default router;

@@ -101,12 +101,12 @@
   },
   "servers": [
     {
-      "url": null,
+      "url": "http://localhost:3000/",
       "description": "Product Server - XD"
     }
   ],
   "paths": {
-    "/api/categories": {
+    "/categories": {
       "get": {
         "tags": [
           "Categories"
@@ -140,7 +140,7 @@
         }
       }
     },
-    "/api/categories/{id}": {
+    "/categories/{id}": {
       "parameters": [
         {
           "name": "id",
@@ -183,7 +183,7 @@
         }
       }
     },
-    "/api/admin/categories": {
+    "/admin/categories": {
       "post": {
         "tags": [
           "Categories"
@@ -214,7 +214,7 @@
         }
       }
     },
-    "/api/admin/categories/{id}": {
+    "/admin/categories/{id}": {
       "parameters": [
         {
           "name": "id",
@@ -275,7 +275,16 @@
             "content": {
               "aplication/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/category-response"
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "Ativa",
+                        "Inativa"
+                      ]
+                    }
+                  }
                 }
               }
             }
@@ -337,7 +346,7 @@
         }
       }
     },
-    "/api/products": {
+    "/products": {
       "get": {
         "tags": [
           "Products"
@@ -371,7 +380,7 @@
         }
       }
     },
-    "/api/products/{id}": {
+    "/products/{id}": {
       "parameters": [
         {
           "name": "id",
@@ -414,7 +423,7 @@
         }
       }
     },
-    "/api/admin/products": {
+    "/admin/products": {
       "post": {
         "tags": [
           "Products"
@@ -458,7 +467,7 @@
         }
       }
     },
-    "/api/admin/products/{id}": {
+    "/admin/products/{id}": {
       "parameters": [
         {
           "name": "id",
@@ -522,7 +531,7 @@
         "tags": [
           "Products"
         ],
-        "summary": "Change a product information by ID. You need to be logged as an adminstrator to use this.",
+        "summary": "NOT IMPLEMENTED - Change a product information by ID. You need to be logged as an adminstrator to use this.",
         "requestBody": {
           "required": true,
           "content": {
@@ -601,7 +610,7 @@
         }
       }
     },
-    "/api/products?max_value=#&min_value=#": {
+    "/products?max_value=#&min_value=#": {
       "parameters": [
         {
           "name": "max_value",
@@ -628,7 +637,7 @@
         "tags": [
           "Products"
         ],
-        "summary": "Search for products in an especific price range.",
+        "summary": "NOT IMPLEMENTED - Search for products in an especific price range.",
         "responses": {
           "200": {
             "description": "Success",
@@ -657,7 +666,7 @@
         }
       }
     },
-    "/api/products/{category}": {
+    "/products/{category}": {
       "parameters": [
         {
           "name": "category",
@@ -674,7 +683,7 @@
         "tags": [
           "Products"
         ],
-        "summary": "Search for products of an especific category",
+        "summary": "NOT IMPLEMENTED - Search for products of an especific category",
         "responses": {
           "200": {
             "description": "Success",
@@ -703,7 +712,7 @@
         }
       }
     },
-    "/api/products?storage_qty=#": {
+    "/products?storage_qty=#": {
       "parameters": [
         {
           "name": "storage_qty",
@@ -720,7 +729,7 @@
         "tags": [
           "Products"
         ],
-        "summary": "Search for products with an especific quantity on storage.",
+        "summary": "NOT IMPLEMENTED - Search for products with an especific quantity on storage.",
         "responses": {
           "200": {
             "description": "Success",
