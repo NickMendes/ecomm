@@ -25,7 +25,7 @@ class ProductController {
 
   static postProduct = (req, res) => {
     let product = new products(req.body);
-
+    
     product.save((err) => {
       if(err) {
         res.status(500).send({ message: err.message });
@@ -33,6 +33,7 @@ class ProductController {
         res.status(201).json(product.toJSON());
       }
     });
+
   };
 
   static putProduct = (req, res) => {
