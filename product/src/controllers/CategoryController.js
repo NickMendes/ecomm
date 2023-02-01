@@ -21,7 +21,7 @@ class CategoryController {
     });
   };
 
-  static postCategory = (req, res) => {
+  static createCategory = (req, res) => {
     let category = new categoryModel(req.body);
 
     category.save((err) => {
@@ -33,7 +33,7 @@ class CategoryController {
     });
   };
 
-  static putCategory = (req, res) => {
+  static updateCategory = (req, res) => {
     const id = req.params.id;
 
     categoryModel.findByIdAndUpdate(id, { $set: req.body }, (err) => {
@@ -45,7 +45,7 @@ class CategoryController {
     });
   };
 
-  static patchCategory = (req, res) => {
+  static updateCategoryStatus = (req, res) => {
     const id = req.params.id;
     const newStatus = req.body.status;
 

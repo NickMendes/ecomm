@@ -23,7 +23,7 @@ class UserController {
     });
   };
 
-  static postUser = (req, res) => {
+  static createUser = (req, res) => {
     let user = new users(req.body);
 
     user.save((err) => {
@@ -35,7 +35,7 @@ class UserController {
     });
   };
 
-  static putUser = (req, res) => {
+  static updateUser = (req, res) => {
     const id = req.params.id;
 
     users.findByIdAndUpdate(id, { $set: req.body }, (err) => {

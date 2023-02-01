@@ -23,7 +23,7 @@ class ProductController {
       });
   };
 
-  static postProduct = (req, res) => {
+  static createProduct = (req, res) => {
     let product = new products(req.body);
     
     product.save((err) => {
@@ -36,7 +36,7 @@ class ProductController {
 
   };
 
-  static putProduct = (req, res) => {
+  static updateProduct = (req, res) => {
     const id = req.params.id;
 
     products.findByIdAndUpdate(id, { $set: req.body }, (err) => {
