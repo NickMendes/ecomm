@@ -376,7 +376,7 @@ paths:
               example: Product Not Found
         500:
           description: Internal Server Error
-  /api/products?max_value=#&min_value=#:
+  /api/products:
     parameters: 
     - name: max_value
       in: query
@@ -441,7 +441,7 @@ paths:
               example: Category Not Found
         500:
           description: Internal Server Error
-  /api/products?storage_qty=#:
+  /api/products:
     parameters: 
     - name: storage_qty
       in: query
