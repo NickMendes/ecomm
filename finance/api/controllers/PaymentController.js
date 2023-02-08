@@ -36,7 +36,22 @@ const add = async (req, res) => {
     const { id, status } = await paymentService.add(newPayment);
     
     return res.status(201).set('Location', `/payments/${id}`).json({id, status});
-  }catch (err) {
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ message: err.message });
+  }
+};
+
+const updateStatus = async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+
+  try {
+    const resultUptade = await paymentService.updateStatus(status, id);
+    if (resultUptade[0] === 0) return res.status(400).json({ message: 'Something went wrong'})
+
+    return res.status(201).set('Location', `/payments/${id}`).json({ id, status });
+  } catch (err) {
     console.log(err);
     return res.status(500).json({ message: err.message });
   }
@@ -45,5 +60,6 @@ const add = async (req, res) => {
 module.exports = {
   getAll,
   getById,
-  add
+  add,
+  updateStatus
 }
