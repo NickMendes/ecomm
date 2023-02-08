@@ -22,8 +22,7 @@ module.exports = (sequelize, DataTypes) => {
     card_number: {
       type: DataTypes.STRING,
       validate: {
-        len: [16],
-        isNumeric: true
+        isCreditCard: true
       }
     },
     expiration_date: {
