@@ -29,14 +29,14 @@ module.exports = (sequelize, DataTypes) => {
     expiration_date: {
       type: DataTypes.STRING,
       validate: {
-        is: /([\d]{4}-[\d]{2})/
+        is: /([\d]{4}-(0[1-9]|10|11|12)$)/
       }
     },
     cvv: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       validate: {
-        min: 100,
-        max: 999
+        len: [3],
+        isNumeric: true
       }
     },
     status: {
