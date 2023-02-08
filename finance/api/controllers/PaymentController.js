@@ -1,4 +1,5 @@
 const paymentService = require('../services/PaymentService');
+const helps = require('../helpers/helps');
 
 const getAll = async (_req, res) => {
   try {
@@ -17,7 +18,9 @@ const getById = async (req, res) => {
     const result = await paymentService.getById(id);
     if(!result) return res.status(404).json({ message: 'Payment not found' });
 
-    return res.status(200).json(result);
+    const newResult = helps.omit(result.dataValues, ['cvv']);
+
+    return res.status(200).json(newResult);
   } catch (err) {
     console.log(err);
     return res.status(500).json({ message: err.message });
@@ -26,9 +29,14 @@ const getById = async (req, res) => {
 
 const add = async (req, res) => {
   const newPayment = req.body;
-  
-  const result = await paymentService.add(newPayment);
-  return res.status(201).json(result);
+
+  try {
+    const { id, status } = await paymentService.add(newPayment);
+    return res.status(201).set('Location', `/payments/${id}`).json({id, status});
+  }catch (err) {
+    console.log(err);
+    return res.status(500).json({ message: err.message });
+  }
 };
 
 module.exports = {
