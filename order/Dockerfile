@@ -1,8 +1,10 @@
-FROM node:14-alpine
+FROM node:16-alpine
 
 WORKDIR /node-app/order
 
-COPY . .
+COPY . . ./
+
+EXPOSE 3003
 
 RUN npm install
 
