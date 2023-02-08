@@ -2,57 +2,51 @@ use ecomm-account
 
 db.users.insertMany([
   {
-    _id: 0001,
-    first_name: "Maria",
-    last_name: "Madalena",
-    cpf: 49330014054,
+    name: "Maria",
     email: "maria@exemple.com",
     password: "maria!123",
+    cpf: 49330014054,
     phones: [31999887766, 31999998877],
-    creation_date: new Date("2023-02-16"),
     address: {
-      street: "Rua da Maria",
-      number: "101",
-      complement: "S/N",
       cep: 32100100,
+      street: "Rua da Maria",
+      number: 101,
+      complement: "S/N",
       city: "Belo Horizonte",
       state: "MG"
-    }
-  },
-    {
-    _id: 0002,
-    first_name: "Jose",
-    last_name: "Padilha",
-    cpf: 95810032079,
-    email: "josepd@exemple.com",
-    password: "padinha!123",
-    phones: [11999887766],
-    creation_date: new Date("2023-02-16"),
-    address: {
-      street: "Rua do Jose",
-      number: "102",
-      complement: "apto 02",
-      cep: 04163300,
-      city: "São Paulo",
-      state: "SP"
-    }
+    },
+    creation_date: new Date()
   },
   {
-    _id: 0003,
-    first_name: "Eduardo",
-    last_name: "Corno",
-    cpf: 38668574035,
+    name: "Jose",
+    email: "josepd@exemple.com",
+    password: "padinha!123",
+    cpf: 95810032079,
+    phones: [11999887766],
+    address: {
+      cep: 04163300,
+      street: "Rua do Jose",
+      number: 102,
+      complement: "apto 02",
+      city: "São Paulo",
+      state: "SP"
+    },
+    creation_date: new Date()
+  },
+  {
+    name: "Eduardo",
     email: "dudu@exemple.com",
     password: "soucorno!123",
+    cpf: 38668574035,
     phones: [61999887766, 61999998877],
-    creation_date: new Date("2023-02-16"),
     address: {
-      street: "Rua da Corno",
-      number: "1069",
-      complement: "S/N",
       cep: 76459970,
+      street: "Rua da Corno",
+      number: 1069,
+      complement: "S/N",
       city: "Minaçu",
       state: "GO"
-    }
+    },
+    creation_date: new Date()
   },
 ])

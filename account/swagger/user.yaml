@@ -2,7 +2,7 @@ openapi: 3.0.1
 info:
   description: Semana 5 - Treinamento da PagoNxt com a Alura sobre HTTP e Swagger.
   version: 0.1.0
-  title: Ecomm Project - Orders API
+  title: Ecomm Project - User API
   termsOfService: http://swagger.io/terms/
   contact:
     name: Marina
@@ -12,12 +12,22 @@ info:
     url: http://www.alura.com
 components:
   schemas:
-    order-insert:
+    user-insert:
       type: object
       properties:
-        user_id:
+        name:
           type: string
-        delivery_address:
+        email:
+          type: string
+        password:
+          type: string
+        cpf:
+          type: integer
+        phones:
+          type: array
+          items: 
+            type: integer
+        address:
           type: object
           properties: 
             cep:
@@ -32,29 +42,24 @@ components:
               type: string
             state:
               type: string
-        sale:
-          type: array
-          items:
-            type: object
-            properties: 
-              product_id:
-                type: string
-              product_qty:
-                type: integer
-              discount:
-                type: number
-                format: double
-              product_unit_price:
-                type: number
-                format: double
-    order-response:
+    user-response:
       type: object
       properties:
         _id:
           type: string
-        user_id:
+        name:
           type: string
-        delivery_address:
+        email:
+          type: string
+        password:
+          type: string
+        cpf:
+          type: integer
+        phones:
+          type: array
+          items: 
+            type: integer
+        address:
           type: object
           properties: 
             cep:
@@ -69,33 +74,18 @@ components:
               type: string
             state:
               type: string
-        sale:
-          type: array
-          items:
-            type: object
-            properties: 
-              product_id:
-                type: string
-              product_qty:
-                type: integer
-              discount:
-                type: number
-                format: double
-              product_unit_price:
-                type: number
-                format: double
-        sale_date:
+        create_date:
           type: string
           format: date
 servers:
 - url: 
-  description: Order Server - XD
+  description: User Server - XD
 paths:
-  /api/orders:
+  /api/user:
     get:
       tags:
-      - Order
-      summary: Search for all available Orders.
+      - User
+      summary: Search for all available users.
       responses:
         200:
           description: Success
@@ -104,7 +94,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/order-response'
+                  $ref: '#/components/schemas/user-response'
         404:
           description: Not Found
           content:
@@ -112,7 +102,7 @@ paths:
               example: Not Found
         500:
           description: Internal Server Error
-  /api/orders/{id}:
+  /api/user/{id}:
     parameters: 
     - in: path
       name: id
@@ -123,15 +113,15 @@ paths:
         type: string
     get:
       tags:
-      - Order
-      summary: Search for an especific order by ID.
+      - User
+      summary: Search for an especific user by ID.
       responses: 
         200:
           description: Success
           content:
             aplication/json:
               schema:
-                $ref: '#/components/schemas/order-response'
+                $ref: '#/components/schemas/user-response'
         404:
           description: Not Found
           content: 
@@ -139,24 +129,24 @@ paths:
               example: Not Found
         500:
           description: Internal Server Error
-  /api/admin/order:
+  /api/admin/user:
     post:
       tags:
-      - Order
-      summary: Add a new order to the list. You need to be logged as an adminstrator to use this.
+      - User
+      summary: Add a new user to the list. You need to be logged as an adminstrator to use this.
       requestBody:
         required: true
         content:
           aplication/json:
             schema:
-              $ref: '#/components/schemas/order-insert'
+              $ref: '#/components/schemas/user-insert'
       responses: 
         201:
           description: Created
           content: 
             aplication/json:
               schema: 
-                $ref: '#/components/schemas/order-response'
+                $ref: '#/components/schemas/user-response'
         401:
           description: Unauthorized
           content: 
@@ -164,7 +154,7 @@ paths:
               example: User unathorized, please check your credentials
         500:
           description: Internal Server Error
-  /api/admin/orders/{id}:
+  /api/admin/user/{id}:
     parameters: 
     - in: path
       name: id
@@ -175,21 +165,21 @@ paths:
         type: string
     put:
       tags:
-      - Order
-      summary: Change all order information by ID. You need to be logged as an adminstrator to use this.
+      - User
+      summary: Change all user information by ID. You need to be logged as an adminstrator to use this.
       requestBody:
         required: true
         content:
           aplication/json:
             schema:
-              $ref: '#/components/schemas/order-insert'
+              $ref: '#/components/schemas/user-insert'
       responses: 
         202:
           description: Accepted
           content: 
             aplicativo/json:
               schema: 
-                $ref: '#/components/schemas/order-response'
+                $ref: '#/components/schemas/user-response'
         401:
           description: Unauthorized
           content: 
@@ -200,13 +190,13 @@ paths:
           content: 
             aplication/json:
               schema: 
-                example: Order Not Found
+                example: User Not Found
         500:
           description: Internal Server Error
     patch:
       tags:
-      - Order
-      summary: Change a order information by ID. You need to be logged as an adminstrator to use this.
+      - User
+      summary: Change a user information by ID. You need to be logged as an adminstrator to use this.
       requestBody:
         required: true
         content:
@@ -219,7 +209,7 @@ paths:
           content:
             aplication/json:
               schema: 
-                $ref: '#/components/schemas/order-response'
+                $ref: '#/components/schemas/user-response'
         401:
           description: Unauthorized
           content: 
@@ -229,19 +219,19 @@ paths:
           description: Not Found
           content: 
             aplication/json:
-              example: Order Not Found
+              example: User Not Found
         500:
           description: Internal Server Error
     delete:
       tags:
-      - Order
-      summary: Delete a order by ID. You need to be logged as an adminstrator to use this.
+      - User
+      summary: Delete a user by ID. You need to be logged as an adminstrator to use this.
       responses: 
         200:
           description: Success
           content:
             aplication/json:
-              example: Order deleted
+              example: User deleted
         401:
           description: Unauthorized
           content: 
@@ -251,6 +241,6 @@ paths:
           description: Not Found
           content: 
             aplication/json:
-              example: Order Not Found
+              example: User Not Found
         500:
           description: Internal Server Error

@@ -1,13 +1,31 @@
 {
-    "name": "product",
-    "version": "1.0.0",
-    "description": "",
-    "main": "src/main.js",
-    "scripts": {
-      "start": "node src/main.js",
-      "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "author": "Wanderson Macêdo",
-    "license": "MIT"
+  "name": "product",
+  "version": "1.0.0",
+  "description": "projects ecomm - Alura/PagoNxt",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NickMendes/ecomm.git"
+  },
+  "author": "NickMendes",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NickMendes/ecomm/issues"
+  },
+  "homepage": "https://github.com/NickMendes/ecomm#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^6.2.6",
+    "swagger-ui-express": "^4.6.0"
   }
-
+}
