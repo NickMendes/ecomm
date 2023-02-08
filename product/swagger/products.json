@@ -610,7 +610,7 @@
         }
       }
     },
-    "/products?max_value=#&min_value=#": {
+    "/products/range": {
       "parameters": [
         {
           "name": "max_value",
@@ -712,7 +712,7 @@
         }
       }
     },
-    "/products?storage_qty=#": {
+    "/products/storage": {
       "parameters": [
         {
           "name": "storage_qty",
