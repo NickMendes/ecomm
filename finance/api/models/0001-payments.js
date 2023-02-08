@@ -2,6 +2,11 @@
 
 module.exports = (sequelize, DataTypes) => {
   const Payments = sequelize.define('Payments', {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
     value: {
       type: DataTypes.DECIMAL(10,2),
       validate: {
@@ -11,13 +16,14 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING,
       validate: {
-        is: /a-zA-Z/i
+        len: [5, 40]
       }
     },
     card_number: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       validate: {
-        isCreditCard: true,
+        len: [16],
+        isNumeric: true
       }
     },
     expiration_date: {

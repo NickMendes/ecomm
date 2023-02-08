@@ -19,7 +19,7 @@ module.exports = {
       },
       card_number: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       expiration_date: {
         allowNull: false,
