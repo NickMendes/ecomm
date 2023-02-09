@@ -10,6 +10,7 @@ router.route('/')
 
 router.route('/:id')
   .get(paymentController.getById)
-  .patch(middlewares.validateStatus, paymentController.updateStatus);
+  .patch(middlewares.validateStatus, paymentController.updateStatus)
+  .delete(paymentController.destroy);
 
 module.exports = router;
