@@ -57,9 +57,25 @@ const updateStatus = async (req, res) => {
   }
 };
 
+const destroy = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const result = await paymentService.destroy(id);
+    if (!result) return res.status(400).json({ message: 'Something went wrong' });
+    if (result.notExist) return res.status(404).json({ message: 'Payment does not exists' });
+
+    return res.status(202).json({ message: `Payment id:${id} deleted` });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ message: err.message });
+  }
+};
+
 module.exports = {
   getAll,
   getById,
   add,
-  updateStatus
-}
+  updateStatus,
+  destroy
+};
