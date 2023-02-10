@@ -1,13 +1,5 @@
 version: "3.9"
 services:
-  product:
-    build: ./product
-    container_name: ecomm-product
-  
-  account:
-    build: ./account
-    container_name: ecomm-account
-
   mongo:
     image: mongo:5.0
     volumes:
@@ -30,6 +22,31 @@ services:
       - 3307:3307
     environment:
       MYSQL_ROOT_PASSWORD: secret
+
+  product:
+    build: ./product
+    container_name: ecomm-product
+    depends_on:
+      - mongo
+    ports:
+     - 3001:3001
+  
+  account:
+    build: ./account
+    container_name: ecomm-account
+    depends_on:
+      - mongo
+    ports:
+     - 3002:3002
+
+  finance:
+    build: ./finance
+    container_name: ecomm-finance
+    depends_on:
+      - mysql
+    ports:
+     - 3003:3003
+  
 
 volumes:
   db-mongo-ecomm:
