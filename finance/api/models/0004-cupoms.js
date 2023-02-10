@@ -29,6 +29,9 @@ module.exports = (sequelize, DataTypes) => {
     Cupoms.belongsTo(models.Sales, {
       foreignKey: 'sale_id'
     })
+    Cupoms.belongsTo(models.Payments, {
+      foreignKey: 'payment_id'
+    })
   }
   
   return Cupoms;

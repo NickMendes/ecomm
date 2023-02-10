@@ -1,4 +1,7 @@
 const paymentService = require('../services/PaymentService');
+const addressService = require('../services/AddressService');
+const saleService = require('../services/SaleService');
+const cupomService = require('../services/CupomService');
 const helps = require('../helpers/helps');
 
 const getAll = async (_req, res) => {
@@ -44,11 +47,26 @@ const add = async (req, res) => {
 
 const updateStatus = async (req, res) => {
   const { id } = req.params;
-  const { status } = req.body;
+  const { status, address, cpf, sale } = req.body;
 
   try {
     const resultUptade = await paymentService.updateStatus(status, id);
-    if (resultUptade[0] === 0) return res.status(400).json({ message: 'Something went wrong'})
+    if (resultUptade[0] === 0) return res.status(400).json({ message: 'Something went wrong' });
+
+    const paymentResult = await paymentService.getById(id);
+    console.log('1---------', paymentResult);
+  
+    const addressResult = await addressService.add({ ...address });
+    const addressID = addressResult.id;
+
+    const saleResult = await saleService.add({ ...sale, total_price: paymentResult.dataValues.value });
+    const saleID = saleResult.id;
+    
+    if(!saleResult || !addressResult) return res.status(400).json({ message: 'Something went wrong' });
+
+    const cupomResult = await cupomService.add({ name: paymentResult.name, cpf, address_id: addressID, sale_id: saleID, payment_id: id });
+
+    if(!cupomResult) return res.status(400).json({ message: 'Something went wrong' });
 
     return res.status(201).set('Location', `/payments/${id}`).json({ id, status });
   } catch (err) {

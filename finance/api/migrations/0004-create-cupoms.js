@@ -27,6 +27,11 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: { model: 'Sales', key: 'id' }
       },
+      payment_id: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: { model: 'Payments', key: 'id' }
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATEONLY
