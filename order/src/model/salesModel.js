@@ -18,7 +18,8 @@ const salesSchema = new mongoose.Schema(
     delivery_address: {
       cep: { type: String, required: true },
       street: { type: String, required: true },
-      number: { type: String, required: true }
+      number: { type: String, required: true },
+      complement: { type: String, required: true }
     },
     total_price: { type: Schema.Types.Decimal128, required: true },
     sale_date: { type: Date, default: Date.now }
