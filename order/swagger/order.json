@@ -1,0 +1,396 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "description": "Semana 5 - Treinamento da PagoNxt com a Alura sobre HTTP e Swagger.",
+    "version": "0.1.0",
+    "title": "Ecomm Project - Orders API",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "name": "Marina",
+      "email": "marina.mendes@pagonxt.com"
+    },
+    "license": {
+      "name": "Licença",
+      "url": "http://www.alura.com"
+    }
+  },
+  "components": {
+    "schemas": {
+      "order-insert": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "delivery_address": {
+            "type": "object",
+            "properties": {
+              "cep": {
+                "type": "integer"
+              },
+              "street": {
+                "type": "string"
+              },
+              "number": {
+                "type": "integer"
+              },
+              "complement": {
+                "type": "string"
+              }
+            }
+          },
+          "order": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "product_name": {
+                  "type": "string"
+                },
+                "product_price": {
+                  "type": "number",
+                  "fortmat": "double"
+                },
+                "product_qty": {
+                  "type": "integer"
+                },
+                "discount": {
+                  "type": "number",
+                  "format": "double"
+                }
+              }
+            }
+          }
+        }
+      },
+      "order-response": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "delivery_address": {
+            "type": "object",
+            "properties": {
+              "cep": {
+                "type": "integer"
+              },
+              "street": {
+                "type": "string"
+              },
+              "number": {
+                "type": "integer"
+              },
+              "complement": {
+                "type": "string"
+              }
+            }
+          },
+          "order": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "product_name": {
+                  "type": "string"
+                },
+                "product_price": {
+                  "type": "number",
+                  "fortmat": "double"
+                },
+                "product_qty": {
+                  "type": "integer"
+                },
+                "discount": {
+                  "type": "number"
+                }
+              }
+            }
+          },
+          "total_price": {
+            "type": "number",
+            "format": "double"
+          },
+          "sale_date": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": null,
+      "description": "Order Server - XD"
+    }
+  ],
+  "paths": {
+    "/orders": {
+      "get": {
+        "tags": [
+          "Order"
+        ],
+        "summary": "Search for all available Orders.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/order-response"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "aplication/json": {
+                "example": "Not Found"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/orders/{id}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "description": "Unique identifier",
+          "required": true,
+          "example": "63caa785ae701b25441ff0be",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "tags": [
+          "Order"
+        ],
+        "summary": "Search for an especific order by ID.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/order-response"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "aplication/json": {
+                "example": "Not Found"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/admin/order": {
+      "post": {
+        "tags": [
+          "Order"
+        ],
+        "summary": "Add a new order to the list. You need to be logged as an adminstrator to use this.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "aplication/json": {
+              "schema": {
+                "$ref": "#/components/schemas/order-insert"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/order-response"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "aplication/json": {
+                "example": "User unathorized, please check your credentials"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/admin/orders/{id}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "description": "Unique identifier",
+          "required": true,
+          "example": "63caa785ae701b25441ff0be",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "put": {
+        "tags": [
+          "Order"
+        ],
+        "summary": "Change all order information by ID. You need to be logged as an adminstrator to use this.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "aplication/json": {
+              "schema": {
+                "$ref": "#/components/schemas/order-insert"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Accepted",
+            "content": {
+              "aplicativo/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/order-response"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "aplication/json": {
+                "example": "User unathorized, please check your credentials"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "example": "Order Not Found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Order"
+        ],
+        "summary": "Change a order information by ID. You need to be logged as an adminstrator to use this.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "aplication/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Accepted",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/order-response"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "aplication/json": {
+                "example": "User unathorized, please check your credentials"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "aplication/json": {
+                "example": "Order Not Found"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Order"
+        ],
+        "summary": "Delete a order by ID. You need to be logged as an adminstrator to use this.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "aplication/json": {
+                "example": "Order deleted"
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "aplication/json": {
+                "example": "User unathorized, please check your credentials"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "aplication/json": {
+                "example": "Order Not Found"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  }
+}
