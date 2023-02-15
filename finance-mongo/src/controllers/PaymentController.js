@@ -3,16 +3,18 @@ import paymentModel from '../models/PaymentModel.js';
 class PaymentController {
   static getAllPayments = (_req, res) => {
     paymentModel.find((err, payment) => {
-      res.status(200).json(payment);
+      if(!err) {
+        res.status(200).json(payment);
+      } else {
+        res.status(500).send({ message: err.message });
+      }
     });
   };
 
   static getPaymentById = (req, res) => {
     const id = req.params.id;
 
-    paymentModel.findById(id)
-      .populate('category_id') 
-      .exec((err, payment) => {
+    paymentModel.findById(id, (err, payment) => {
         if(err) {
           res.status(400).send({ message: err.message });
         } else {
