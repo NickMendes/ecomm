@@ -1,0 +1,577 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "description": "Semana 7 - Treinamento da PagoNxt com a Alura, payments integration",
+    "version": "0.1.0",
+    "title": "Ecomm Project - Finance API",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "name": "Marina",
+      "email": "marina.mendes@pagonxt.com"
+    },
+    "license": {
+      "name": "Licença",
+      "url": "http://www.alura.com"
+    }
+  },
+  "components": {
+    "schemas": {
+      "payment-response": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "value": {
+            "type": "number",
+            "format": "double"
+          },
+          "name": {
+            "type": "string"
+          },
+          "card_number": {
+            "type": "string"
+          },
+          "expiration_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "cvv": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "CRIADO",
+              "CANCELADO",
+              "CONFIRMADO"
+            ]
+          }
+        }
+      },
+      "payment-insert": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "number",
+            "format": "double"
+          },
+          "name": {
+            "type": "string"
+          },
+          "card_number": {
+            "type": "string"
+          },
+          "expiration_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "cvv": {
+            "type": "string"
+          }
+        }
+      },
+      "cupom-respose": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "cpf": {
+            "type": "string"
+          },
+          "payment_id": {
+            "type": "string"
+          }
+        }
+      },
+      "cupom-insert": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "cpf": {
+            "type": "string"
+          },
+          "payment_id": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": null,
+      "description": "Finance Server - XD"
+    }
+  ],
+  "paths": {
+    "/payment": {
+      "get": {
+        "tags": [
+          "Payments"
+        ],
+        "summary": "Search for all available payments",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/payment-response"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "aplication/json": {
+                "example": "Not Found"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/payment/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "Unique identifier",
+          "required": true,
+          "example": "63caa785ae701b25441ff0be",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "tags": [
+          "Payments"
+        ],
+        "summary": "Search for payment by ID",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/payment-response"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "aplication/json": {
+                "example": "Category Not Found"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/admin/payment": {
+      "post": {
+        "tags": [
+          "Payments"
+        ],
+        "summary": "Add a new payment to the list. You need to be logged as an adminstrator to use this.",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/payment-insert"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "aplication/json": {
+                "example": "User unathorized, please check your credentials"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/admin/payment/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "Unique identifier",
+          "required": true,
+          "example": "63caa785ae701b25441ff0be",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "put": {
+        "tags": [
+          "Payments"
+        ],
+        "summary": "Change payment by ID. You need to be logged as an adminstrator to use this.",
+        "responses": {
+          "202": {
+            "description": "Accepted",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/payment-insert"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "aplication/json": {
+                "example": "User unathorized, please check your credentials"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "aplication/json": {
+                "example": "Category Not Found"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Payments"
+        ],
+        "summary": "Change payment status by ID. You need to be logged as an adminstrator to use this.",
+        "responses": {
+          "202": {
+            "description": "Accepted",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/payment-response"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "aplication/json": {
+                "example": "User unathorized, please check your credentials"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "aplication/json": {
+                "example": "Payment Not Found"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Payments"
+        ],
+        "summary": "Delete payment by ID. You need to be logged as an adminstrator to use this.",
+        "responses": {
+          "200": {
+            "description": "Seccess",
+            "content": {
+              "aplication/json": {
+                "example": "Payment deleted"
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "aplication/json": {
+                "example": "User unathorized, please check your credentials"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "aplication/json": {
+                "example": "Payment Not Found"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/cupom": {
+      "get": {
+        "tags": [
+          "Cupoms"
+        ],
+        "summary": "Search for all available cupoms",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/cupom-respose"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "aplication/json": {
+                "example": "Not Found"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/cupom/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "Unique identifier",
+          "required": true,
+          "example": "63caa785ae701b25441ff0be",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "tags": [
+          "Cupoms"
+        ],
+        "summary": "Search for cupom by ID",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/cupom-respose"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "aplication/json": {
+                "example": "Category Not Found"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/admin/cupom": {
+      "post": {
+        "tags": [
+          "Cupoms"
+        ],
+        "summary": "Add a new cupom to the list. You need to be logged as an adminstrator to use this.",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/cupom-insert"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "aplication/json": {
+                "example": "User unathorized, please check your credentials"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/admin/cupom/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "Unique identifier",
+          "required": true,
+          "example": "63caa785ae701b25441ff0be",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "put": {
+        "tags": [
+          "Cupoms"
+        ],
+        "summary": "Change cupom by ID. You need to be logged as an adminstrator to use this.",
+        "responses": {
+          "202": {
+            "description": "Accepted",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/cupom-insert"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "aplication/json": {
+                "example": "User unathorized, please check your credentials"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "aplication/json": {
+                "example": "Category Not Found"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Cupoms"
+        ],
+        "summary": "Change cupom status by ID. You need to be logged as an adminstrator to use this.",
+        "responses": {
+          "202": {
+            "description": "Accepted",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/cupom-respose"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "aplication/json": {
+                "example": "User unathorized, please check your credentials"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "aplication/json": {
+                "example": "Payment Not Found"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Cupoms"
+        ],
+        "summary": "Delete cupom by ID. You need to be logged as an adminstrator to use this.",
+        "responses": {
+          "200": {
+            "description": "Seccess",
+            "content": {
+              "aplication/json": {
+                "example": "Cupom deleted"
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "aplication/json": {
+                "example": "User unathorized, please check your credentials"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "aplication/json": {
+                "example": "Payment Not Found"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  }
+}
