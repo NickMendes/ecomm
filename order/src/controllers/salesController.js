@@ -23,7 +23,6 @@ class SaleController {
     });
   };
 
-  // Esta gerando um _id para a ordem que tem dentro do sale não sei porque, mas não atrapalha meu código. Olhar depois como tira isso
   static createSale = (req, res) => {
     const saleInfo = req.body;
     const total_price = saleInfo.order.reduce((acc, cur) =>  {
