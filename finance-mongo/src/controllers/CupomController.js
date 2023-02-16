@@ -1,31 +1,28 @@
 import cupomModel from '../models/CupomModel.js';
 import axios from 'axios';
 import { omit } from '../../../helpers/helps.js';
+
 class CupomController {
   static getAllCupoms = (_req, res) => {
-    cupomModel.find()
-      .populate('payment_id')
-      .exec((err, cupom) => {
-        if(!err) {
-          res.status(200).json(cupom);
-        } else {
-          res.status(400).send({ message: err.message });
-        }
-      });
+    cupomModel.find((err, cupom) => {
+      if(!err) {
+        res.status(200).json(cupom);
+      } else {
+        res.status(400).send({ message: err.message });
+      }
+    });
   };
 
   static getCupomById = (req, res) => {
     const id = req.params.id;
 
-    cupomModel.findById(id)
-      .populate('payment_id')
-      .exec((err, cupom) => {
-        if(!err) {
-          res.status(200).json(cupom);
-        } else {
-          res.status(400).send({ message: err.message });
-        }
-      });
+    cupomModel.findById(id, (err, cupom) => {
+      if(!err) {
+        res.status(200).json(cupom);
+      } else {
+        res.status(400).send({ message: err.message });
+      }
+    });
   };
 
   static createCupom = async (req, res) => {
@@ -47,7 +44,7 @@ class CupomController {
 
       cupom.save((err) => {
         if(!err) {
-          res.status(200).json(cupom);
+          res.status(201).json(cupom);
         } else {
           res.status(400).send({ message: err.message });
         }
@@ -55,6 +52,30 @@ class CupomController {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  static updateCupom = (req, res) => {
+    const id = req.params.id;
+
+    cupomModel.findByIdAndUpdate(id, { $set: req.body }, (err) => {
+      if(!err) {
+        res.status(200).json({ message: 'Cupom updated success'});
+      } else {
+        res.status(400).send({ message: err.message });
+      }
+    });
+  };
+
+  static deleteCupom = (req, res) => {
+    const id = req.params.id;
+
+    cupomModel.findByIdAndDelete(id, { $set: req.body }, (err) => {
+      if(!err) {
+        res.status(200).json({ message: 'Cupom deleted success'});
+      } else {
+        res.status(400).send({ message: err.message });
+      }
+    });
   };
 }
 

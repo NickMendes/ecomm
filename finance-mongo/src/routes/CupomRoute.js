@@ -6,6 +6,8 @@ const router = express.Router();
 router
   .get('/cupom', CupomController.getAllCupoms)
   .get('/cupom/:id', CupomController.getCupomById)
-  .post('/admin/cupom', CupomController.createCupom);
+  .post('/admin/cupom', CupomController.createCupom)
+  .patch('/admin/cupom/:id', CupomController.updateCupom)
+  .delete('/admin/cupom/:id', CupomController.deleteCupom);
 
 export default router;
