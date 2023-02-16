@@ -4,6 +4,8 @@ import CupomController from '../controllers/CupomController.js';
 const router = express.Router();
 
 router
-  .get('/cupoms', CupomController.getAllCupoms);
+  .get('/cupom', CupomController.getAllCupoms)
+  .get('/cupom/:id', CupomController.getCupomById)
+  .post('/admin/cupom', CupomController.createCupom);
 
 export default router;
