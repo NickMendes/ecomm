@@ -29,32 +29,34 @@ class SaleController {
     const saleInfo = req.body;
 
     try {
-      const userData = await axios.get(`http://localhost:3002/user${saleInfo.user_id}`);
+      const userData = await axios.get(`http://localhost:3002/user/${saleInfo.user_id}`);
       const user_info = { name: userData.data.name, cpf: userData.data.cpf };
-      const orderInfo = [];
-
-      saleInfo.order.map(async (product) => {
-        const productData = await axios.get(`http://localhost:3001/product${product.product_id}`);
+      
+      const orderInfo = await saleInfo.order.map(async (product) => {
+        const productData =  await axios.get(`http://localhost:3001/product/${product.product_id}`);
         if (!productData) {
           res.status(404).send({ message: 'A product was not found' });
         } else {
           const newOrder = {
             product_name: productData.data.name,
             product_price: productData.data.unit_price,
-            product_qty: productData.data.product_qty,
-            discount: productData.data.discount
+            product_qty: product.product_qty,
+            discount: product.discount
           };
-          orderInfo.push(newOrder);
+          return newOrder;
         }
       });
+
+      const orderInfoPromise = await Promise.all(orderInfo);
       
-      const total_price = saleInfo.orderInfo.reduce((acc, cur) =>  {
-        return acc + ((cur.product_price * cur.product_qty) - cur.discount)
-      }, 0);
+      const total_price = orderInfoPromise.reduce((acc, cur) =>  {
+        return acc + (cur.product_price.$numberDecimal * cur.product_qty) - cur.discount
+      }, 0).toFixed(2);
+      console.log(total_price);
 
       const saleInfoRefactor = omit(saleInfo, ['user_id', 'order']);
 
-      let sale = new salesModel({ ...saleInfoRefactor, user_info, total_price, order: orderInfo });
+      let sale = new salesModel({ ...saleInfoRefactor, user_info, total_price, order: orderInfoPromise });
   
       sale.save((err) => {
         if(err) {
