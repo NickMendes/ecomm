@@ -10,4 +10,4 @@ router
   .put('/admin/user/:id', UserController.updateUser)
   .delete('/admin/user/:id', UserController.deleteUser)
 
-export default router;   
+export default router;
