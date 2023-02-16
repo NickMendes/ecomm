@@ -50,7 +50,6 @@ const paymentSubSchema = new mongoose.Schema(
     name: { 
       type: String,
       minLength: 5,
-      match: /^[a-zA-Z][a-zA-Z.,$; ]+$/,
       required: true
     },
     card_number: {
