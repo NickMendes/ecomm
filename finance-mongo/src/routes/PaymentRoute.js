@@ -1,13 +1,13 @@
 import express from 'express';
-import PaymentCOntroller from '../controllers/PaymentController.js';
+import PaymentController from '../controllers/PaymentController.js';
 
 const router = express.Router();
 
 router
-  .get('/payment', PaymentCOntroller.getAllPayments)
-  .get('/payment/:id', PaymentCOntroller.getPaymentById)
-  .post('/admin/payment', PaymentCOntroller.createPayment)
-  .patch('/admin/payment/:id', PaymentCOntroller.updatePayment)
-  .delete('/admin/payment/:id', PaymentCOntroller.deletePayment);
+  .get('/payments', PaymentController.getAllPayments)
+  .get('/payments/:id', PaymentController.getPaymentById)
+  .post('/admin/payments', PaymentController.createPayment)
+  .patch('/admin/payments/:id', PaymentController.updatePayment)
+  .delete('/admin/payments/:id', PaymentController.deletePayment);
 
 export default router;
