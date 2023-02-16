@@ -35,7 +35,7 @@ const paymentSchema = new mongoose.Schema(
       enum: ['CRIADO', 'CONFIRMADO', 'CANCELADO'],
       required: true
     }
-  }
+  }, { versionKey: false }
 );
 
 const payments = mongoose.model('payments', paymentSchema);

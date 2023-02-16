@@ -31,7 +31,7 @@ const productSchema = new mongoose.Schema(
       ref: 'categories',
       required: true
     },
-  }
+  }, { versionKey: false }
 );
 
 const products = mongoose.model('products', productSchema);

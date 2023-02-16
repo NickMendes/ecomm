@@ -14,7 +14,7 @@ const categorySchema = new mongoose.Schema(
       enum: ['Ativa', 'Inativa'],
       required: true
     }
-  }
+  }, { versionKey: false }
 );
 
 const categories = mongoose.model('categories', categorySchema);

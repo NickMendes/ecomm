@@ -23,7 +23,7 @@ const salesSchema = new mongoose.Schema(
     },
     total_price: { type: Schema.Types.Decimal128, required: true },
     sale_date: { type: Date, default: Date.now }
-  }
+  }, { versionKey: false }
 );
 
 const sales = mongoose.model('sales', salesSchema);
