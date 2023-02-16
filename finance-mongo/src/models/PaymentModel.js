@@ -15,8 +15,7 @@ const paymentSchema = new mongoose.Schema(
     },
     card_number: {
       type: String,
-      minLength: 16,
-      maxLength: 16,
+      match: /[/d]{16}/,
       require: true 
     },
     expiration_date: {
@@ -26,13 +25,13 @@ const paymentSchema = new mongoose.Schema(
     },
     cvv: {
       type: String,
-      minLength: 3,
-      maxLength: 3,
+      match: /[/d]{3}/,
       require: true 
     },
     status: { 
       type: String,
       enum: ['CRIADO', 'CONFIRMADO', 'CANCELADO'],
+      default: 'CRIADO',
       required: true
     }
   }, { versionKey: false }
