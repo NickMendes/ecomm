@@ -1,4 +1,6 @@
 import salesModel from '../model/salesModel.js';
+import axios from 'axios';
+import { omit } from '../../../helpers/helps.js';
 
 class SaleController {
   static getAllSales = (_req, res) => {
@@ -23,21 +25,43 @@ class SaleController {
     });
   };
 
-  static createSale = (req, res) => {
+  static createSale = async (req, res) => {
     const saleInfo = req.body;
-    const total_price = saleInfo.order.reduce((acc, cur) =>  {
-      return acc + ((cur.product_price * cur.product_qty) - cur.discount)
-    }, 0);
 
-    let sale = new salesModel({ ...saleInfo, total_price });
+    try {
+      const userData = await axios.get(`http://localhost:3002/user${saleInfo.user_id}`);
+      const user_info = { name: userData.data.name, cpf: userData.data.cpf };
+      const orderInfo = [];
 
-    sale.save((err) => {
-      if(err) {
-        res.status(500).send({ message: err.message });
-      } else {
-        res.status(201).send(sale.toJSON());
-      }
-    });
+      saleInfo.order.map(async (product) => {
+        const productData = await axios.get(`http://localhost:3001/product${product.product_id}`);
+        const newOrder = {
+          product_name: productData.data.product_name,
+          product_price: productData.data.product_price,
+          product_qty: productData.data.product_qty,
+          discount: productData.data.discount
+        };
+        orderInfo.push(newOrder);
+      });
+      
+      const total_price = saleInfo.order.reduce((acc, cur) =>  {
+        return acc + ((cur.product_price * cur.product_qty) - cur.discount)
+      }, 0);
+
+      const saleInfoRefactor = omit(saleInfo, ['user_id', 'product_id', 'order']);
+
+      let sale = new salesModel({ ...saleInfoRefactor, user_info, total_price, order: orderInfo });
+  
+      sale.save((err) => {
+        if(err) {
+          res.status(500).send({ message: err.message });
+        } else {
+          res.status(201).send(sale.toJSON());
+        }
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   static updateSale = (req, res) => {
