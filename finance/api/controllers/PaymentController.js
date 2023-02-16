@@ -2,7 +2,7 @@ const paymentService = require('../services/PaymentService');
 const addressService = require('../services/AddressService');
 const saleService = require('../services/SaleService');
 const cupomService = require('../services/CupomService');
-const helps = require('../../../helpers/helps.js');
+const helps = require('../helpers/helps.js');
 
 const getAll = async (_req, res) => {
   try {
