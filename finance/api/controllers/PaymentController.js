@@ -54,7 +54,6 @@ const updateStatus = async (req, res) => {
     if (resultUptade[0] === 0) return res.status(400).json({ message: 'Something went wrong' });
 
     const paymentResult = await paymentService.getById(id);
-    console.log('1---------', paymentResult);
   
     const addressResult = await addressService.add({ ...address });
     const addressID = addressResult.id;
@@ -68,7 +67,7 @@ const updateStatus = async (req, res) => {
 
     if(!cupomResult) return res.status(400).json({ message: 'Something went wrong' });
 
-    return res.status(201).set('Location', `/payments/${id}`).json({ id, status });
+    return res.status(202).set('Location', `/payments/${id}`).json({ id, status });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ message: err.message });

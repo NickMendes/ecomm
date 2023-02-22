@@ -69,7 +69,7 @@ class SaleController {
 
     salesModel.findByIdAndUpdate(id, { $set: req.body }, (err) => {
       if(!err) {
-        res.status(200).send({ message: 'Sale updated success' });
+        res.status(202).send({ message: 'Sale updated success' });
       } else {
         res.status(500).send({ message: err.message });
       }
@@ -81,7 +81,7 @@ class SaleController {
 
     salesModel.findByIdAndDelete(id, (err) => {
       if(!err) {
-        res.status(200).send({ message: 'Sale deleted success' });
+        res.status(202).send({ message: 'Sale deleted success' });
       } else {
         res.status(500).send({ message: err.message });
       }

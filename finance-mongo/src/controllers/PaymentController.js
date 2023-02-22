@@ -41,7 +41,7 @@ class PaymentController {
 
     paymentModel.findByIdAndUpdate(id, { $set: req.body }, (err) => {
       if(!err) {
-        res.status(200).json({ message: 'Payment updated success'});
+        res.status(202).json({ message: 'Payment updated success'});
       } else {
         res.status(500).send({ message: err.message });
       }
@@ -53,7 +53,7 @@ class PaymentController {
 
     paymentModel.findByIdAndDelete(id, (err) => {
       if(!err) {
-        res.status(200).json({ message: 'Payment deleted success'});
+        res.status(202).json({ message: 'Payment deleted success'});
       } else {
         res.status(500).send({ message: err.message });
       }

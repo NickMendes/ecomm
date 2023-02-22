@@ -59,7 +59,7 @@ class CupomController {
 
     cupomModel.findByIdAndUpdate(id, { $set: req.body }, (err) => {
       if(!err) {
-        res.status(200).json({ message: 'Cupom updated success'});
+        res.status(202).json({ message: 'Cupom updated success'});
       } else {
         res.status(400).send({ message: err.message });
       }
@@ -71,7 +71,7 @@ class CupomController {
 
     cupomModel.findByIdAndDelete(id, { $set: req.body }, (err) => {
       if(!err) {
-        res.status(200).json({ message: 'Cupom deleted success'});
+        res.status(202).json({ message: 'Cupom deleted success'});
       } else {
         res.status(400).send({ message: err.message });
       }
