@@ -1,6 +1,6 @@
 import salesModel from '../model/salesModel.js';
 import axios from 'axios';
-import { omit } from '../../../helpers/helps.js';
+import omit from '../helpers/helps.js';
 
 class SaleController {
   static getAllSales = (_req, res) => {
@@ -29,28 +29,34 @@ class SaleController {
     const saleInfo = req.body;
 
     try {
-      const userData = await axios.get(`http://localhost:3002/user${saleInfo.user_id}`);
+      const userData = await axios.get(`http://localhost:3002/user/${saleInfo.user_id}`);
       const user_info = { name: userData.data.name, cpf: userData.data.cpf };
-      const orderInfo = [];
-
-      saleInfo.order.map(async (product) => {
-        const productData = await axios.get(`http://localhost:3001/product${product.product_id}`);
-        const newOrder = {
-          product_name: productData.data.product_name,
-          product_price: productData.data.product_price,
-          product_qty: productData.data.product_qty,
-          discount: productData.data.discount
-        };
-        orderInfo.push(newOrder);
-      });
       
-      const total_price = saleInfo.order.reduce((acc, cur) =>  {
-        return acc + ((cur.product_price * cur.product_qty) - cur.discount)
-      }, 0);
+      const orderInfo = await saleInfo.order.map(async (product) => {
+        const productData =  await axios.get(`http://localhost:3001/product/${product.product_id}`);
+        if (!productData) {
+          res.status(404).send({ message: 'A product was not found' });
+        } else {
+          const newOrder = {
+            product_name: productData.data.name,
+            product_price: productData.data.unit_price,
+            product_qty: product.product_qty,
+            discount: product.discount
+          };
+          return newOrder;
+        }
+      });
 
-      const saleInfoRefactor = omit(saleInfo, ['user_id', 'product_id', 'order']);
+      const orderInfoPromise = await Promise.all(orderInfo);
+      
+      const total_price = orderInfoPromise.reduce((acc, cur) =>  {
+        return acc + (cur.product_price.$numberDecimal * cur.product_qty) - cur.discount
+      }, 0).toFixed(2);
+      console.log(total_price);
 
-      let sale = new salesModel({ ...saleInfoRefactor, user_info, total_price, order: orderInfo });
+      const saleInfoRefactor = omit(saleInfo, ['user_id', 'order']);
+
+      let sale = new salesModel({ ...saleInfoRefactor, user_info, total_price, order: orderInfoPromise });
   
       sale.save((err) => {
         if(err) {

@@ -1,10 +1,12 @@
 import paymentModel from '../models/PaymentModel.js';
+import omit from '../helpers/helps.js'
 
 class PaymentController {
   static getAllPayments = (_req, res) => {
     paymentModel.find((err, payment) => {
       if(!err) {
-        res.status(200).json(payment);
+        const payments = payment.map((ele) => omit(ele._doc, ['cvv']))
+        res.status(200).json(payments);
       } else {
         res.status(500).send({ message: err.message });
       }
@@ -18,7 +20,7 @@ class PaymentController {
         if(err) {
           res.status(400).send({ message: err.message });
         } else {
-          res.status(200).json(payment);
+          res.status(200).json(omit(payment._doc, ['cvv']));
         }
       });
   };

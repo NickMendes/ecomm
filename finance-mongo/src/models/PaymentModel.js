@@ -10,12 +10,11 @@ const paymentSchema = new mongoose.Schema(
     name: { 
       type: String,
       minLength: 5,
-      match: /^[a-zA-Z][a-zA-Z.,$; ]+$/,
       required: true
     },
     card_number: {
       type: String,
-      match: /[/d]{16}/,
+      match: /[\d]{16}/,
       require: true 
     },
     expiration_date: {
@@ -25,7 +24,7 @@ const paymentSchema = new mongoose.Schema(
     },
     cvv: {
       type: String,
-      match: /[/d]{3}/,
+      match: /[\d]{3}/,
       require: true 
     },
     status: { 

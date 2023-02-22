@@ -1,6 +1,6 @@
 import cupomModel from '../models/CupomModel.js';
 import axios from 'axios';
-import { omit } from '../../../helpers/helps.js';
+import omit from '../helpers/helps.js';
 
 class CupomController {
   static getAllCupoms = (_req, res) => {

@@ -8,7 +8,9 @@ PRODUCTS - PRODUCT - http://localhost:3001/product
   "name": "PlayStation 5",
   "description": "Sony new generation console",
   "slug": "play-station-5",
-  "unit_price": 4199.98
+  "storage_qty": 15,
+  "unit_price": 4199.98,
+  "category_id": "63ee842d0d94cab2358629f4"
 }
 
 ACCOUNT - USER - http://localhost:3002/user
@@ -30,21 +32,18 @@ ACCOUNT - USER - http://localhost:3002/user
 
 ORDER - SALE - http://localhost:3004/sale
 {
-  "user_id": {
-    "name": "João Castor da Silva",
-    "cpf": "32145698709",
-  },
+  "user_id": "63ee835b5ab79d1681d8a05c",
   "delivery_address": {
     "cep": "32017-756",
     "street": "Rua das Acásias",
     "number": "1792",
-    "complement": "apto 103",
+    "complement": "apto 103"
   },
   "order": [{
-    "product_id": "OLHAR ANTES"
-    "product_qty": 1
+    "product_id": "63ee84970d94cab2358629f7",
+    "product_qty": 1,
     "discount": 150.00
-  }],
+  }]
 }
 
 FINANCE - PAYMENT - http://localhost:3005/payment
@@ -58,6 +57,6 @@ FINANCE - PAYMENT - http://localhost:3005/payment
 FINANCE - CUPOM - http://localhost:3005/CUPOM
 {
   "user_id": "",
-  "sale_info": "",
+  "sale_id": "",
   "payment_id": ""
 }
