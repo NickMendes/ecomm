@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --verbose",
     "dev": "nodemon server.js"
   },
   "repository": {
@@ -20,7 +20,9 @@
   },
   "homepage": "https://github.com/NickMendes/ecomm#readme",
   "devDependencies": {
-    "nodemon": "^2.0.20"
+    "@jest/globals": "^29.4.3",
+    "nodemon": "^2.0.20",
+    "supertest": "^6.3.3"
   },
   "dependencies": {
     "dotenv": "^16.0.3",
