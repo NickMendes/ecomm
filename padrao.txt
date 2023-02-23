@@ -1,0 +1,62 @@
+PRODUCTS - CATEGORY - http://localhost:3001/categories
+{
+  "name": "Video Game",
+  "status": "Ativa"
+}
+PRODUCTS - PRODUCT - http://localhost:3001/product
+{
+  "name": "PlayStation 5",
+  "description": "Sony new generation console",
+  "slug": "play-station-5",
+  "storage_qty": 15,
+  "unit_price": 4199.98,
+  "category_id": "63ee842d0d94cab2358629f4"
+}
+
+ACCOUNT - USER - http://localhost:3002/user
+{
+  "name": "João Castor da Silva",
+  "email": "joão@castor.com.br",
+  "pasword": "joao123$",
+  "cpf": "32145698709",
+  "phones": ["31998561212", "31989752563"],
+  "address": {
+    "cep": "32017-756",
+    "street": "Rua das Acásias",
+    "number": "1792",
+    "complement": "apto 103",
+    "city": "Coronel Fabriciano",
+    "state": "MG"
+  }
+}
+
+ORDER - SALE - http://localhost:3004/sale
+{
+  "user_id": "63ee835b5ab79d1681d8a05c",
+  "delivery_address": {
+    "cep": "32017-756",
+    "street": "Rua das Acásias",
+    "number": "1792",
+    "complement": "apto 103"
+  },
+  "order": [{
+    "product_id": "63ee84970d94cab2358629f7",
+    "product_qty": 1,
+    "discount": 150.00
+  }]
+}
+
+FINANCE - PAYMENT - http://localhost:3005/payment
+{
+  "value": 4049.98,
+  "name": "João Castor da Silva",
+  "card_number": "5502147823651234",
+  "expiration_date": "2024-10",
+  "cvv": "846"
+}
+FINANCE - CUPOM - http://localhost:3005/CUPOM
+{
+  "user_id": "",
+  "sale_id": "",
+  "payment_id": ""
+}

@@ -43,7 +43,7 @@ const update = async (req, res) => {
 
   try {
     const result = await addressService.update(newInfo, id);
-    return res.status(201).json(result);
+    return res.status(202).json(result);
   } catch (err) {
     console.log(err);
     return res.status(500).json({ message: err.message });

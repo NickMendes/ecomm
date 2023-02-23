@@ -38,7 +38,7 @@ class CategoryController {
 
     categoryModel.findByIdAndUpdate(id, { $set: req.body }, (err) => {
       if(!err) {
-        res.status(200).send({ message: 'Category updated success' });
+        res.status(202).send({ message: 'Category updated success' });
       } else {
         res.status(500).send({ message: err.message });
       }
@@ -54,7 +54,7 @@ class CategoryController {
     } else {
       categoryModel.findByIdAndUpdate(id, { $set: { status: newStatus } }, (err) => {
         if(!err) {
-          res.status(200).send({ message: 'Category updated success' });
+          res.status(202).send({ message: 'Category updated success' });
         } else {
           res.status(500).send({ message: err.message });
         }
@@ -67,7 +67,7 @@ class CategoryController {
 
     categoryModel.findByIdAndDelete(id, (err) => {
       if(!err){
-        res.status(200).send({ message: 'Category deleted success' });
+        res.status(202).send({ message: 'Category deleted success' });
       } else {
         res.status(500).send({ message: err.message });
       }

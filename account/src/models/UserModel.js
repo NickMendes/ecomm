@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema(
     },
     email: { 
       type: String,
-      match: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+      // match: /^[\w\.]+@([\w-]+\.)+[\w-]{2,4}$/,
       required: true
     },
     password: { 
@@ -18,16 +18,15 @@ const userSchema = new mongoose.Schema(
       required: true
     },
     cpf: { 
-      type: Number,
-      min: 10000000000,
-      max: 99999999999,
+      type: String,
+      match: /[\d]{11}/,
       required: true
     },
     phones: { 
-      type: [{ type: Number, min: 1000000000, max: 9999999999999}]
+      type: [{ type: String, match: /[\d]{11}/ }]
     },
     address: { 
-      cep: { type: Number, min: 10000000, max:99999999, required: true },
+      cep: { type: String, match: /[\d]{5}-[\d]{3}/, required: true },
       street: { type: String, required: true },
       number: { type: String, required: true },
       complement: String,
@@ -43,7 +42,7 @@ const userSchema = new mongoose.Schema(
       type: Date,
       default: Date.now
     },
-  }
+  }, { versionKey: false }
 );
 
 const users = mongoose.model('users', userSchema);

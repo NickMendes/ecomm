@@ -3,4 +3,4 @@ const omit = (obj, arr) =>
     .filter(k => !arr.includes(k))
     .reduce((acc, key) => ((acc[key] = obj[key]), acc), {})
 
-module.exports = { omit }
+export default omit;

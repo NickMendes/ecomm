@@ -6,7 +6,7 @@ const categorySchema = new mongoose.Schema(
     name: { 
       type: String,
       minLength: 3,
-      match: /^[a-zA-Z][a-zA-Z0-9.,$;]+$/,
+      match: /^[a-zA-Z][a-zA-Z0-9.,$; ]+$/,
       required: true
     },
     status: { 
@@ -14,7 +14,7 @@ const categorySchema = new mongoose.Schema(
       enum: ['Ativa', 'Inativa'],
       required: true
     }
-  }
+  }, { versionKey: false }
 );
 
 const categories = mongoose.model('categories', categorySchema);

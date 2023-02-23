@@ -40,7 +40,7 @@ class UserController {
 
     users.findByIdAndUpdate(id, { $set: req.body }, (err) => {
       if(!err) {
-        res.status(200).send({ message: 'User updated success' });
+        res.status(202).send({ message: 'User updated success' });
       } else {
         res.status(500).send({ message: err.message });
       }
@@ -52,7 +52,7 @@ class UserController {
 
     users.findByIdAndDelete(id, (err) => {
       if(!err) {
-        res.status(200).send({ message: 'User deleted success' });
+        res.status(202).send({ message: 'User deleted success' });
       } else {
         res.status(500).send({ message: err.message });
       }

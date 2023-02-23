@@ -15,7 +15,7 @@ components:
     order-insert:
       type: object
       properties:
-        user_id:
+        name:
           type: string
         delivery_address:
           type: object
@@ -28,23 +28,19 @@ components:
               type: integer
             complement:
               type: string
-            city:
-              type: string
-            state:
-              type: string
-        sale:
+        order:
           type: array
           items:
             type: object
             properties: 
-              product_id:
+              product_name:
                 type: string
+              product_price:
+                type: number
+                fortmat: double
               product_qty:
                 type: integer
               discount:
-                type: number
-                format: double
-              product_unit_price:
                 type: number
                 format: double
     order-response:
@@ -52,7 +48,7 @@ components:
       properties:
         _id:
           type: string
-        user_id:
+        name:
           type: string
         delivery_address:
           type: object
@@ -65,25 +61,23 @@ components:
               type: integer
             complement:
               type: string
-            city:
-              type: string
-            state:
-              type: string
-        sale:
+        order:
           type: array
           items:
             type: object
             properties: 
-              product_id:
+              product_name:
                 type: string
+              product_price:
+                type: number
+                fortmat: double
               product_qty:
                 type: integer
               discount:
                 type: number
-                format: double
-              product_unit_price:
-                type: number
-                format: double
+        total_price:
+          type: number
+          format: double
         sale_date:
           type: string
           format: date
@@ -91,7 +85,7 @@ servers:
 - url: 
   description: Order Server - XD
 paths:
-  /api/orders:
+  /orders:
     get:
       tags:
       - Order
@@ -112,7 +106,7 @@ paths:
               example: Not Found
         500:
           description: Internal Server Error
-  /api/orders/{id}:
+  /orders/{id}:
     parameters: 
     - in: path
       name: id
@@ -139,7 +133,7 @@ paths:
               example: Not Found
         500:
           description: Internal Server Error
-  /api/admin/order:
+  /admin/order:
     post:
       tags:
       - Order
@@ -164,7 +158,7 @@ paths:
               example: User unathorized, please check your credentials
         500:
           description: Internal Server Error
-  /api/admin/orders/{id}:
+  /admin/orders/{id}:
     parameters: 
     - in: path
       name: id
