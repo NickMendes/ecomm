@@ -1,4 +1,4 @@
-import categoryModel from "../models/CagetogyModel.js";
+import categoryModel from "../models/CategoryModel.js";
 
 class CategoryController {
   static getAllCategories = (_req, res) => {
