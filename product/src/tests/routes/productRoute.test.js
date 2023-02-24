@@ -37,7 +37,6 @@ describe('POST route /admin/product', () => {
             })
             .expect(201);
         idResponse = response.body['_id'];
-        console.log(idResponse);
     });
     it('Should return error if body is empty', async () => {
         await request(app)
