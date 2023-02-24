@@ -1,9 +1,10 @@
 import categoryModel from '../models/CategoryModel.js';
+import statusCode from '../../enum/statusCode.js';
 
 class CategoryController {
     static getAllCategories = (_req, res) => {
         categoryModel.find((err, category) => {
-            res.status(200).json(category);
+            res.status(statusCode.OK).json(category);
         });
     };
 
@@ -12,11 +13,9 @@ class CategoryController {
 
         categoryModel.findById(id, (err, category) => {
             if(err) {
-                res.status(400).send({ message: err.message });
-                console.log('error', category);
+                res.status(statusCode.BAD_REQUEST).send({ message: err.message });
             } else {
-                res.status(200).send(category);
-                console.log('correto', category);
+                res.status(statusCode.OK).send(category);
             }
         });
     };
@@ -24,13 +23,17 @@ class CategoryController {
     static createCategory = (req, res) => {
         let category = new categoryModel(req.body);
 
-        category.save((err) => {
-            if(err) {
-                res.status(400).send({ message: err.message });
-            } else {
-                res.status(201).send(category.toJSON());
-            }
-        });
+        if(!req.body.name) {
+            res.status(statusCode.BAD_REQUEST).send({ message: 'Body is Required' });
+        } else {
+            category.save((err) => {
+                if(err) {
+                    res.status(statusCode.BAD_REQUEST).send({ message: err.message });
+                } else {
+                    res.status(statusCode.CREATED).send(category.toJSON());
+                }
+            });
+        }
     };
 
     static updateCategory = (req, res) => {
@@ -38,9 +41,9 @@ class CategoryController {
 
         categoryModel.findByIdAndUpdate(id, { $set: req.body }, (err) => {
             if(!err) {
-                res.status(202).send({ message: 'Category updated success' });
+                res.status(statusCode.ACCEPTED).send({ message: 'Category updated success' });
             } else {
-                res.status(500).send({ message: err.message });
+                res.status(statusCode.SERVER_ERROR).send({ message: err.message });
             }
         });
     };
@@ -50,13 +53,14 @@ class CategoryController {
         const newStatus = req.body.status;
 
         if(!newStatus) {
-            res.status(400).send({ message: 'Add an status to the body requirement' });
+            res.status(statusCode.BAD_REQUEST).send(
+                { message: 'Add an status to the body requirement' });
         } else {
             categoryModel.findByIdAndUpdate(id, { $set: { status: newStatus } }, (err) => {
                 if(!err) {
-                    res.status(202).send({ message: 'Category updated success' });
+                    res.status(statusCode.ACCEPTED).send({ message: 'Category updated success' });
                 } else {
-                    res.status(500).send({ message: err.message });
+                    res.status(statusCode.SERVER_ERROR).send({ message: err.message });
                 }
             });
         }
@@ -67,9 +71,9 @@ class CategoryController {
 
         categoryModel.findByIdAndDelete(id, (err) => {
             if(!err){
-                res.status(202).send({ message: 'Category deleted success' });
+                res.status(statusCode.ACCEPTED).send({ message: 'Category deleted success' });
             } else {
-                res.status(500).send({ message: err.message });
+                res.status(statusCode.SERVER_ERROR).send({ message: err.message });
             }
         });
     };
