@@ -28,10 +28,9 @@ class ProductController {
 
     static createProduct = (req, res) => {
         let product = new products(req.body);
-        console.log(req.body);
 
         if(!req.body.name) {
-            res.status(status.BAD_REQUEST).send({ message: 'Body is Requested' });
+            res.status(status.BAD_REQUEST).send({ message: 'Body is Required' });
         } else {
             product.save((err) => {
                 if(err) {
