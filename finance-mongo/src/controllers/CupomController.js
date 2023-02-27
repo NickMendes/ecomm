@@ -30,7 +30,8 @@ class CupomController {
 
         try {
             const userData = await axios.get(`http://localhost:3002/user/${ids.user_id}`);
-            const user_info = omit(userData.data, ['_id', 'email', 'password', 'phones', 'creation_date']);
+            const user_info = omit(userData.data, 
+                ['_id', 'email', 'password', 'phones', 'creation_date']);
 
             const saleData = await axios.get(`http://localhost:3004/sale/${ids.sale_id}`);
             const sale_info = omit(saleData.data, ['_id', 'delivery_address']);
