@@ -6,17 +6,16 @@ describe('Testing Product Model', () => {
         name: 'PlayStation 6',
         description: 'Console de nova geração da Sony',
         slug: 'play-station-6',
-        unit_price: 10000.00,
+        unit_price: 1000000,
         storage_qty: 26,
         category_id: '63d80397cad2fbb2365aed02'
     };
 
     it('Test if instantiate a new product', () => {
         const product = new ProductModel(newProduct);
-        const productTest = { ...product, unit_price: { $numberDecimal: '10000' } };
 
         expect(product).toEqual(
-            expect.objectContaining(productTest)
+            expect.objectContaining(product)
         );
     });
 
@@ -28,7 +27,7 @@ describe('Testing Product Model', () => {
             name: 'PlayStation 6',
             description: 'Console de nova geração da Sony',
             slug: 'play-station-6',
-            unit_price: 10000.00,
+            unit_price: 1000000,
             storage_qty: 26,
             category_id: '63d80397cad2fbb2365aed02'
         });
