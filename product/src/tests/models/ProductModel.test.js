@@ -19,7 +19,7 @@ describe('Testing Product Model', () => {
         );
     });
 
-    it('Test if instance is saved in DB', () => {
+    it('Test if instance is saved in DB', async () => {
         const product = new ProductModel(newProduct);
 
         product.salvar = jest.fn().mockReturnValue({
@@ -32,7 +32,7 @@ describe('Testing Product Model', () => {
             category_id: '63d80397cad2fbb2365aed02'
         });
       
-        const retorno = product.salvar();
+        const retorno = await product.salvar();
     
         expect(retorno).toEqual(
             expect.objectContaining({
