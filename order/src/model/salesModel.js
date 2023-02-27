@@ -1,11 +1,11 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose from 'mongoose';
 
 const orderSchema = new mongoose.Schema(
     {
         product_name: { type: String, required: true },
-        product_price: { type: Schema.Types.Decimal128, required: true },
+        product_price: { type: Number, required: true },
         product_qty: { type: Number, min: 1, required: true },
-        discount: { type: Schema.Types.Decimal128, required: true },
+        discount: { type: Number, required: true },
         _id : false 
     }
 );
@@ -24,7 +24,7 @@ const salesSchema = new mongoose.Schema(
             number: { type: String, required: true },
             complement: { type: String }
         },
-        total_price: { type: Schema.Types.Decimal128, required: true },
+        total_price: { type: Number, required: true },
         sale_date: { type: Date, default: Date.now }
     }, { versionKey: false }
 );

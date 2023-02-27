@@ -1,10 +1,10 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose from 'mongoose';
 
 const paymentSchema = new mongoose.Schema(
     {
         id: { type: String },
         value: {
-            type: Schema.Types.Decimal128,
+            type: Number,
             required: true
         },
         name: { 

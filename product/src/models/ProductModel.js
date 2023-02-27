@@ -1,4 +1,4 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose from 'mongoose';
 
 const productSchema = new mongoose.Schema(
     {
@@ -16,8 +16,8 @@ const productSchema = new mongoose.Schema(
             required: true
         },
         unit_price: { 
-            type: Schema.Types.Decimal128,
-            min: 0, //Minimo não funciona para decimal, não sei se deixo assim ou troco para Number
+            type: Number,
+            min: 0,
             required: true
         },
         storage_qty: { 
