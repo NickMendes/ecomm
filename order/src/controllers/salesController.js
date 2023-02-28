@@ -33,7 +33,8 @@ class SaleController {
             const user_info = { name: userData.data.name, cpf: userData.data.cpf };
       
             const orderInfo = await saleInfo.order.map(async (product) => {
-                const productData =  await axios.get(`http://localhost:3001/product/${product.product_id}`);
+                const productData =  await axios.get(
+                    `http://localhost:3001/product/${product.product_id}`);
                 if (!productData) {
                     res.status(404).send({ message: 'A product was not found' });
                 } else {
@@ -56,7 +57,8 @@ class SaleController {
 
             const saleInfoRefactor = omit(saleInfo, ['user_id', 'order']);
 
-            let sale = new salesModel({ ...saleInfoRefactor, user_info, total_price, order: orderInfoPromise });
+            let sale = new salesModel(
+                { ...saleInfoRefactor, user_info, total_price, order: orderInfoPromise });
   
             sale.save((err) => {
                 if(err) {
