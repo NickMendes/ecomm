@@ -24,7 +24,7 @@ describe('GET route /product', () => {
 
 let idResponse;
 describe('POST route /admin/product', () => {
-    it('Should add a new category', async () => {
+    it('Should add a new product', async () => {
         const response = await request(app)
             .post('/admin/product')
             .send({
