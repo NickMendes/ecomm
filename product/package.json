@@ -28,6 +28,7 @@
   "dependencies": {
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "joi": "^17.8.3",
     "mongoose": "^6.2.6",
     "swagger-ui-express": "^4.6.0"
   }
