@@ -9,13 +9,11 @@ const userSchema = new mongoose.Schema(
     },
     email: { 
       type: String,
-      // match: /^[\w\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+      unique: true,
       required: true
     },
     password: { 
-      type: String,
-      match: /^(?=.{8,32}$)(?=.*[a-z]).*\d.*\D/i,
-      required: true
+      type: String
     },
     cpf: { 
       type: String,
@@ -23,7 +21,7 @@ const userSchema = new mongoose.Schema(
       required: true
     },
     phones: { 
-      type: [{ type: String, match: /[\d]{11}/ }]
+      type: [{ type: String, match: /[\d]{9,11}/ }]
     },
     address: { 
       cep: { type: String, match: /[\d]{5}-[\d]{3}/, required: true },
