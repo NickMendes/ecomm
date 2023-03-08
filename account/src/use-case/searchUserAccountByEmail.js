@@ -1,11 +1,11 @@
-import { userList } from "./createUserAccount.js";
+import { userList } from './createUserAccount.js';
 
 export const searchUserAccountByEmailUseCase = (email) => {
-  const userFound = userList.find((user) => user.email === email);
+    const userFound = userList.find((user) => user.email === email);
   
-  if (!userFound) {
-    return Error('User not found');
-  }
+    if (!userFound) {
+        return Error('User not found');
+    }
 
-  return userFound;
+    return userFound;
 };

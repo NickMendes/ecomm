@@ -17,7 +17,7 @@ ACCOUNT - USER - http://localhost:3002/user
 {
   "name": "João Castor da Silva",
   "email": "joão@castor.com.br",
-  "pasword": "joao123$",
+  "password": "joao123$",
   "cpf": "32145698709",
   "phones": ["31998561212", "31989752563"],
   "address": {
