@@ -17,7 +17,7 @@ class ProductController {
             .populate('category_id') 
             .exec((err, product) => {
                 if(err) {
-                    res.status(status.SERVER_ERROR).send({ message: err.message });
+                    res.status(status.BAD_REQUEST).send({ message: err.message });
                 } else if(!product) {
                     res.status(status.NOT_FOUND).send({ message: 'Product Not Found' });
                 } else {
@@ -34,7 +34,7 @@ class ProductController {
         } else {
             product.save((err) => {
                 if(err) {
-                    res.status(status.SERVER_ERROR).send({ message: err.message });
+                    res.status(status.BAD_REQUEST).send({ message: err.message });
                 } else {
                     res.status(status.CREATED).json(product.toJSON());
                 }
@@ -49,7 +49,7 @@ class ProductController {
             if(!err) {
                 res.status(status.ACCEPTED).json({ message: 'Product updated success'});
             } else {
-                res.status(status.SERVER_ERROR).send({ message: err.message });
+                res.status(status.BAD_REQUEST).send({ message: err.message });
             }
         });
     };
@@ -61,7 +61,7 @@ class ProductController {
             if(!err) {
                 res.status(status.ACCEPTED).json({ message: 'Product deleted success'});
             } else {
-                res.status(status.SERVER_ERROR).send({ message: err.message });
+                res.status(status.BAD_REQUEST).send({ message: err.message });
             }
         });
     };
@@ -71,7 +71,7 @@ class ProductController {
 
         products.find({'category': category}, {}, (err, products) => {
             if(err) {
-                res.status(status.SERVER_ERROR).send({ message: err.message });
+                res.status(status.BAD_REQUEST).send({ message: err.message });
             } else {
                 res.status(status.OK).send(products);
             }

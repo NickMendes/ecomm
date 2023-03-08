@@ -8,7 +8,7 @@ class SaleController {
             if(!err) {
                 res.status(200).json(sale);
             } else {
-                res.status(500).send({ message: err.message });
+                res.status(400).send({ message: err.message });
             }
         });
     };
@@ -62,7 +62,7 @@ class SaleController {
   
             sale.save((err) => {
                 if(err) {
-                    res.status(500).send({ message: err.message });
+                    res.status(400).send({ message: err.message });
                 } else {
                     res.status(201).send(sale.toJSON());
                 }
@@ -79,7 +79,7 @@ class SaleController {
             if(!err) {
                 res.status(202).send({ message: 'Sale updated success' });
             } else {
-                res.status(500).send({ message: err.message });
+                res.status(400).send({ message: err.message });
             }
         });
     };
@@ -91,7 +91,7 @@ class SaleController {
             if(!err) {
                 res.status(202).send({ message: 'Sale deleted success' });
             } else {
-                res.status(500).send({ message: err.message });
+                res.status(400).send({ message: err.message });
             }
         });
     };

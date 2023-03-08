@@ -49,7 +49,7 @@ class UserController {
 
         user.save((err) => {
             if(err) {
-                res.status(500).send({ message: err.message });
+                res.status(400).send({ message: err.message });
             } else {
                 res.status(201).send(user.toJSON());
             }
@@ -63,7 +63,7 @@ class UserController {
             if(!err) {
                 res.status(202).send({ message: 'User updated success' });
             } else {
-                res.status(500).send({ message: err.message });
+                res.status(400).send({ message: err.message });
             }
         });
     };
@@ -75,7 +75,7 @@ class UserController {
             if(!err) {
                 res.status(202).send({ message: 'User deleted success' });
             } else {
-                res.status(500).send({ message: err.message });
+                res.status(400).send({ message: err.message });
             }
         });
     };

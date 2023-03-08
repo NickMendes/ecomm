@@ -43,7 +43,7 @@ class CategoryController {
             if(!err) {
                 res.status(statusCode.ACCEPTED).send({ message: 'Category updated success' });
             } else {
-                res.status(statusCode.SERVER_ERROR).send({ message: err.message });
+                res.status(statusCode.BAD_REQUEST).send({ message: err.message });
             }
         });
     };
@@ -60,7 +60,7 @@ class CategoryController {
                 if(!err) {
                     res.status(statusCode.ACCEPTED).send({ message: 'Category updated success' });
                 } else {
-                    res.status(statusCode.SERVER_ERROR).send({ message: err.message });
+                    res.status(statusCode.BAD_REQUEST).send({ message: err.message });
                 }
             });
         }
@@ -73,7 +73,7 @@ class CategoryController {
             if(!err){
                 res.status(statusCode.ACCEPTED).send({ message: 'Category deleted success' });
             } else {
-                res.status(statusCode.SERVER_ERROR).send({ message: err.message });
+                res.status(statusCode.BAD_REQUEST).send({ message: err.message });
             }
         });
     };

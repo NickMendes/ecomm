@@ -8,7 +8,7 @@ class PaymentController {
                 const payments = payment.map((ele) => omit(ele._doc, ['cvv']));
                 res.status(200).json(payments);
             } else {
-                res.status(500).send({ message: err.message });
+                res.status(400).send({ message: err.message });
             }
         });
     };
@@ -30,7 +30,7 @@ class PaymentController {
     
         payment.save((err) => {
             if(err) {
-                res.status(500).send({ message: err.message });
+                res.status(400).send({ message: err.message });
             } else {
                 res.status(201).json(payment.toJSON());
             }
@@ -45,7 +45,7 @@ class PaymentController {
             if(!err) {
                 res.status(202).json({ message: 'Payment updated success'});
             } else {
-                res.status(500).send({ message: err.message });
+                res.status(400).send({ message: err.message });
             }
         });
     };
@@ -57,7 +57,7 @@ class PaymentController {
             if(!err) {
                 res.status(202).json({ message: 'Payment deleted success'});
             } else {
-                res.status(500).send({ message: err.message });
+                res.status(400).send({ message: err.message });
             }
         });
     };
