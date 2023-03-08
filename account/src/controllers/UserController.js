@@ -30,55 +30,55 @@ class UserController {
     });
   };
 
-  static getUserById = (req, res) => {
-    const id = req.params.id;
+    static getUserById = (req, res) => {
+        const id = req.params.id;
 
-    users.findById(id, (err, user) => {
-      if(err) {
-        res.status(400).send({ message: err.message });
-      } else {
-        res.status(200).send(user);
-      }
-    });
-  };
+        users.findById(id, (err, user) => {
+            if(err) {
+                res.status(400).send({ message: err.message });
+            } else {
+                res.status(200).send(user);
+            }
+        });
+    };
 
   static createUser = async (req, res) => {
     const hash = await Hash.hashing(req.body.password);
 
     let user = new users({ ...req.body, password: hash });
 
-    user.save((err) => {
-      if(err) {
-        res.status(500).send({ message: err.message });
-      } else {
-        res.status(201).send(user.toJSON());
-      }
-    });
-  };
+        user.save((err) => {
+            if(err) {
+                res.status(500).send({ message: err.message });
+            } else {
+                res.status(201).send(user.toJSON());
+            }
+        });
+    };
 
-  static updateUser = (req, res) => {
-    const id = req.params.id;
+    static updateUser = (req, res) => {
+        const id = req.params.id;
 
-    users.findByIdAndUpdate(id, { $set: req.body }, (err) => {
-      if(!err) {
-        res.status(202).send({ message: 'User updated success' });
-      } else {
-        res.status(500).send({ message: err.message });
-      }
-    });
-  };
+        users.findByIdAndUpdate(id, { $set: req.body }, (err) => {
+            if(!err) {
+                res.status(202).send({ message: 'User updated success' });
+            } else {
+                res.status(500).send({ message: err.message });
+            }
+        });
+    };
 
-  static deleteUser = (req, res) => {
-    const id = req.params.id;
+    static deleteUser = (req, res) => {
+        const id = req.params.id;
 
-    users.findByIdAndDelete(id, (err) => {
-      if(!err) {
-        res.status(202).send({ message: 'User deleted success' });
-      } else {
-        res.status(500).send({ message: err.message });
-      }
-    });
-  };
+        users.findByIdAndDelete(id, (err) => {
+            if(!err) {
+                res.status(202).send({ message: 'User deleted success' });
+            } else {
+                res.status(500).send({ message: err.message });
+            }
+        });
+    };
 }
 
 export default UserController;
