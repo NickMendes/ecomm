@@ -12,5 +12,6 @@ router
   .put('/admin/user/:id', tokenVal, UserController.updateUser)
   .delete('/admin/user/:id', UserController.deleteUser)
   .post('/user/login', UserController.login)
+  .get('/user/logout', tokenVal, UserController.logout)
 
 export default router;

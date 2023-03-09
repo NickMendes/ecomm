@@ -1,6 +1,7 @@
 import users from '../models/UserModel.js';
 import JWTHelp from '../helpers/token.js';
 import Hash from '../helpers/hashing.js';
+import addToBlacklist from '../../redis/useBlacklist.js';
 
 class UserController {
   static login = async (req, res) => {
@@ -18,6 +19,16 @@ class UserController {
 
     res.set('Authorization', token);
     res.status(204).send();
+  };
+
+  static logout = async (req, res) => {
+    const { authorization } = req.header;
+    const add = await addToBlacklist(authorization);
+
+    if (!add) {
+      return res.status(400).json({ message: 'Email or Password invalid' });
+    }
+    res.status(204).json({ message: 'logout succeded' });
   };
 
   static getAllUsers = (_req, res) => {
