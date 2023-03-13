@@ -1,12 +1,15 @@
 import products from '../models/ProductModel.js';
-import status from '../../enum/statusCode.js';
 
 class ProductController {
     static getAllProducts = (_req, res) => {
         products.find()
             .populate('category_id')
             .exec((err, products) => {
-                res.status(status.OK).json(products);
+                if(err) {
+                    res.status(500).json({ message: err.message });
+                } else {
+                    res.status(200).json(products);
+                }
             });
     };
 
@@ -17,11 +20,11 @@ class ProductController {
             .populate('category_id') 
             .exec((err, product) => {
                 if(err) {
-                    res.status(status.BAD_REQUEST).send({ message: err.message });
+                    res.status(500).send({ message: err.message });
                 } else if(!product) {
-                    res.status(status.NOT_FOUND).send({ message: 'Product Not Found' });
+                    res.status(404).send({ message: 'Product Not Found' });
                 } else {
-                    res.status(status.OK).json(product);
+                    res.status(200).json(product);
                 }
             });
     };
@@ -29,27 +32,24 @@ class ProductController {
     static createProduct = (req, res) => {
         let product = new products(req.body);
 
-        if(!req.body.name) {
-            res.status(status.BAD_REQUEST).send({ message: 'Body is Required' });
-        } else {
-            product.save((err) => {
-                if(err) {
-                    res.status(status.BAD_REQUEST).send({ message: err.message });
-                } else {
-                    res.status(status.CREATED).json(product.toJSON());
-                }
-            });
-        }
+        product.save((err) => {
+            if(err) {
+                res.status(400).send({ message: err.message });
+            } else {
+                res.status(201).json(product.toJSON());
+            }
+        });
+        
     };
 
     static updateProduct = (req, res) => {
         const id = req.params.id;
 
         products.findByIdAndUpdate(id, { $set: req.body }, (err) => {
-            if(!err) {
-                res.status(status.ACCEPTED).json({ message: 'Product updated success'});
+            if(err) {
+                res.status(400).send({ message: err.message });
             } else {
-                res.status(status.BAD_REQUEST).send({ message: err.message });
+                res.status(204).json({ message: 'Product updated success'});
             }
         });
     };
@@ -58,10 +58,10 @@ class ProductController {
         const id = req.params.id;
 
         products.findByIdAndDelete(id, (err) => {
-            if(!err) {
-                res.status(status.ACCEPTED).json({ message: 'Product deleted success'});
+            if(err) {
+                res.status(400).send({ message: err.message });
             } else {
-                res.status(status.BAD_REQUEST).send({ message: err.message });
+                res.status(204).json({ message: 'Product deleted success'});
             }
         });
     };
@@ -71,9 +71,9 @@ class ProductController {
 
         products.find({'category': category}, {}, (err, products) => {
             if(err) {
-                res.status(status.BAD_REQUEST).send({ message: err.message });
+                res.status(404).send({ message: err.message });
             } else {
-                res.status(status.OK).send(products);
+                res.status(200).send(products);
             }
         });
     };

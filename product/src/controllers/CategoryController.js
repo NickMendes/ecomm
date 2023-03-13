@@ -1,10 +1,13 @@
 import categoryModel from '../models/CategoryModel.js';
-import statusCode from '../../enum/statusCode.js';
 
 class CategoryController {
     static getAllCategories = (_req, res) => {
         categoryModel.find((err, category) => {
-            res.status(statusCode.OK).json(category);
+            if(err) {
+                res.status(500).json({ message: err.message });
+            } else {
+                res.status(200).json(category);
+            }
         });
     };
 
@@ -13,9 +16,9 @@ class CategoryController {
 
         categoryModel.findById(id, (err, category) => {
             if(err) {
-                res.status(statusCode.BAD_REQUEST).send({ message: err.message });
+                res.status(404).send({ message: err.message });
             } else {
-                res.status(statusCode.OK).send(category);
+                res.status(200).send(category);
             }
         });
     };
@@ -23,27 +26,23 @@ class CategoryController {
     static createCategory = (req, res) => {
         let category = new categoryModel(req.body);
 
-        if(!req.body.name) {
-            res.status(statusCode.BAD_REQUEST).send({ message: 'Body is Required' });
-        } else {
-            category.save((err) => {
-                if(err) {
-                    res.status(statusCode.BAD_REQUEST).send({ message: err.message });
-                } else {
-                    res.status(statusCode.CREATED).send(category.toJSON());
-                }
-            });
-        }
+        category.save((err) => {
+            if(err) {
+                res.status(400).send({ message: err.message });
+            } else {
+                res.status(201).send(category.toJSON());
+            }
+        });
     };
 
     static updateCategory = (req, res) => {
         const id = req.params.id;
 
         categoryModel.findByIdAndUpdate(id, { $set: req.body }, (err) => {
-            if(!err) {
-                res.status(statusCode.ACCEPTED).send({ message: 'Category updated success' });
+            if(err) {
+                res.status(400).send({ message: err.message });
             } else {
-                res.status(statusCode.BAD_REQUEST).send({ message: err.message });
+                res.status(204).send({ message: 'Category updated success' });
             }
         });
     };
@@ -53,14 +52,14 @@ class CategoryController {
         const newStatus = req.body.status;
 
         if(!newStatus) {
-            res.status(statusCode.BAD_REQUEST).send(
+            res.status(400).send(
                 { message: 'Add an status to the body requirement' });
         } else {
             categoryModel.findByIdAndUpdate(id, { $set: { status: newStatus } }, (err) => {
-                if(!err) {
-                    res.status(statusCode.ACCEPTED).send({ message: 'Category updated success' });
+                if(err) {
+                    res.status(400).send({ message: err.message });
                 } else {
-                    res.status(statusCode.BAD_REQUEST).send({ message: err.message });
+                    res.status(204).send({ message: 'Category updated success' });
                 }
             });
         }
@@ -70,10 +69,10 @@ class CategoryController {
         const id = req.params.id;
 
         categoryModel.findByIdAndDelete(id, (err) => {
-            if(!err){
-                res.status(statusCode.ACCEPTED).send({ message: 'Category deleted success' });
+            if(err){
+                res.status(400).send({ message: err.message });
             } else {
-                res.status(statusCode.BAD_REQUEST).send({ message: err.message });
+                res.status(204).send({ message: 'Category deleted success' });
             }
         });
     };
