@@ -6,10 +6,10 @@ import tokenVal from '../middleware/authorizationMW.js';
 const router = express.Router();
 
 router
-  .get('/product', ProductController.getAllProducts)
-  .get('/product/:id', ProductController.getProductById)
-  .post('/admin/product', tokenVal, validadeProduct, ProductController.createProduct)
-  .put('/admin/product/:id', tokenVal, ProductController.updateProduct)
-  .delete('/admin/product/:id', tokenVal, ProductController.deleteProduct)
+    .get('/product', ProductController.getAllProducts)
+    .get('/product/:id', ProductController.getProductById)
+    .post('/product', tokenVal, validadeProduct, ProductController.createProduct)
+    .put('/product/:id', tokenVal, ProductController.updateProduct)
+    .delete('/product/:id', tokenVal, ProductController.deleteProduct);
 
 export default router;

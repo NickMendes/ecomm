@@ -6,11 +6,11 @@ import tokenVal from '../middleware/authorizationMW.js';
 const router = express.Router();
 
 router
-  .get('/categories', CategoryController.getAllCategories)
-  .get('/categories/:id', CategoryController.getCategoryById)
-  .post('/admin/categories', tokenVal, validateCategory, CategoryController.createCategory)
-  .patch('/admin/categories/:id', tokenVal, CategoryController.updateCategoryStatus)
-  .put('/admin/categories/:id', tokenVal, validateCategory, CategoryController.updateCategory)
-  .delete('/admin/categories/:id', tokenVal, CategoryController.deleteCategory)
+    .get('/categories', CategoryController.getAllCategories)
+    .get('/categories/:id', CategoryController.getCategoryById)
+    .post('/categories', tokenVal, validateCategory, CategoryController.createCategory)
+    .patch('/categories/:id', tokenVal, CategoryController.updateCategoryStatus)
+    .put('/categories/:id', tokenVal, validateCategory, CategoryController.updateCategory)
+    .delete('/categories/:id', tokenVal, CategoryController.deleteCategory);
 
 export default router;

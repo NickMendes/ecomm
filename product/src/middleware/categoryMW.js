@@ -8,7 +8,7 @@ const validateCategory = (req, res, next) => {
 
     const { error } = categorySchema.validate(req.body);
     if (error) {
-      return res.status(422).json({ message: error.message });
+        return res.status(422).json({ message: error.message });
     }
     next();
     return true;
