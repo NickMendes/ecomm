@@ -22,7 +22,7 @@ const validateSale = (req, res, next) => {
 
     const { error } = saleSchema.validate(req.body);
     if (error) {
-      return res.status(422).json({ message: error.message });
+        return res.status(422).json({ message: error.message });
     }
     next();
     return true;
