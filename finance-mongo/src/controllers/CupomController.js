@@ -5,10 +5,10 @@ import omit from '../helpers/helps.js';
 class CupomController {
     static getAllCupoms = (_req, res) => {
         cupomModel.find((err, cupom) => {
-            if(!err) {
-                res.status(200).json(cupom);
+            if(err) {
+                res.status(500).send({ message: err.message });
             } else {
-                res.status(400).send({ message: err.message });
+                res.status(200).json(cupom);
             }
         });
     };
@@ -17,10 +17,10 @@ class CupomController {
         const id = req.params.id;
 
         cupomModel.findById(id, (err, cupom) => {
-            if(!err) {
-                res.status(200).json(cupom);
+            if(err) {
+                res.status(404).send({ message: err.message });
             } else {
-                res.status(400).send({ message: err.message });
+                res.status(200).json(cupom);
             }
         });
     };
@@ -44,14 +44,15 @@ class CupomController {
             let cupom = new cupomModel(cupomInfo);
 
             cupom.save((err) => {
-                if(!err) {
-                    res.status(201).json(cupom);
-                } else {
+                if(err) {
                     res.status(400).send({ message: err.message });
+                } else {
+                    res.status(201).json(cupom);
                 }
             });
         } catch (error) {
-            console.error(error);
+            res.status(400).send({ message: error.message });
+
         }
     };
 
@@ -59,10 +60,10 @@ class CupomController {
         const id = req.params.id;
 
         cupomModel.findByIdAndUpdate(id, { $set: req.body }, (err) => {
-            if(!err) {
-                res.status(202).json({ message: 'Cupom updated success'});
-            } else {
+            if(err) {
                 res.status(400).send({ message: err.message });
+            } else {
+                res.status(204).json({ message: 'Cupom updated success'});
             }
         });
     };
@@ -71,10 +72,10 @@ class CupomController {
         const id = req.params.id;
 
         cupomModel.findByIdAndDelete(id, { $set: req.body }, (err) => {
-            if(!err) {
-                res.status(202).json({ message: 'Cupom deleted success'});
-            } else {
+            if(err) {
                 res.status(400).send({ message: err.message });
+            } else {
+                res.status(204).json({ message: 'Cupom deleted success'});
             }
         });
     };

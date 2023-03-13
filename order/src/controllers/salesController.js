@@ -5,10 +5,10 @@ import omit from '../helpers/helps.js';
 class SaleController {
     static getAllSales = (_req, res) => {
         salesModel.find((err, sale) => {
-            if(!err) {
-                res.status(200).json(sale);
-            } else {
+            if(err) {
                 res.status(500).send({ message: err.message });
+            } else {
+                res.status(200).json(sale);
             }
         });
     };
@@ -18,7 +18,7 @@ class SaleController {
 
         salesModel.findById(id, (err, sale) => {
             if(err) {
-                res.status(400).send({ message: err.message });
+                res.status(404).send({ message: err.message });
             } else {
                 res.status(200).send(sale);
             }
@@ -62,7 +62,7 @@ class SaleController {
   
             sale.save((err) => {
                 if(err) {
-                    res.status(500).send({ message: err.message });
+                    res.status(400).send({ message: err.message });
                 } else {
                     res.status(201).send(sale.toJSON());
                 }
@@ -76,10 +76,10 @@ class SaleController {
         const id = req.params.id;
 
         salesModel.findByIdAndUpdate(id, { $set: req.body }, (err) => {
-            if(!err) {
-                res.status(202).send({ message: 'Sale updated success' });
+            if(err) {
+                res.status(400).send({ message: err.message });
             } else {
-                res.status(500).send({ message: err.message });
+                res.status(204).send({ message: 'Sale updated success' });
             }
         });
     };
@@ -88,10 +88,10 @@ class SaleController {
         const id = req.params.id;
 
         salesModel.findByIdAndDelete(id, (err) => {
-            if(!err) {
-                res.status(202).send({ message: 'Sale deleted success' });
+            if(err) {
+                res.status(400).send({ message: err.message });
             } else {
-                res.status(500).send({ message: err.message });
+                res.status(204).send({ message: 'Sale deleted success' });
             }
         });
     };

@@ -1,13 +1,15 @@
 import express from 'express';
 import PaymentController from '../controllers/PaymentController.js';
+import validatePayment from '../middleware/paymentMW.js';
+import tokenVal from '../middleware/authorizationMW.js';
 
 const router = express.Router();
 
 router
-    .get('/payment', PaymentController.getAllPayments)
-    .get('/payment/:id', PaymentController.getPaymentById)
-    .post('/admin/payment', PaymentController.createPayment)
-    .patch('/admin/payment/:id', PaymentController.updatePayment)
-    .delete('/admin/payment/:id', PaymentController.deletePayment);
+    .get('/payment', tokenVal, PaymentController.getAllPayments)
+    .get('/payment/:id', tokenVal, PaymentController.getPaymentById)
+    .post('/payment', validatePayment, tokenVal, PaymentController.createPayment)
+    .patch('/payment/:id', tokenVal, PaymentController.updatePayment)
+    .delete('/payment/:id', tokenVal, PaymentController.deletePayment);
 
 export default router;

@@ -5,10 +5,10 @@ class PaymentController {
     static getAllPayments = (_req, res) => {
         paymentModel.find((err, payment) => {
             if(!err) {
+                res.status(500).send({ message: err.message });
+            } else {
                 const payments = payment.map((ele) => omit(ele._doc, ['cvv']));
                 res.status(200).json(payments);
-            } else {
-                res.status(500).send({ message: err.message });
             }
         });
     };
@@ -18,7 +18,7 @@ class PaymentController {
 
         paymentModel.findById(id, (err, payment) => {
             if(err) {
-                res.status(400).send({ message: err.message });
+                res.status(404).send({ message: err.message });
             } else {
                 res.status(200).json(omit(payment._doc, ['cvv']));
             }
@@ -30,7 +30,7 @@ class PaymentController {
     
         payment.save((err) => {
             if(err) {
-                res.status(500).send({ message: err.message });
+                res.status(400).send({ message: err.message });
             } else {
                 res.status(201).json(payment.toJSON());
             }
@@ -42,10 +42,10 @@ class PaymentController {
         const id = req.params.id;
 
         paymentModel.findByIdAndUpdate(id, { $set: req.body }, (err) => {
-            if(!err) {
-                res.status(202).json({ message: 'Payment updated success'});
+            if(err) {
+                res.status(400).send({ message: err.message });
             } else {
-                res.status(500).send({ message: err.message });
+                res.status(204).json({ message: 'Payment updated success'});
             }
         });
     };
@@ -54,10 +54,10 @@ class PaymentController {
         const id = req.params.id;
 
         paymentModel.findByIdAndDelete(id, (err) => {
-            if(!err) {
-                res.status(202).json({ message: 'Payment deleted success'});
+            if(err) {
+                res.status(400).send({ message: err.message });
             } else {
-                res.status(500).send({ message: err.message });
+                res.status(204).json({ message: 'Payment deleted success'});
             }
         });
     };
