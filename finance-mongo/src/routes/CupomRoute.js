@@ -6,10 +6,10 @@ import tokenVal from '../middleware/authorizationMW.js';
 const router = express.Router();
 
 router
-  .get('/cupom', tokenVal, CupomController.getAllCupoms)
-  .get('/cupom/:id', tokenVal, CupomController.getCupomById)
-  .post('/admin/cupom', tokenVal, CupomController.createCupom)
-  .patch('/admin/cupom/:id', tokenVal, CupomController.updateCupom)
-  .delete('/admin/cupom/:id', tokenVal, CupomController.deleteCupom);
+    .get('/cupom', tokenVal, CupomController.getAllCupoms)
+    .get('/cupom/:id', tokenVal, CupomController.getCupomById)
+    .post('/cupom', tokenVal, CupomController.createCupom)
+    .patch('/cupom/:id', tokenVal, CupomController.updateCupom)
+    .delete('/cupom/:id', tokenVal, CupomController.deleteCupom);
 
 export default router;
