@@ -1,11 +1,11 @@
 # ecomm
 
-Projeto de Ecommerce criando durante o programa LevelUp da Alura
+This is a back-end application created for a ecommerce using Node.js, Express and Mongoose to help applie the acquired knowledge from the Alura Junior Dev program together with PagoNxt (A Santader company).
 
 ## 12 Factor App
 [The Twelve-Factor App](https://12factor.net/)
 
-Analysis of the application on the twelve factors to be applied of the methodology for building software as a service. Resume about every factor and explanation if the factor itself is applied
+Analysis of the application on the twelve factors to be applied of the methodology for building software as a service. Resume about every factor and explanation if the factor itself is applied.
 
 1. [x] **Codebase**
 
@@ -55,17 +55,17 @@ Analysis of the application on the twelve factors to be applied of the methodolo
     
     - Don`t know
     
-1. [ ] **Disposability**
+1. [x] **Disposability**
 
     This Factor says the application should have a fast inicialization and a gracefull stop, witch means it should stop with a SIGTERM signal, showing that the application exited in an expected way, freeing the resources correctly and saving the state if necessary.
     
-    - Don`t know
+    - This application is using the ninth factor with the help of Docker containerization.
 
-1. [ ] **Dev/prod parity**
+1. [x] **Dev/prod parity**
 
     This Factor says the development, production and test enviroment should be as similar as possible. This includes the code version, the team itself and configuration.
     
-    - Don`t know
+    - This application is using the tenth factor using the same enviroment for development and testing and dockering the production enviroment.
     
 1. [x] **Logs**
 
@@ -77,4 +77,33 @@ Analysis of the application on the twelve factors to be applied of the methodolo
 
     This Factor says One-off admin processes should be run in an identical environment as the regular long-running processes of the app and Admin code must ship with application code to avoid synchronization issues.
     
-    - Don`t know
+    - Not Implemented
+
+## MicroServices
+[What is microservices?](https://microservices.io/)
+
+Analysis of the application on the microservices architecture implementations.
+
+- [x] **Domain Services**
+
+    - Used on the Account and Order Services
+
+- [x] **Application Service**
+
+    - Used on the Finance and Products Services
+
+- [x] **API Gateway**
+
+- [x] **Process Aggregator**
+
+- [ ] **Edge Service**
+
+- [ ] **Single Database**
+
+- [x] **Mult Databases**
+
+- [x] **Asynchronous Events‌**
+
+- [ ] **Log Aggregation**
+
+- [ ] **Metric Aggregation**
