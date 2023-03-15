@@ -3,7 +3,7 @@ import * as dotenv from 'dotenv';
 
 dotenv.config();
 
-mongoose.connect( process.env.CONNECTION_STRING);
+mongoose.connect(process.env.CONNECTION_STRING);
 
 let db = mongoose.connection;
 

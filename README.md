@@ -11,7 +11,7 @@ Analysis of the application on the twelve factors to be applied of the methodolo
 
     This Factor says your codebase needs to be versionated and have an one-to-one correlation between the codebase and the app.
     
-    - This application is using the fist factor once it's on a controled git repository and 
+    - This application is using the fist factor once it's on a controled git repository.
     
 1. [x] **Dependencies**
 
@@ -69,7 +69,7 @@ Analysis of the application on the twelve factors to be applied of the methodolo
     
 1. [x] **Logs**
 
-    This Factor says an application should not attempt to write to or manage logfiles. Instead, each running process writes its event stream, unbuffered, to ```stdout```.
+    This Factor says an application should not attempt to write to or manage logfiles. Instead, each running process writes its event stream, unbuffered, to `stdout`.
     
     - This application is using the eleventh factor, all logs are directed to the standart output and separeted between messages and errors.
     
