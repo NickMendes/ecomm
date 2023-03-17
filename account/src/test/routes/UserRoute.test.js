@@ -45,6 +45,7 @@ describe('GET route /user', () => {
     it('Should return 401 if token is not valid', async () => {
         await request(app)
             .get('/user')
+            .set('Authorization', 'qualquercoisaquenaosejaoauthorizadordeverdade')
             .expect(401);
     });
 });
