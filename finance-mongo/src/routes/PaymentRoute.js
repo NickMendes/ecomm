@@ -8,7 +8,7 @@ const router = express.Router();
 router
     .get('/payment', tokenVal, PaymentController.getAllPayments)
     .get('/payment/:id', tokenVal, PaymentController.getPaymentById)
-    .post('/payment', validatePayment, tokenVal, PaymentController.createPayment)
+    .post('/payment', tokenVal, validatePayment, PaymentController.createPayment)
     .patch('/payment/:id', tokenVal, PaymentController.updatePayment)
     .delete('/payment/:id', tokenVal, PaymentController.deletePayment);
 

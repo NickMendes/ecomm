@@ -8,7 +8,7 @@ const router = express.Router();
 router
     .get('/sale', tokenVal, SaleController.getAllSales)
     .get('/sale/:id', tokenVal, SaleController.getSaleById)
-    .post('/sale', validateSale, tokenVal, SaleController.createSale)
+    .post('/sale', tokenVal, validateSale, SaleController.createSale)
     .patch('/sale/:id', tokenVal, SaleController.updateSale)
     .delete('/sale/:id', tokenVal, SaleController.deleteSale);
 
