@@ -14,7 +14,7 @@ Analysis of the application on the twelve factors to be applied of the methodolo
     
     - This application is using the fist factor once it's on a controled git repository.
     </details>
-    
+
 1. [x] **Dependencies**
     <details>
     <summary> Learn More </summary>
@@ -48,7 +48,8 @@ Analysis of the application on the twelve factors to be applied of the methodolo
     </details>
     
 1. [x] **Processes**
-
+    <details>
+    <summary> Learn More </summary>
     This Factor says the application should be stateless and between microservices it should have no exchange of informations or states. 
     
     - This application is using the sixth factor, being stateless and saving all necessery information on a database.
@@ -63,7 +64,8 @@ Analysis of the application on the twelve factors to be applied of the methodolo
     </details>
     
 1. [ ] **Concurrency**
-
+    <details>
+    <summary> Learn More </summary>
     This Factor says that when thinking of scalability instead of makeing a new instance in a better machine you should be able to duplicate the current instance.
     
     - Don`t know
