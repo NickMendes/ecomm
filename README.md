@@ -8,11 +8,12 @@ This is a back-end application created for a ecommerce using Node.js, Express an
 Analysis of the application on the twelve factors to be applied of the methodology for building software as a service. Resume about every factor and explanation if the factor itself is applied.
 
 1. [x] **Codebase**
-
+    <details>
+    <summary> Learn More </summary>
     This Factor says your codebase needs to be versionated and have an one-to-one correlation between the codebase and the app.
     
     - This application is using the fist factor once it's on a controled git repository.
-    
+    </details>
 1. [x] **Dependencies**
 
     This Factor says all the dependencies used on the application need to be well documented and isolated to avoid machine-to-machine errors.
