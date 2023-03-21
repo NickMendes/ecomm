@@ -116,7 +116,7 @@ Analysis of the application on the microservices architecture implementations.
 
     - Used on the Finance and Products Services
 
-- [x] **API Gateway**
+- [ ] **API Gateway**
 
 - [x] **Process Aggregator**
 
