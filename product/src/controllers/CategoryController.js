@@ -42,7 +42,7 @@ class CategoryController {
             if(err) {
                 res.status(400).send({ message: err.message });
             } else {
-                res.status(204).send({ message: 'Category updated success' });
+                res.status(204).end();
             }
         });
     };
@@ -59,7 +59,7 @@ class CategoryController {
                 if(err) {
                     res.status(400).send({ message: err.message });
                 } else {
-                    res.status(204).send({ message: 'Category updated success' });
+                    res.status(204).end();
                 }
             });
         }
@@ -72,7 +72,7 @@ class CategoryController {
             if(err){
                 res.status(400).send({ message: err.message });
             } else {
-                res.status(204).send({ message: 'Category deleted success' });
+                res.status(204).end();
             }
         });
     };

@@ -1,15 +1,13 @@
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 class Hash{
-    static hashing = async (senha) => {
-        const saltRounds = 10;
-        const salt = await bcrypt.genSalt(saltRounds);
-        return bcrypt.hash(senha, salt);
+    static hashing = (password) => {
+        const saltRounds = bcrypt.genSaltSync(12);
+        return bcrypt.hashSync(password, saltRounds);
     };
     
-    static dehashing = (senha, hash) => {
-        const result = bcrypt.compareSync(senha, hash);
-        return result;
+    static dehashing = (password, hash) => {
+        return bcrypt.compareSync(password, hash);
     };
 }
 

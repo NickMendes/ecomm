@@ -27,14 +27,17 @@ class SaleController {
 
     static createSale = async (req, res) => {
         const saleInfo = req.body;
+        const { authorization } = req.headers;
 
         try {
-            const userData = await axios.get(`http://localhost:3002/user/${saleInfo.user_id}`);
+            const userData = await axios.get(`http://localhost:3002/user/${saleInfo.user_id}`,
+                { headers: { 'Authorization': authorization } });
             const user_info = { name: userData.data.name, cpf: userData.data.cpf };
       
             const orderInfo = await saleInfo.order.map(async (product) => {
                 const productData =  await axios.get(
-                    `http://localhost:3001/product/${product.product_id}`);
+                    `http://localhost:3001/product/${product.product_id}`,
+                    { headers: { 'Authorization': authorization } });
                 if (!productData) {
                     res.status(404).send({ message: 'A product was not found' });
                 } else {
@@ -51,9 +54,8 @@ class SaleController {
             const orderInfoPromise = await Promise.all(orderInfo);
       
             const total_price = orderInfoPromise.reduce((acc, cur) =>  {
-                return acc + (cur.product_price.$numberDecimal * cur.product_qty) - cur.discount;
+                return acc + (cur.product_price * cur.product_qty) - cur.discount;
             }, 0).toFixed(2);
-            console.log(total_price);
 
             const saleInfoRefactor = omit(saleInfo, ['user_id', 'order']);
 

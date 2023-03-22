@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "description": "Semana 5 - Treinamento da PagoNxt com a Alura sobre HTTP e Swagger.",
-    "version": "0.1.0",
+    "description": "Treinamento da PagoNxt (Empresa Santander) com a Alura - Microserviço de Ecommerce, documentação dos usuários",
+    "version": "0.2.0",
     "title": "Ecomm Project - User API",
     "termsOfService": "http://swagger.io/terms/",
     "contact": {
@@ -16,6 +16,13 @@
   },
   "components": {
     "schemas": {
+      "securitySchemes": {
+        "JWTAuth": {
+          "type": "http",
+          "scheme": "bearer",
+          "bearerFormat": "JWT"
+        }
+      },
       "user-insert": {
         "type": "object",
         "properties": {
@@ -29,25 +36,25 @@
             "type": "string"
           },
           "cpf": {
-            "type": "integer"
+            "type": "string"
           },
           "phones": {
             "type": "array",
             "items": {
-              "type": "integer"
+              "type": "string"
             }
           },
           "address": {
             "type": "object",
             "properties": {
               "cep": {
-                "type": "integer"
+                "type": "string"
               },
               "street": {
                 "type": "string"
               },
               "number": {
-                "type": "integer"
+                "type": "string"
               },
               "complement": {
                 "type": "string"
@@ -78,19 +85,19 @@
             "type": "string"
           },
           "cpf": {
-            "type": "integer"
+            "type": "string"
           },
           "phones": {
             "type": "array",
             "items": {
-              "type": "integer"
+              "type": "string"
             }
           },
           "address": {
             "type": "object",
             "properties": {
               "cep": {
-                "type": "integer"
+                "type": "string"
               },
               "street": {
                 "type": "string"
@@ -119,15 +126,41 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3000/",
+      "url": null,
       "description": "User Server - XD"
     }
   ],
   "paths": {
+    "/user/login": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Enter your credentials to recive the JWT Authorization Token",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "example": "Email or Password invalid"
+              }
+            }
+          }
+        }
+      }
+    },
     "/user": {
       "get": {
         "tags": [
           "User"
+        ],
+        "security": [
+          {
+            "JWTAuth": []
+          }
         ],
         "summary": "Search for all available users.",
         "responses": {
@@ -144,46 +177,11 @@
               }
             }
           },
-          "404": {
-            "description": "Not Found",
+          "401": {
+            "description": "Unathorized",
             "content": {
-              "aplication/json": {
-                "example": "Not Found"
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/user/{id}": {
-      "parameters": [
-        {
-          "in": "path",
-          "name": "id",
-          "description": "Unique identifier",
-          "required": true,
-          "example": "63caa785ae701b25441ff0be",
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
-      "get": {
-        "tags": [
-          "User"
-        ],
-        "summary": "Search for an especific user by ID.",
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "aplication/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/user-response"
-                }
+              "application/json": {
+                "example": "Token not found || Expired or invalid token"
               }
             }
           },
@@ -199,9 +197,7 @@
             "description": "Internal Server Error"
           }
         }
-      }
-    },
-    "/admin/user": {
+      },
       "post": {
         "tags": [
           "User"
@@ -228,11 +224,11 @@
               }
             }
           },
-          "401": {
-            "description": "Unauthorized",
+          "422": {
+            "description": "Unprocessable Entity",
             "content": {
-              "aplication/json": {
-                "example": "User unathorized, please check your credentials"
+              "application/json": {
+                "example": "\\xxx\\ is required || \\xxx\\ must be 'typeof'"
               }
             }
           },
@@ -242,7 +238,7 @@
         }
       }
     },
-    "/admin/user/{id}": {
+    "/user/{id}": {
       "parameters": [
         {
           "in": "path",
@@ -255,9 +251,56 @@
           }
         }
       ],
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "security": [
+          {
+            "JWTAuth": []
+          }
+        ],
+        "summary": "Search for an especific user by ID.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/user-response"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unathorized",
+            "content": {
+              "application/json": {
+                "example": "Token not found || Expired or invalid token"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "aplication/json": {
+                "example": "Not Found"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
       "put": {
         "tags": [
           "User"
+        ],
+        "security": [
+          {
+            "JWTAuth": []
+          }
         ],
         "summary": "Change all user information by ID. You need to be logged as an adminstrator to use this.",
         "requestBody": {
@@ -271,21 +314,14 @@
           }
         },
         "responses": {
-          "202": {
-            "description": "Accepted",
-            "content": {
-              "aplicativo/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/user-response"
-                }
-              }
-            }
+          "204": {
+            "description": "No Content"
           },
           "401": {
-            "description": "Unauthorized",
+            "description": "Unathorized",
             "content": {
-              "aplication/json": {
-                "example": "User unathorized, please check your credentials"
+              "application/json": {
+                "example": "Token not found || Expired or invalid token"
               }
             }
           },
@@ -308,7 +344,12 @@
         "tags": [
           "User"
         ],
-        "summary": "NOT IMPLEMENTED - Change a user information by ID. You need to be logged as an adminstrator to use this.",
+        "security": [
+          {
+            "JWTAuth": []
+          }
+        ],
+        "summary": "Change a user information by ID. You need to be logged as an adminstrator to use this.",
         "requestBody": {
           "required": true,
           "content": {
@@ -320,21 +361,14 @@
           }
         },
         "responses": {
-          "202": {
-            "description": "Accepted",
-            "content": {
-              "aplication/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/user-response"
-                }
-              }
-            }
+          "204": {
+            "description": "No Content"
           },
           "401": {
-            "description": "Unauthorized",
+            "description": "Unathorized",
             "content": {
-              "aplication/json": {
-                "example": "User unathorized, please check your credentials"
+              "application/json": {
+                "example": "Token not found || Expired or invalid token"
               }
             }
           },
@@ -355,21 +389,21 @@
         "tags": [
           "User"
         ],
+        "security": [
+          {
+            "JWTAuth": []
+          }
+        ],
         "summary": "Delete a user by ID. You need to be logged as an adminstrator to use this.",
         "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "aplication/json": {
-                "example": "User deleted"
-              }
-            }
+          "204": {
+            "description": "No Content"
           },
           "401": {
-            "description": "Unauthorized",
+            "description": "Unathorized",
             "content": {
-              "aplication/json": {
-                "example": "User unathorized, please check your credentials"
+              "application/json": {
+                "example": "Token not found || Expired or invalid token"
               }
             }
           },

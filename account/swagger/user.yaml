@@ -1,7 +1,8 @@
 openapi: 3.0.1
+
 info:
-  description: Semana 5 - Treinamento da PagoNxt com a Alura sobre HTTP e Swagger.
-  version: 0.1.0
+  description: Treinamento da PagoNxt (Empresa Santander) com a Alura - Microserviço de Ecommerce, documentação dos usuários
+  version: 0.2.0
   title: Ecomm Project - User API
   termsOfService: http://swagger.io/terms/
   contact:
@@ -10,8 +11,14 @@ info:
   license:
     name: Licença
     url: http://www.alura.com
+
 components:
   schemas:
+    securitySchemes:
+      JWTAuth:
+        type: http
+        scheme: bearer
+        bearerFormat: JWT
     user-insert:
       type: object
       properties:
@@ -22,20 +29,20 @@ components:
         password:
           type: string
         cpf:
-          type: integer
+          type: string
         phones:
           type: array
           items: 
-            type: integer
+            type: string
         address:
           type: object
           properties: 
             cep:
-              type: integer
+              type: string
             street:
               type: string
             number:
-              type: integer
+              type: string
             complement:
               type: string
             city:
@@ -54,16 +61,16 @@ components:
         password:
           type: string
         cpf:
-          type: integer
+          type: string
         phones:
           type: array
           items: 
-            type: integer
+            type: string
         address:
           type: object
           properties: 
             cep:
-              type: integer
+              type: string
             street:
               type: string
             number:
@@ -81,10 +88,26 @@ servers:
 - url: 
   description: User Server - XD
 paths:
-  /api/user:
+  /user/login:
+    post:
+      tags:
+        - User
+      summary: Enter your credentials to recive the JWT Authorization Token
+      responses:
+        204:
+          description: No Content
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              example: Email or Password invalid
+
+  /user:
     get:
       tags:
       - User
+      security:
+        - JWTAuth: []
       summary: Search for all available users.
       responses:
         200:
@@ -95,6 +118,11 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/user-response'
+        401:
+          description: Unathorized
+          content:
+            application/json:
+              example: Token not found || Expired or invalid token
         404:
           description: Not Found
           content:
@@ -102,34 +130,7 @@ paths:
               example: Not Found
         500:
           description: Internal Server Error
-  /api/user/{id}:
-    parameters: 
-    - in: path
-      name: id
-      description: Unique identifier
-      required: true
-      example: 63caa785ae701b25441ff0be
-      schema: 
-        type: string
-    get:
-      tags:
-      - User
-      summary: Search for an especific user by ID.
-      responses: 
-        200:
-          description: Success
-          content:
-            aplication/json:
-              schema:
-                $ref: '#/components/schemas/user-response'
-        404:
-          description: Not Found
-          content: 
-            aplication/json:
-              example: Not Found
-        500:
-          description: Internal Server Error
-  /api/admin/user:
+
     post:
       tags:
       - User
@@ -147,14 +148,15 @@ paths:
             aplication/json:
               schema: 
                 $ref: '#/components/schemas/user-response'
-        401:
-          description: Unauthorized
-          content: 
-            aplication/json:
-              example: User unathorized, please check your credentials
+        422:
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example: \xxx\ is required || \xxx\ must be 'typeof'
         500:
           description: Internal Server Error
-  /api/admin/user/{id}:
+
+  /user/{id}:
     parameters: 
     - in: path
       name: id
@@ -163,9 +165,37 @@ paths:
       example: 63caa785ae701b25441ff0be
       schema: 
         type: string
+    get:
+      tags:
+      - User
+      security:
+        - JWTAuth: []
+      summary: Search for an especific user by ID.
+      responses: 
+        200:
+          description: Success
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/user-response'
+        401:
+          description: Unathorized
+          content:
+            application/json:
+              example: Token not found || Expired or invalid token
+        404:
+          description: Not Found
+          content: 
+            aplication/json:
+              example: Not Found
+        500:
+          description: Internal Server Error
+
     put:
       tags:
       - User
+      security:
+        - JWTAuth: []
       summary: Change all user information by ID. You need to be logged as an adminstrator to use this.
       requestBody:
         required: true
@@ -174,17 +204,13 @@ paths:
             schema:
               $ref: '#/components/schemas/user-insert'
       responses: 
-        202:
-          description: Accepted
-          content: 
-            aplicativo/json:
-              schema: 
-                $ref: '#/components/schemas/user-response'
+        204:
+          description: No Content
         401:
-          description: Unauthorized
-          content: 
-            aplication/json:
-              example: User unathorized, please check your credentials
+          description: Unathorized
+          content:
+            application/json:
+              example: Token not found || Expired or invalid token
         404:
           description: Not Found
           content: 
@@ -193,9 +219,12 @@ paths:
                 example: User Not Found
         500:
           description: Internal Server Error
+
     patch:
       tags:
       - User
+      security:
+        - JWTAuth: []
       summary: Change a user information by ID. You need to be logged as an adminstrator to use this.
       requestBody:
         required: true
@@ -204,17 +233,13 @@ paths:
             schema:
               type: object
       responses: 
-        202:
-          description: Accepted
-          content:
-            aplication/json:
-              schema: 
-                $ref: '#/components/schemas/user-response'
+        204:
+          description: No Content
         401:
-          description: Unauthorized
-          content: 
-            aplication/json:
-              example: User unathorized, please check your credentials
+          description: Unathorized
+          content:
+            application/json:
+              example: Token not found || Expired or invalid token
         404:
           description: Not Found
           content: 
@@ -222,21 +247,21 @@ paths:
               example: User Not Found
         500:
           description: Internal Server Error
+
     delete:
       tags:
       - User
+      security:
+        - JWTAuth: []
       summary: Delete a user by ID. You need to be logged as an adminstrator to use this.
       responses: 
-        200:
-          description: Success
-          content:
-            aplication/json:
-              example: User deleted
+        204:
+          description: No Content
         401:
-          description: Unauthorized
-          content: 
-            aplication/json:
-              example: User unathorized, please check your credentials
+          description: Unathorized
+          content:
+            application/json:
+              example: Token not found || Expired or invalid token
         404:
           description: Not Found
           content: 
