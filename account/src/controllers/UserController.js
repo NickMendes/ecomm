@@ -7,10 +7,12 @@ class UserController {
         const { email, password } = req.body;
 
         const checkUser = await users.findOne({ email });
+        if (!checkUser) {
+            return res.status(400).json({ message: 'Email or Password invalid' });
+        }
 
         const checkPassword = Hash.dehashing(password, checkUser.password);
-
-        if (!checkUser || !checkPassword) {
+        if (!checkPassword) {
             return res.status(400).json({ message: 'Email or Password invalid' });
         }
 
