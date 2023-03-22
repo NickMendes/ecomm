@@ -203,14 +203,6 @@
               }
             }
           },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "aplication/json": {
-                "example": "Not Found"
-              }
-            }
-          },
           "500": {
             "description": "Internal Server Error"
           }

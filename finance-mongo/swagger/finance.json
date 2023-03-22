@@ -246,14 +246,6 @@
               }
             }
           },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "aplication/json": {
-                "example": "Not Found"
-              }
-            }
-          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -453,14 +445,6 @@
             "content": {
               "application/json": {
                 "example": "Token not found || Expired or invalid token"
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "aplication/json": {
-                "example": "Not Found"
               }
             }
           },
