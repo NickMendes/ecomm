@@ -60,8 +60,13 @@ class CupomController {
         }
     };
 
-    static updateCupom = (req, res) => {
+    static updateCupom = async (req, res) => {
         const id = req.params.id;
+
+        const checkId = await cupomModel.findById(id);
+        if (!checkId) {
+            res.status(404).send({ message: 'Cupom not found' });
+        }
 
         cupomModel.findByIdAndUpdate(id, { $set: req.body }, (err) => {
             if(err) {
@@ -72,8 +77,13 @@ class CupomController {
         });
     };
 
-    static deleteCupom = (req, res) => {
+    static deleteCupom = async (req, res) => {
         const id = req.params.id;
+
+        const checkId = await cupomModel.findById(id);
+        if (!checkId) {
+            res.status(404).send({ message: 'Cupom not found' });
+        }
 
         cupomModel.findByIdAndDelete(id, { $set: req.body }, (err) => {
             if(err) {

@@ -58,8 +58,13 @@ class UserController {
         });
     };
 
-    static updateUser = (req, res) => {
+    static updateUser = async (req, res) => {
         const id = req.params.id;
+
+        const checkId = await users.findById(id);
+        if (!checkId) {
+            res.status(404).send({ message: 'User not found' });
+        }
 
         users.findByIdAndUpdate(id, { $set: req.body }, (err) => {
             if(!err) {
@@ -70,8 +75,13 @@ class UserController {
         });
     };
 
-    static deleteUser = (req, res) => {
+    static deleteUser = async (req, res) => {
         const id = req.params.id;
+
+        const checkId = await users.findById(id);
+        if (!checkId) {
+            res.status(404).send({ message: 'User not found' });
+        }
 
         users.findByIdAndDelete(id, (err) => {
             if(!err) {
