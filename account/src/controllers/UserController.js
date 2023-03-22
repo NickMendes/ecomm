@@ -43,7 +43,7 @@ class UserController {
     };
 
     static createUser = async (req, res) => {
-        const hash = await Hash.hashing(req.body.password);
+        const hash = Hash.hashing(req.body.password);
 
         let user = new users({ ...req.body, password: hash });
 
@@ -61,7 +61,7 @@ class UserController {
 
         users.findByIdAndUpdate(id, { $set: req.body }, (err) => {
             if(!err) {
-                res.status(204).send({ message: 'User updated success' });
+                res.status(204).end();
             } else {
                 res.status(400).send({ message: err.message });
             }
@@ -73,7 +73,7 @@ class UserController {
 
         users.findByIdAndDelete(id, (err) => {
             if(!err) {
-                res.status(204).send({ message: 'User deleted success' });
+                res.status(204).end();
             } else {
                 res.status(400).send({ message: err.message });
             }

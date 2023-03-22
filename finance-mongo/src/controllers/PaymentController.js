@@ -4,7 +4,7 @@ import omit from '../helpers/helps.js';
 class PaymentController {
     static getAllPayments = (_req, res) => {
         paymentModel.find((err, payment) => {
-            if(!err) {
+            if(err) {
                 res.status(500).send({ message: err.message });
             } else {
                 const payments = payment.map((ele) => omit(ele._doc, ['cvv']));

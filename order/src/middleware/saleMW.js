@@ -17,7 +17,7 @@ const validateSale = (req, res, next) => {
     const saleSchema = Joi.object().keys({
         user_id: Joi.string().required(),
         delivery_address: addressSchema,
-        order: orderSchema
+        order: Joi.array().items(orderSchema)
     });
 
     const { error } = saleSchema.validate(req.body);
