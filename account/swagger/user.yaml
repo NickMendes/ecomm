@@ -93,6 +93,17 @@ paths:
       tags:
         - User
       summary: Enter your credentials to recive the JWT Authorization Token
+      requestBody:
+        required: true
+        content:
+          aplication/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password: 
+                  type: string
       responses:
         204:
           description: No Content
