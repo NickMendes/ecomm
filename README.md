@@ -138,12 +138,8 @@ Analysis of the application on the microservices architecture implementations.
 
 - [x] **Security**
 
-<details>
-<summary> More </summary>
-
     - Hashing saved passwords
     - JWT Authorization token
 
-</details>
 
 - [ ] **Build and Deploy**
