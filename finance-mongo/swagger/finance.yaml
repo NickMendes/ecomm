@@ -1,7 +1,8 @@
 openapi: 3.0.3
+
 info:
-  description: Semana 7 - Treinamento da PagoNxt com a Alura, payments integration
-  version: 0.1.0
+  description: Treinamento da PagoNxt (Empresa Santander) com a Alura - Microserviço de Ecommerce, documentação dos pagamentos
+  version: 0.2.0
   title: Ecomm Project - Finance API
   termsOfService: http://swagger.io/terms/
   contact:
@@ -10,24 +11,45 @@ info:
   license:
     name: Licença
     url: http://www.alura.com
+
+security:
+  - JWTAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
 components:
   schemas:
-    payment-response:
+    payment-response-cvv:
       type: object
       properties: 
         _id:
           type: string
         value:
-          type: number
-          format: double          
+          type: integer        
         name:
           type: string
         card_number:
           type: string
         expiration_date:
           type: string
-          format: date
         cvv:
+          type: string
+        status:
+          type: string
+          enum: ['CRIADO', 'CANCELADO', 'CONFIRMADO']
+    payment-response:
+      type: object
+      properties: 
+        _id:
+          type: string
+        value:
+          type: integer        
+        name:
+          type: string
+        card_number:
+          type: string
+        expiration_date:
           type: string
         status:
           type: string
@@ -36,40 +58,88 @@ components:
       type: object
       properties:
         value:
-          type: number
-          format: double          
+          type: integer
         name:
           type: string
         card_number:
           type: string
         expiration_date:
           type: string
-          format: date
         cvv:
           type: string
-    cupom-respose:
+    cupom-response:
       type: object
       properties: 
         _id:
           type: string
-        name:
-          type: string
-        cpf:
-          type: string
-        payment_id:
-          type: string
+        user_info:
+          type: object
+          properties: 
+            name:
+              type: string
+            cpf:
+              type: string
+            address:
+              type: object
+              properties: 
+                cep:
+                  type: string
+                street:
+                  type: string
+                number:
+                  type: string
+                complement:
+                  type: string
+                city:
+                  type: string
+                state:
+                  type: string
+        sale_info:
+          type: object
+          properties: 
+            order:
+              type: array
+              items: 
+                type: object
+                properties: 
+                  product_name:
+                    type: string
+                  product_qty:
+                    type: integer
+                  product_price:
+                    type: integer
+                  discount:
+                    type: integer
+            total_price:
+              type: integer
+            sale_date:
+              type: string
+              format: date-time
+        payment_info:
+          type: object
+          properties: 
+            name:
+              type: string
+            card_number:
+              type: string
+            expiration_date:
+              type: string
+            status:
+              type: string
     cupom-insert:
       type: object
       properties:
-        name:
+        user_id:
           type: string
-        cpf:
+        sale_id:
           type: string
         payment_id:
           type: string
+
 servers:
 - url:
   description: Finance Server - XD
+
 paths:
   /payment:
     get:
@@ -85,6 +155,11 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/payment-response'
+        401:
+          description: Unathorized
+          content:
+            application/json:
+              example: Token not found || Expired or invalid token
         404:
           description: Not Found
           content:
@@ -92,6 +167,37 @@ paths:
               example: Not Found
         500:
           description: Internal Server Error
+
+    post:
+      tags:
+      - Payments
+      summary: Add a new payment to the list. You need to be logged as an adminstrator to use this.
+      requestBody: 
+        required: true
+        content: 
+          aplication/json:
+            schema: 
+              $ref: '#/components/schemas/payment-insert'
+      responses:
+        201:
+          description: Created
+          content: 
+            aplication/json:
+              schema: 
+                $ref: '#/components/schemas/payment-response-cvv'
+        401:
+          description: Unathorized
+          content:
+            application/json:
+              example: Token not found || Expired or invalid token
+        422:
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example: \xxx\ is required || \xxx\ must be 'typeof'
+        500:
+          description: Internal Server Error
+
   /payment/{id}:
     parameters: 
     - name: id
@@ -112,57 +218,11 @@ paths:
             aplication/json:
               schema: 
                 $ref: '#/components/schemas/payment-response'
-        404:
-          description: Not Found
-          content: 
-            aplication/json:
-              example: Category Not Found
-        500:
-          description: Internal Server Error
-  /admin/payment:
-    post:
-      tags:
-      - Payments
-      summary: Add a new payment to the list. You need to be logged as an adminstrator to use this.
-      responses:
-        201:
-          description: Created
-          content: 
-            aplication/json:
-              schema: 
-                $ref: '#/components/schemas/payment-insert'
         401:
-          description: Unauthorized
-          content: 
-            aplication/json:
-              example: User unathorized, please check your credentials
-        500:
-          description: Internal Server Error
-  /admin/payment/{id}:
-    parameters: 
-    - name: id
-      in: path
-      description: Unique identifier
-      required: true
-      example: 63caa785ae701b25441ff0be
-      schema: 
-        type: string
-    put:
-      tags:
-      - Payments
-      summary: Change payment by ID. You need to be logged as an adminstrator to use this.
-      responses: 
-        202:
-          description: Accepted
+          description: Unathorized
           content:
-            aplication/json:
-              schema: 
-                $ref: '#/components/schemas/payment-insert'
-        401:
-          description: Unauthorized
-          content: 
-            aplication/json:
-              example: User unathorized, please check your credentials
+            application/json:
+              example: Token not found || Expired or invalid token
         404:
           description: Not Found
           content: 
@@ -170,22 +230,25 @@ paths:
               example: Category Not Found
         500:
           description: Internal Server Error
+
     patch:
       tags:
       - Payments
       summary: Change payment status by ID. You need to be logged as an adminstrator to use this.
+      requestBody: 
+        required: true
+        content: 
+          aplication/json:
+            schema:
+              type: object
       responses: 
-        202:
-          description: Accepted
-          content:
-            aplication/json:
-              schema: 
-                $ref: '#/components/schemas/payment-response'
+        204:
+          description: No Content
         401:
-          description: Unauthorized
-          content: 
-            aplication/json:
-              example: User unathorized, please check your credentials
+          description: Unathorized
+          content:
+            application/json:
+              example: Token not found || Expired or invalid token
         404:
           description: Not Found
           content: 
@@ -198,16 +261,13 @@ paths:
       - Payments
       summary: Delete payment by ID. You need to be logged as an adminstrator to use this.
       responses: 
-        200:
-          description: Seccess
-          content:
-            aplication/json:
-              example: Payment deleted
+        204:
+          description: No Content
         401:
-          description: Unauthorized
-          content: 
-            aplication/json:
-              example: User unathorized, please check your credentials
+          description: Unathorized
+          content:
+            application/json:
+              example: Token not found || Expired or invalid token
         404:
           description: Not Found
           content: 
@@ -215,6 +275,7 @@ paths:
               example: Payment Not Found
         500:
           description: Internal Server Error
+
   /cupom:
     get:
       tags:
@@ -228,7 +289,12 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/cupom-respose'
+                  $ref: '#/components/schemas/cupom-response'
+        401:
+          description: Unathorized
+          content:
+            application/json:
+              example: Token not found || Expired or invalid token
         404:
           description: Not Found
           content:
@@ -236,6 +302,37 @@ paths:
               example: Not Found
         500:
           description: Internal Server Error
+
+    post:
+      tags:
+      - Cupoms
+      summary: Add a new cupom to the list. You need to be logged as an adminstrator to use this.
+      requestBody: 
+        required: true
+        content: 
+          aplication/json:
+            schema: 
+              $ref: '#/components/schemas/cupom-insert'
+      responses:
+        201:
+          description: Created
+          content: 
+            aplication/json:
+              schema: 
+                $ref: '#/components/schemas/cupom-response'
+        401:
+          description: Unathorized
+          content:
+            application/json:
+              example: Token not found || Expired or invalid token
+        422:
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example: \xxx\ is required || \xxx\ must be 'typeof'
+        500:
+          description: Internal Server Error
+  
   /cupom/{id}:
     parameters: 
     - name: id
@@ -255,58 +352,12 @@ paths:
           content: 
             aplication/json:
               schema: 
-                $ref: '#/components/schemas/cupom-respose'
-        404:
-          description: Not Found
-          content: 
-            aplication/json:
-              example: Category Not Found
-        500:
-          description: Internal Server Error
-  /admin/cupom:
-    post:
-      tags:
-      - Cupoms
-      summary: Add a new cupom to the list. You need to be logged as an adminstrator to use this.
-      responses:
-        201:
-          description: Created
-          content: 
-            aplication/json:
-              schema: 
-                $ref: '#/components/schemas/cupom-insert'
+                $ref: '#/components/schemas/cupom-response'
         401:
-          description: Unauthorized
-          content: 
-            aplication/json:
-              example: User unathorized, please check your credentials
-        500:
-          description: Internal Server Error
-  /admin/cupom/{id}:
-    parameters: 
-    - name: id
-      in: path
-      description: Unique identifier
-      required: true
-      example: 63caa785ae701b25441ff0be
-      schema: 
-        type: string
-    put:
-      tags:
-      - Cupoms
-      summary: Change cupom by ID. You need to be logged as an adminstrator to use this.
-      responses: 
-        202:
-          description: Accepted
+          description: Unathorized
           content:
-            aplication/json:
-              schema: 
-                $ref: '#/components/schemas/cupom-insert'
-        401:
-          description: Unauthorized
-          content: 
-            aplication/json:
-              example: User unathorized, please check your credentials
+            application/json:
+              example: Token not found || Expired or invalid token
         404:
           description: Not Found
           content: 
@@ -314,17 +365,20 @@ paths:
               example: Category Not Found
         500:
           description: Internal Server Error
+
     patch:
       tags:
       - Cupoms
       summary: Change cupom status by ID. You need to be logged as an adminstrator to use this.
+      requestBody: 
+        required: true
+        content: 
+          aplication/json:
+            schema:
+              type: object
       responses: 
-        202:
-          description: Accepted
-          content:
-            aplication/json:
-              schema: 
-                $ref: '#/components/schemas/cupom-respose'
+        204:
+          description: No Content
         401:
           description: Unauthorized
           content: 
@@ -337,21 +391,19 @@ paths:
               example: Payment Not Found
         500:
           description: Internal Server Error
+
     delete:
       tags:
       - Cupoms
       summary: Delete cupom by ID. You need to be logged as an adminstrator to use this.
       responses: 
-        200:
-          description: Seccess
-          content:
-            aplication/json:
-              example: Cupom deleted
+        204:
+          description: No Content
         401:
-          description: Unauthorized
-          content: 
-            aplication/json:
-              example: User unathorized, please check your credentials
+          description: Unathorized
+          content:
+            application/json:
+              example: Token not found || Expired or invalid token
         404:
           description: Not Found
           content: 
