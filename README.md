@@ -63,12 +63,12 @@ Analysis of the application on the twelve factors to be applied of the methodolo
     - This application is using the seventh factor, all ports are binded and communication between services are being made through it.
     </details>
     
-1. [ ] **Concurrency**
+1. [x] **Concurrency**
     <details>
     <summary> Learn More </summary>
     This Factor says that when thinking of scalability instead of makeing a new instance in a better machine you should be able to duplicate the current instance.
     
-    - Don`t know
+    - Even though it's not applied, this application is capable of scalability with little to no changes.
     </details>
     
 1. [x] **Disposability**
@@ -126,7 +126,7 @@ Analysis of the application on the microservices architecture implementations.
 
 - [x] **Mult Databases**
 
-- [x] **Asynchronous Events‌**
+- [x] **Synchronous Events‌**
 
 - [ ] **Log Aggregation**
 
