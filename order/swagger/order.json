@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "description": "Semana 5 - Treinamento da PagoNxt com a Alura sobre HTTP e Swagger.",
-    "version": "0.1.0",
+    "description": "Treinamento da PagoNxt (Empresa Santander) com a Alura - Microserviço de Ecommerce, documentação dos pedidos",
+    "version": "0.2.0",
     "title": "Ecomm Project - Orders API",
     "termsOfService": "http://swagger.io/terms/",
     "contact": {
@@ -14,25 +14,34 @@
       "url": "http://www.alura.com"
     }
   },
+  "security": [
+    {
+      "JWTAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  ],
   "components": {
     "schemas": {
       "order-insert": {
         "type": "object",
         "properties": {
-          "name": {
+          "user_id": {
             "type": "string"
           },
           "delivery_address": {
             "type": "object",
             "properties": {
               "cep": {
-                "type": "integer"
+                "type": "string"
               },
               "street": {
                 "type": "string"
               },
               "number": {
-                "type": "integer"
+                "type": "string"
               },
               "complement": {
                 "type": "string"
@@ -44,19 +53,14 @@
             "items": {
               "type": "object",
               "properties": {
-                "product_name": {
+                "product_id": {
                   "type": "string"
-                },
-                "product_price": {
-                  "type": "number",
-                  "fortmat": "double"
                 },
                 "product_qty": {
                   "type": "integer"
                 },
                 "discount": {
-                  "type": "number",
-                  "format": "double"
+                  "type": "integer"
                 }
               }
             }
@@ -69,8 +73,16 @@
           "_id": {
             "type": "string"
           },
-          "name": {
-            "type": "string"
+          "user_info": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "cfp": {
+                "type": "string"
+              }
+            }
           },
           "delivery_address": {
             "type": "object",
@@ -98,21 +110,19 @@
                   "type": "string"
                 },
                 "product_price": {
-                  "type": "number",
-                  "fortmat": "double"
+                  "type": "integer"
                 },
                 "product_qty": {
                   "type": "integer"
                 },
                 "discount": {
-                  "type": "number"
+                  "type": "integer"
                 }
               }
             }
           },
           "total_price": {
-            "type": "number",
-            "format": "double"
+            "type": "integer"
           },
           "sale_date": {
             "type": "string",
@@ -129,12 +139,12 @@
     }
   ],
   "paths": {
-    "/orders": {
+    "/sale": {
       "get": {
         "tags": [
-          "Order"
+          "Sale"
         ],
-        "summary": "Search for all available Orders.",
+        "summary": "Search for all available Sales.",
         "responses": {
           "200": {
             "description": "Success",
@@ -149,46 +159,11 @@
               }
             }
           },
-          "404": {
-            "description": "Not Found",
+          "401": {
+            "description": "Unathorized",
             "content": {
               "aplication/json": {
-                "example": "Not Found"
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/orders/{id}": {
-      "parameters": [
-        {
-          "in": "path",
-          "name": "id",
-          "description": "Unique identifier",
-          "required": true,
-          "example": "63caa785ae701b25441ff0be",
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
-      "get": {
-        "tags": [
-          "Order"
-        ],
-        "summary": "Search for an especific order by ID.",
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "aplication/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/order-response"
-                }
+                "example": "Token not found || Expired or invalid token"
               }
             }
           },
@@ -204,12 +179,10 @@
             "description": "Internal Server Error"
           }
         }
-      }
-    },
-    "/admin/order": {
+      },
       "post": {
         "tags": [
-          "Order"
+          "Sale"
         ],
         "summary": "Add a new order to the list. You need to be logged as an adminstrator to use this.",
         "requestBody": {
@@ -237,7 +210,15 @@
             "description": "Unauthorized",
             "content": {
               "aplication/json": {
-                "example": "User unathorized, please check your credentials"
+                "example": "Token not found || Expired or invalid token"
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "example": "\\xxx\\ is required || \\xxx\\ must be 'typeof'"
               }
             }
           },
@@ -247,7 +228,7 @@
         }
       }
     },
-    "/admin/orders/{id}": {
+    "/sale/{id}": {
       "parameters": [
         {
           "in": "path",
@@ -260,26 +241,16 @@
           }
         }
       ],
-      "put": {
+      "get": {
         "tags": [
-          "Order"
+          "Sale"
         ],
-        "summary": "Change all order information by ID. You need to be logged as an adminstrator to use this.",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "aplication/json": {
-              "schema": {
-                "$ref": "#/components/schemas/order-insert"
-              }
-            }
-          }
-        },
+        "summary": "Search for an especific order by ID.",
         "responses": {
-          "202": {
-            "description": "Accepted",
+          "200": {
+            "description": "Success",
             "content": {
-              "aplicativo/json": {
+              "aplication/json": {
                 "schema": {
                   "$ref": "#/components/schemas/order-response"
                 }
@@ -290,7 +261,7 @@
             "description": "Unauthorized",
             "content": {
               "aplication/json": {
-                "example": "User unathorized, please check your credentials"
+                "example": "Token not found || Expired or invalid token"
               }
             }
           },
@@ -298,9 +269,7 @@
             "description": "Not Found",
             "content": {
               "aplication/json": {
-                "schema": {
-                  "example": "Order Not Found"
-                }
+                "example": "Not Found"
               }
             }
           },
@@ -311,7 +280,7 @@
       },
       "patch": {
         "tags": [
-          "Order"
+          "Sale"
         ],
         "summary": "Change a order information by ID. You need to be logged as an adminstrator to use this.",
         "requestBody": {
@@ -325,21 +294,14 @@
           }
         },
         "responses": {
-          "202": {
-            "description": "Accepted",
-            "content": {
-              "aplication/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/order-response"
-                }
-              }
-            }
+          "204": {
+            "description": "No Content"
           },
           "401": {
             "description": "Unauthorized",
             "content": {
               "aplication/json": {
-                "example": "User unathorized, please check your credentials"
+                "example": "Token not found || Expired or invalid token"
               }
             }
           },
@@ -358,23 +320,18 @@
       },
       "delete": {
         "tags": [
-          "Order"
+          "Sale"
         ],
         "summary": "Delete a order by ID. You need to be logged as an adminstrator to use this.",
         "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "aplication/json": {
-                "example": "Order deleted"
-              }
-            }
+          "204": {
+            "description": "No Content"
           },
           "401": {
             "description": "Unauthorized",
             "content": {
               "aplication/json": {
-                "example": "User unathorized, please check your credentials"
+                "example": "Token not found || Expired or invalid token"
               }
             }
           },
