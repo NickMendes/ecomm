@@ -131,3 +131,15 @@ Analysis of the application on the microservices architecture implementations.
 - [ ] **Log Aggregation**
 
 - [ ] **Metric Aggregation**
+
+- [x] **Standard Services Stacks**
+
+- [x] **Discovery Services Solutions**
+
+- [x] **Security**
+
+    - Hashing saved passwords
+    - JWT Authorization token
+
+
+- [ ] **Build and Deploy**

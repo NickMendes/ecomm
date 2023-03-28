@@ -42,8 +42,13 @@ class ProductController {
         
     };
 
-    static updateProduct = (req, res) => {
+    static updateProduct = async (req, res) => {
         const id = req.params.id;
+
+        const checkId = await products.findById(id);
+        if (!checkId) {
+            res.status(404).send({ message: 'Product not found' });
+        }
 
         products.findByIdAndUpdate(id, { $set: req.body }, (err) => {
             if(err) {
@@ -54,8 +59,13 @@ class ProductController {
         });
     };
 
-    static deleteProduct = (req, res) => {
+    static deleteProduct = async (req, res) => {
         const id = req.params.id;
+
+        const checkId = await products.findById(id);
+        if (!checkId) {
+            res.status(404).send({ message: 'Product not found' });
+        }
 
         products.findByIdAndDelete(id, (err) => {
             if(err) {

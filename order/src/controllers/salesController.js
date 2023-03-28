@@ -74,8 +74,13 @@ class SaleController {
         }
     };
 
-    static updateSale = (req, res) => {
+    static updateSale = async (req, res) => {
         const id = req.params.id;
+
+        const checkId = await salesModel.findById(id);
+        if (!checkId) {
+            res.status(404).send({ message: 'Sale not found' });
+        }
 
         salesModel.findByIdAndUpdate(id, { $set: req.body }, (err) => {
             if(err) {
@@ -86,8 +91,13 @@ class SaleController {
         });
     };
 
-    static deleteSale = (req, res) => {
+    static deleteSale = async (req, res) => {
         const id = req.params.id;
+
+        const checkId = await salesModel.findById(id);
+        if (!checkId) {
+            res.status(404).send({ message: 'Sale not found' });
+        }
 
         salesModel.findByIdAndDelete(id, (err) => {
             if(err) {

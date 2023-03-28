@@ -35,8 +35,13 @@ class CategoryController {
         });
     };
 
-    static updateCategory = (req, res) => {
+    static updateCategory = async (req, res) => {
         const id = req.params.id;
+
+        const checkId = await categoryModel.findById(id);
+        if (!checkId) {
+            res.status(404).send({ message: 'Category not found' });
+        }
 
         categoryModel.findByIdAndUpdate(id, { $set: req.body }, (err) => {
             if(err) {
@@ -47,7 +52,7 @@ class CategoryController {
         });
     };
 
-    static updateCategoryStatus = (req, res) => {
+    static updateCategoryStatus = async (req, res) => {
         const id = req.params.id;
         const newStatus = req.body.status;
 
@@ -55,6 +60,11 @@ class CategoryController {
             res.status(400).send(
                 { message: 'Add an status to the body requirement' });
         } else {
+            const checkId = await categoryModel.findById(id);
+            if (!checkId) {
+                res.status(404).send({ message: 'Category not found' });
+            }
+
             categoryModel.findByIdAndUpdate(id, { $set: { status: newStatus } }, (err) => {
                 if(err) {
                     res.status(400).send({ message: err.message });
@@ -65,8 +75,13 @@ class CategoryController {
         }
     };
 
-    static deleteCategory = (req, res) => {
+    static deleteCategory = async (req, res) => {
         const id = req.params.id;
+
+        const checkId = await categoryModel.findById(id);
+        if (!checkId) {
+            res.status(404).send({ message: 'Category not found' });
+        }
 
         categoryModel.findByIdAndDelete(id, (err) => {
             if(err){

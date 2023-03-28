@@ -7,10 +7,12 @@ class UserController {
         const { email, password } = req.body;
 
         const checkUser = await users.findOne({ email });
+        if (!checkUser) {
+            return res.status(400).json({ message: 'Email or Password invalid' });
+        }
 
         const checkPassword = Hash.dehashing(password, checkUser.password);
-
-        if (!checkUser || !checkPassword) {
+        if (!checkPassword) {
             return res.status(400).json({ message: 'Email or Password invalid' });
         }
 
@@ -56,8 +58,13 @@ class UserController {
         });
     };
 
-    static updateUser = (req, res) => {
+    static updateUser = async (req, res) => {
         const id = req.params.id;
+
+        const checkId = await users.findById(id);
+        if (!checkId) {
+            res.status(404).send({ message: 'User not found' });
+        }
 
         users.findByIdAndUpdate(id, { $set: req.body }, (err) => {
             if(!err) {
@@ -68,8 +75,13 @@ class UserController {
         });
     };
 
-    static deleteUser = (req, res) => {
+    static deleteUser = async (req, res) => {
         const id = req.params.id;
+
+        const checkId = await users.findById(id);
+        if (!checkId) {
+            res.status(404).send({ message: 'User not found' });
+        }
 
         users.findByIdAndDelete(id, (err) => {
             if(!err) {

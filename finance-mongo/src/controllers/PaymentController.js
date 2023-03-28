@@ -38,8 +38,13 @@ class PaymentController {
 
     };
 
-    static updatePayment = (req, res) => {
+    static updatePayment = async (req, res) => {
         const id = req.params.id;
+
+        const checkId = await paymentModel.findById(id);
+        if (!checkId) {
+            res.status(404).send({ message: 'Payment not found' });
+        }
 
         paymentModel.findByIdAndUpdate(id, { $set: req.body }, (err) => {
             if(err) {
@@ -50,8 +55,13 @@ class PaymentController {
         });
     };
 
-    static deletePayment = (req, res) => {
+    static deletePayment = async (req, res) => {
         const id = req.params.id;
+
+        const checkId = await paymentModel.findById(id);
+        if (!checkId) {
+            res.status(404).send({ message: 'Payment not found' });
+        }
 
         paymentModel.findByIdAndDelete(id, (err) => {
             if(err) {
